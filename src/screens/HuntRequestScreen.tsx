@@ -1,0 +1,68 @@
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import React from 'react';
+import WholeWrapper from '../components/WholeWrapper';
+import ReusableInput from '../components/ReusableInput';
+import {COLORS, FONTSIZE} from '../theme/theme';
+
+type Props = {};
+
+const HuntRequestScreen = (props: Props) => {
+  const [productName, setProductName] = React.useState<string>('');
+
+  const [productPrice, setProductPrice] = React.useState<string>('');
+
+  const [productCount, setProductCount] = React.useState<string>('');
+
+  const [description, setDescription] = React.useState<string>('');
+
+  return (
+    <WholeWrapper>
+      <View style={styles.container}>
+        <ReusableInput
+          category="물품명"
+          placeholder="물품명을 입력해주세요"
+          setValue={setProductName}
+          value={productName}
+          isMultiline={false}
+        />
+        <ReusableInput
+          category="금액"
+          placeholder="예상금액"
+          setValue={setProductPrice}
+          value={productPrice}
+          isMultiline={false}
+        />
+        <ReusableInput
+          category="수량"
+          placeholder="필요수량"
+          setValue={setProductCount}
+          value={productCount}
+          isMultiline={false}
+        />
+        <ReusableInput
+          category="설명"
+          placeholder="물품에 대한 설명이나 추가 설명을 해주세요"
+          setValue={setDescription}
+          value={description}
+          isMultiline={true}
+        />
+        <Text style={styles.category}>상품 사진</Text>
+      </View>
+    </WholeWrapper>
+  );
+};
+
+export default HuntRequestScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 10,
+  },
+  category: {
+    marginLeft: 10,
+    marginBottom: 5,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.Orange,
+    fontWeight: '700',
+  },
+});
