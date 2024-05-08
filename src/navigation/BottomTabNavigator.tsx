@@ -1,5 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import HuntRequestScreen from '../screens/HuntRequestScreen';
+import {StyleSheet} from 'react-native';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -9,8 +11,18 @@ const BottomTabNavigator = () => {
       screenOptions={{
         tabBarHideOnKeyboard: true,
         headerShown: false,
-      }}></BottomTab.Navigator>
+        tabBarStyle: style.bottomTabStyle,
+      }}>
+      <BottomTab.Screen name="request" component={HuntRequestScreen} />
+    </BottomTab.Navigator>
   );
 };
 
 export default BottomTabNavigator;
+
+const style = StyleSheet.create({
+  bottomTabStyle: {
+    backgroundColor: 'black',
+    borderTopWidth: 0,
+  },
+});
