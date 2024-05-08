@@ -3,6 +3,8 @@ import React from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableInput from '../components/ReusableInput';
 import {COLORS, FONTSIZE} from '../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Photo from '../assets/icons/photo.svg';
 
 type Props = {};
 
@@ -47,6 +49,11 @@ const HuntRequestScreen = (props: Props) => {
           isMultiline={true}
         />
         <Text style={styles.category}>상품 사진</Text>
+        <View>
+          <TouchableOpacity onPress={() => {}} style={styles.addImageBtn}>
+            <Photo />
+          </TouchableOpacity>
+        </View>
       </View>
     </WholeWrapper>
   );
@@ -64,5 +71,22 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_14,
     color: COLORS.Orange,
     fontWeight: '700',
+  },
+  addImageBtn: {
+    width: 90,
+    height: 90,
+    backgroundColor: '#eee',
+    borderColor: '#d9d7ba',
+    borderWidth: 1,
+    borderRadius: 20,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
