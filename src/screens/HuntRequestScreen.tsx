@@ -1,12 +1,33 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActionSheetIOS,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableInput from '../components/ReusableInput';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Photo from '../assets/icons/photo.svg';
+import {
+  Asset,
+  CameraOptions,
+  ImageLibraryOptions,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 type Props = {};
+
+const imagePickerOption = {
+  mediaType: 'photo',
+  maxWidth: 360,
+  maxHeight: 360,
+  includeBase64: Platform.OS === 'android',
+};
 
 const HuntRequestScreen = (props: Props) => {
   const [productName, setProductName] = React.useState<string>('');
@@ -16,6 +37,51 @@ const HuntRequestScreen = (props: Props) => {
   const [productCount, setProductCount] = React.useState<string>('');
 
   const [description, setDescription] = React.useState<string>('');
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
+  const [profileImage, setProfileImage] = React.useState<Asset | null>(null);
+
+  const onPickImage = (res: any) => {
+    if (res.didCancel || !res) {
+      return;
+    }
+
+    setProfileImage({
+      ...res.assets[0],
+      uri:
+        Platform.OS === 'android'
+          ? res.assets[0].uri
+          : res.assets[0].uri!.replace('file://', ''),
+    });
+  };
+
+  const onLaunchCamera = () => {
+    launchCamera(imagePickerOption as CameraOptions, onPickImage);
+  };
+
+  const onLaunchImageLibrary = () => {
+    launchImageLibrary(imagePickerOption as ImageLibraryOptions, onPickImage);
+  };
+  const handleModalOpen = () => {
+    if (Platform.OS === 'android') {
+      setModalOpen(prev => !prev);
+    } else {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['사진 찍기', '사진 선택', '취소'],
+          cancelButtonIndex: 2,
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            onLaunchCamera();
+          } else if (buttonIndex === 1) {
+            onLaunchImageLibrary();
+          }
+        },
+      );
+    }
+  };
 
   return (
     <WholeWrapper>
