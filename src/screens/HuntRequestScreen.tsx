@@ -1,9 +1,10 @@
 import {
   ActionSheetIOS,
+  FlatList,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import React from 'react';
@@ -91,9 +92,16 @@ const HuntRequestScreen = (props: Props) => {
     }
   };
 
+  const renderItem = ({item}: {item: any}) => {
+    return <View></View>;
+  };
+  const keyExtractor = ({item}: {item: Asset}) => {
+    return `${item}`;
+  };
+
   return (
     <WholeWrapper>
-      <>
+      <ScrollView>
         <View style={styles.container}>
           <ReusableInput
             category="물품명"
@@ -124,7 +132,7 @@ const HuntRequestScreen = (props: Props) => {
             isMultiline={true}
           />
           <Text style={styles.category}>상품 사진</Text>
-          <View>
+          <View style={styles.imageContainer}>
             <TouchableOpacity
               onPress={() => {
                 handleModalOpen();
@@ -132,6 +140,16 @@ const HuntRequestScreen = (props: Props) => {
               style={styles.addImageBtn}>
               <Photo />
             </TouchableOpacity>
+            <View>
+              {profileImage && (
+                <FlatList
+                  data={profileImage}
+                  renderItem={renderItem}
+                  keyExtractor={item => keyExtractor(item)}
+                  horizontal={true}
+                />
+              )}
+            </View>
           </View>
           <ReusableBtn isClickable={true} onClick={() => {}} />
         </View>
@@ -146,7 +164,7 @@ const HuntRequestScreen = (props: Props) => {
             />
           }
         />
-      </>
+      </ScrollView>
     </WholeWrapper>
   );
 };
@@ -180,5 +198,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  imageContainer: {
+    flexDirection: 'row',
   },
 });
