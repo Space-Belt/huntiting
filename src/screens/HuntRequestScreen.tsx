@@ -54,20 +54,24 @@ const HuntRequestScreen = (props: Props) => {
       return;
     }
     const temp: Asset[] = profileImage ? [...profileImage] : [];
-    temp.push({
-      ...res.assets[0],
-      uri:
-        Platform.OS === 'android'
-          ? res.assets[0].uri
-          : res.assets[0].uri!.replace('file://', ''),
-    });
+
+    for (let i = 0; i < res.assets.length; i++) {
+      temp.push({
+        ...res.assets,
+        uri:
+          Platform.OS === 'android'
+            ? res.assets[i].uri
+            : res.assets[i].uri!.replace('file://', ''),
+      });
+    }
     console.log(res.assets);
     setProfileImage(temp);
   };
 
-  const deleteImage = (index: number) => {
-    const temp: Asset[] = profileImage ? [...profileImage] : [];
-    temp.splice(index, 1);
+  const deleteImage = (uri: string) => {
+    let temp: Asset[] = profileImage ? [...profileImage] : [];
+    temp = temp.filter(item => item.uri !== uri);
+
     setProfileImage(temp);
   };
 
@@ -103,22 +107,25 @@ const HuntRequestScreen = (props: Props) => {
     }
   };
 
-  const renderItem = ({item}: {item: any}) => {
+  const renderItem = ({item}: {item: Asset}) => {
     return (
-      <View
-        style={{
-          position: 'relative',
-          paddingTop: 20,
-        }}>
+      <View style={styles.imageWrapper}>
         <FastImage source={{uri: item.uri}} style={styles.addImageBtn} />
-        <TouchableOpacity style={styles.editIconStyle} onPress={() => {}}>
-          <CloseIcon style={styles.editIconStyle} />
+        <TouchableOpacity
+          containerStyle={styles.editIconStyle}
+          onPress={() => {
+            console.log('dfdfdfdfdf');
+            if (item.uri !== undefined) {
+              deleteImage(item.uri);
+            }
+          }}>
+          <CloseIcon style={styles.editIconStyles} />
         </TouchableOpacity>
       </View>
     );
   };
-  const keyExtractor = () => {
-    return `${1111}`;
+  const keyExtractor = (item: any) => {
+    return `${item.uri}`;
   };
 
   return (
@@ -163,17 +170,21 @@ const HuntRequestScreen = (props: Props) => {
               <Photo />
             </TouchableOpacity>
           </View>
-          <View>
-            {profileImage && (
-              <FlatList
-                data={profileImage}
-                renderItem={renderItem}
-                keyExtractor={keyExtractor}
-                horizontal={true}
-              />
-            )}
-          </View>
-          <ReusableBtn isClickable={true} onClick={() => {}} />
+
+          {profileImage && (
+            <FlatList
+              data={profileImage}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+              horizontal={true}
+            />
+          )}
+
+          <ReusableBtn
+            text={'요청하기'}
+            isClickable={true}
+            onClick={() => {}}
+          />
         </View>
         <ReusableModal
           visible={modalOpen}
@@ -207,7 +218,6 @@ const styles = StyleSheet.create({
   addImageBtn: {
     width: 90,
     height: 90,
-
     backgroundColor: '#eee',
     borderColor: '#d9d7ba',
     borderWidth: 1,
@@ -228,11 +238,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imageWrapper: {
-    width: 90,
-    height: 90,
-    borderRadius: 20,
+    position: 'relative',
+    paddingTop: 20,
   },
   imageStyle: {
+    position: 'relative',
     width: 90,
     height: 90,
     borderRadius: 20,
@@ -241,6 +251,12 @@ const styles = StyleSheet.create({
   editIconStyle: {
     position: 'absolute',
     right: 2,
-    top: -48,
+    top: 15,
+
+    zIndex: 1,
+  },
+  editIconStyles: {
+    position: 'relative',
+    zIndex: 1,
   },
 });
