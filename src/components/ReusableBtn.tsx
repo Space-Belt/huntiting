@@ -11,11 +11,11 @@ import {COLORS, FONTSIZE} from '../theme/theme';
 
 type Props = {
   onClick: () => void;
-
   isClickable: boolean;
+  text: string;
 };
 
-const ReusableBtn = ({onClick, isClickable}: Props) => {
+const ReusableBtn = ({onClick, isClickable, text}: Props) => {
   const changeBtnStyle: ViewStyle = {
     backgroundColor: isClickable ? COLORS.Orange : COLORS.Grey,
   };
@@ -24,7 +24,7 @@ const ReusableBtn = ({onClick, isClickable}: Props) => {
     <TouchableOpacity
       onPress={onClick}
       style={[styles.btnStyle, changeBtnStyle]}>
-      <Text style={styles.btnText}>Save</Text>
+      <Text style={styles.btnText}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     height: 46,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
   btnText: {
     fontSize: FONTSIZE.size_16,
