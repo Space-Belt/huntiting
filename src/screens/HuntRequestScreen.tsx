@@ -19,6 +19,8 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import ReusableModal from '../components/ReusableModal';
+import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
 
 type Props = {};
 
@@ -40,7 +42,7 @@ const HuntRequestScreen = (props: Props) => {
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
-  const [profileImage, setProfileImage] = React.useState<Asset | null>(null);
+  const [profileImage, setProfileImage] = React.useState<Asset[]>();
 
   const onPickImage = (res: any) => {
     if (res.didCancel || !res) {
@@ -63,6 +65,11 @@ const HuntRequestScreen = (props: Props) => {
   const onLaunchImageLibrary = () => {
     launchImageLibrary(imagePickerOption as ImageLibraryOptions, onPickImage);
   };
+
+  const modalClose = () => {
+    setModalOpen(prev => !prev);
+  };
+
   const handleModalOpen = () => {
     if (Platform.OS === 'android') {
       setModalOpen(prev => !prev);
@@ -85,42 +92,59 @@ const HuntRequestScreen = (props: Props) => {
 
   return (
     <WholeWrapper>
-      <View style={styles.container}>
-        <ReusableInput
-          category="물품명"
-          placeholder="물품명을 입력해주세요"
-          setValue={setProductName}
-          value={productName}
-          isMultiline={false}
-        />
-        <ReusableInput
-          category="금액"
-          placeholder="예상금액"
-          setValue={setProductPrice}
-          value={productPrice}
-          isMultiline={false}
-        />
-        <ReusableInput
-          category="수량"
-          placeholder="필요수량"
-          setValue={setProductCount}
-          value={productCount}
-          isMultiline={false}
-        />
-        <ReusableInput
-          category="설명"
-          placeholder="물품에 대한 설명이나 추가 설명을 해주세요"
-          setValue={setDescription}
-          value={description}
-          isMultiline={true}
-        />
-        <Text style={styles.category}>상품 사진</Text>
-        <View>
-          <TouchableOpacity onPress={() => {}} style={styles.addImageBtn}>
-            <Photo />
-          </TouchableOpacity>
+      <>
+        <View style={styles.container}>
+          <ReusableInput
+            category="물품명"
+            placeholder="물품명을 입력해주세요"
+            setValue={setProductName}
+            value={productName}
+            isMultiline={false}
+          />
+          <ReusableInput
+            category="금액"
+            placeholder="예상금액"
+            setValue={setProductPrice}
+            value={productPrice}
+            isMultiline={false}
+          />
+          <ReusableInput
+            category="수량"
+            placeholder="필요수량"
+            setValue={setProductCount}
+            value={productCount}
+            isMultiline={false}
+          />
+          <ReusableInput
+            category="설명"
+            placeholder="물품에 대한 설명이나 추가 설명을 해주세요"
+            setValue={setDescription}
+            value={description}
+            isMultiline={true}
+          />
+          <Text style={styles.category}>상품 사진</Text>
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                handleModalOpen();
+              }}
+              style={styles.addImageBtn}>
+              <Photo />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+        <ReusableModal
+          visible={modalOpen}
+          onClose={modalClose}
+          children={
+            <ImageSelectWayModal
+              onClose={modalClose}
+              onLaunchCamera={onLaunchCamera}
+              onLaunchImageLibrary={onLaunchImageLibrary}
+            />
+          }
+        />
+      </>
     </WholeWrapper>
   );
 };
