@@ -21,6 +21,7 @@ import {
 } from 'react-native-image-picker';
 import ReusableModal from '../components/ReusableModal';
 import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
+import ReusableBtn from '../components/ReusableBtn';
 
 type Props = {};
 
@@ -132,6 +133,7 @@ const HuntRequestScreen = (props: Props) => {
               <Photo />
             </TouchableOpacity>
           </View>
+          <ReusableBtn isClickable={true} onClick={() => {}} />
         </View>
         <ReusableModal
           visible={modalOpen}
