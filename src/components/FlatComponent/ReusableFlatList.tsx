@@ -1,5 +1,6 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import HuntListComponent from './HuntListComponent';
 
 type Props = {
   data: any[];
@@ -9,7 +10,7 @@ type Props = {
 
 const ReusableFlatList = (data, renderElement, keyExtractor: Props) => {
   const renderList = ({item}: {item: any}) => {
-    return renderElement;
+    return <HuntListComponent />;
   };
   return (
     <View>
