@@ -1,13 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {ReactElement} from 'react';
 
-type Props = {};
+type Props = {
+  data: any[];
+  renderItem: ({item}: {item: any}) => ReactElement;
+  keyExtractor: (item: any) => string;
+};
 
-const HuntListComponent = (props: Props) => {
+const HuntListComponent = ({data, renderItem, keyExtractor}: Props) => {
   return (
-    <View>
-      <Text>HuntListComponent</Text>
-    </View>
+    <FlatList data={data} renderItem={renderItem} keyExtractor={keyExtractor} />
   );
 };
 

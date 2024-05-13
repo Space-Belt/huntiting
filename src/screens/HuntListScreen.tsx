@@ -14,16 +14,32 @@ const HuntListScreen = (props: Props) => {
     navigation.navigate('detail' as never);
   };
 
+  const renderItem = ({item}: {item: any}) => {
+    return <View></View>;
+  };
+
+  const keyExtractor = () => {
+    return `${i}`;
+  };
+
   return (
     <WholeWrapper>
-      <ScrollView>
+      <View style={styles.container}>
         <ReusableHeader title="HomeScreen" handleBackBtn={handleBackBtn} />
-        <HuntListComponent />
-      </ScrollView>
+        <HuntListComponent
+          data={[]}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+        />
+      </View>
     </WholeWrapper>
   );
 };
 
 export default HuntListScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

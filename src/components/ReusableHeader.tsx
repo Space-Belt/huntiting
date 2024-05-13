@@ -32,7 +32,7 @@ const ReusableHeader = ({
       <TouchableOpacity
         style={styles.rightArea}
         onPress={handleRightBtn ? handleRightBtn : () => {}}>
-        {rightBtnIcon ? leftBtnIcon : <BackBtn />}
+        {rightBtnIcon ? leftBtnIcon : <></>}
       </TouchableOpacity>
     </View>
   );
@@ -43,7 +43,7 @@ export default ReusableHeader;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flex: 1,
+    height: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
