@@ -14,8 +14,8 @@ const BottomTabNavigator = () => {
         headerShown: false,
         tabBarStyle: style.bottomTabStyle,
       }}>
-      <BottomTab.Screen name="request" component={HuntRequestScreen} />
       <BottomTab.Screen name="list" component={HuntListScreen} />
+      <BottomTab.Screen name="request" component={HuntRequestScreen} />
     </BottomTab.Navigator>
   );
 };

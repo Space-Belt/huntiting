@@ -1,8 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 
@@ -14,10 +15,12 @@ const HuntListScreen = (props: Props) => {
   };
 
   return (
-    <View>
-      <ReusableHeader title="HomeScreen" handleBackBtn={handleBackBtn} />
-      <HuntListComponent />
-    </View>
+    <WholeWrapper>
+      <ScrollView>
+        <ReusableHeader title="HomeScreen" handleBackBtn={handleBackBtn} />
+        <HuntListComponent />
+      </ScrollView>
+    </WholeWrapper>
   );
 };
 
