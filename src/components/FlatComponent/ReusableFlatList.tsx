@@ -9,14 +9,7 @@ type Props = {
 };
 
 const ReusableFlatList = (data, renderElement, keyExtractor: Props) => {
-  const renderList = ({item}: {item: any}) => {
-    return <HuntListComponent />;
-  };
-  return (
-    <View>
-      <FlatList data={data} renderItem={renderList} />
-    </View>
-  );
+  return <View>{/* <FlatList data={data} renderItem={renderList} /> */}</View>;
 };
 
 export default ReusableFlatList;

@@ -1,36 +1,24 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
 import WholeWrapper from '../components/WholeWrapper';
+import {IHuntList, huntList} from '../assets/mockData/huntList';
+import FastImage from 'react-native-fast-image';
 
 type Props = {};
 
 const HuntListScreen = (props: Props) => {
-  const navigation = useNavigation();
-
-  const handleBackBtn = () => {
-    navigation.navigate('detail' as never);
-  };
-
-  const renderItem = ({item}: {item: any}) => {
-    return <View></View>;
-  };
-
-  const keyExtractor = () => {
-    return `${i}`;
+  const keyExtractor = (item: any) => {
+    return `${item.id}`;
   };
 
   return (
     <WholeWrapper>
       <View style={styles.container}>
-        <ReusableHeader title="HomeScreen" handleBackBtn={handleBackBtn} />
-        <HuntListComponent
-          data={[]}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-        />
+        <ReusableHeader title="요청 둘러보기" leftBtnIcon={<></>} />
+        <HuntListComponent data={huntList} />
       </View>
     </WholeWrapper>
   );
