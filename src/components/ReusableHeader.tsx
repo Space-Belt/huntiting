@@ -43,7 +43,8 @@ export default ReusableHeader;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   rightArea: {
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   },
   centerArea: {
     height: 50,
+    justifyContent: 'center',
   },
   titleStyle: {
     fontSize: FONTSIZE.size_18,
