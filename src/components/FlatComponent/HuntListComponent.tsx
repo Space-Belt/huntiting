@@ -1,7 +1,8 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {ReactElement} from 'react';
 import {IHuntList} from '../../assets/mockData/huntList';
 import FastImage from 'react-native-fast-image';
+import {COLORS, FONTSIZE} from '../../theme/theme';
 
 type Props = {
   data: IHuntList[];
@@ -24,7 +25,12 @@ const HuntListComponent = ({data}: Props) => {
           }}
           style={styles.imageStyle}
         />
-        <View></View>
+        <View style={styles.textInfoWrapper}>
+          <Text style={styles.productName}>{item.productName}</Text>
+          <Text style={styles.productPriceNCount}>
+            가격: {item.price} 수량: {item.productCount}
+          </Text>
+        </View>
       </View>
     );
   };
@@ -53,16 +59,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 10,
     height: 100,
+    paddingHorizontal: 15,
   },
   imageStyle: {
     width: 80,
     height: 80,
+    marginRight: 10,
     borderRadius: 20,
   },
+  textInfoWrapper: {
+    // flex: 1,
+    justifyContent: 'space-between',
+  },
+  productName: {
+    color: COLORS.Orange,
+    fontSize: FONTSIZE.size_14,
+    fontWeight: '700',
+  },
+  productPriceNCount: {
+    color: COLORS.Orange,
+    fontSize: FONTSIZE.size_12,
+  },
+
   divider: {
-    borderWidth: 0.5,
+    borderWidth: 0.4,
     width: '80%',
-    borderColor: '#da5252',
+    borderColor: '#d9d7ba',
   },
   dividerWrapper: {
     width: '100%',
