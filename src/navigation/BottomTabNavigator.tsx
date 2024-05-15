@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HuntRequestScreen from '../screens/HuntRequestScreen';
 import {StyleSheet} from 'react-native';
 import HuntListScreen from '../screens/HuntListScreen';
+import MyPageScreen from '../screens/MyPageScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ const BottomTabNavigator = () => {
       }}>
       <BottomTab.Screen name="list" component={HuntListScreen} />
       <BottomTab.Screen name="request" component={HuntRequestScreen} />
+      <BottomTab.Screen name="my_page" component={MyPageScreen} />
     </BottomTab.Navigator>
   );
 };
