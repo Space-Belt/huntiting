@@ -3,21 +3,31 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {RecoilRoot} from 'recoil';
 import MainStackNavigator from './navigation/MainStackNavigator';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
 const RootStack = createStackNavigator();
 
 function App(): React.JSX.Element {
   return (
-    <RecoilRoot>
-      <NavigationContainer>
-        <RootStack.Navigator screenOptions={{headerShown: false}}>
-          <RootStack.Screen
-            name="MainStackNavigator"
-            component={MainStackNavigator}
-          />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </RecoilRoot>
+    <GestureHandlerRootView style={styles.container}>
+      <RecoilRoot>
+        <NavigationContainer>
+          <RootStack.Navigator screenOptions={{headerShown: false}}>
+            <RootStack.Screen
+              name="MainStackNavigator"
+              component={MainStackNavigator}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      </RecoilRoot>
+    </GestureHandlerRootView>
   );
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
