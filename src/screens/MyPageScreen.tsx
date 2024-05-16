@@ -20,12 +20,22 @@ const MyPageScreen = (props: Props) => {
   return (
     <WholeWrapper>
       <View style={styles.container}>
-        <ReusableHeader title="프로필" handleBackBtn={handleBackBtn} />
+        <View>
+          <ReusableHeader title="프로필" handleBackBtn={handleBackBtn} />
 
-        <MyPageHeader />
+          <MyPageHeader />
+        </View>
         <View style={styles.btnWrapper}>
           <MenuComponent
             title="공지사항"
+            handleNavigate={() => navigation.navigate('home' as never)}
+          />
+          <MenuComponent
+            title="설정"
+            handleNavigate={() => navigation.navigate('Setting' as never)}
+          />
+          <MenuComponent
+            title="약관"
             handleNavigate={() => navigation.navigate('home' as never)}
           />
         </View>
@@ -37,8 +47,10 @@ const MyPageScreen = (props: Props) => {
 export default MyPageScreen;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   btnWrapper: {
-    marginTop: 100,
+    // marginTop: 100,
   },
 });
