@@ -8,6 +8,8 @@ type Props = {};
 
 const Setting = (props: Props) => {
   const [notificationOn, setNotificationOn] = React.useState<boolean>(false);
+  const [marketingAccept, setMarketingAccept] = React.useState<boolean>(false);
+
   return (
     <WholeWrapper>
       <View style={styles.container}>
@@ -16,6 +18,11 @@ const Setting = (props: Props) => {
           name="알림"
           setValue={setNotificationOn}
           value={notificationOn}
+        />
+        <SettingComponent
+          name="마케팅 수신동의"
+          setValue={setMarketingAccept}
+          value={marketingAccept}
         />
       </View>
     </WholeWrapper>
