@@ -25,6 +25,7 @@ import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
 import ReusableBtn from '../components/ReusableBtn';
 import FastImage from 'react-native-fast-image';
 import CloseIcon from '../assets/icons/smallClose.svg';
+import ReusableHeader from '../components/ReusableHeader';
 
 type Props = {};
 
@@ -131,6 +132,7 @@ const HuntRequestScreen = (props: Props) => {
   return (
     <WholeWrapper>
       <ScrollView>
+        <ReusableHeader title="물품찾기" />
         <View style={styles.container}>
           <ReusableInput
             category="물품명"
@@ -207,6 +209,7 @@ export default HuntRequestScreen;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    marginTop: 15,
   },
   category: {
     marginLeft: 10,
