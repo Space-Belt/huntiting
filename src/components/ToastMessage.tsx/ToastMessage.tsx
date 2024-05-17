@@ -4,6 +4,9 @@ import {getLayout} from '../../utils/getLayout';
 import {useRecoilValue} from 'recoil';
 import {toastContent} from '../../recoil/ToastStore';
 import WholeWrapper from '../WholeWrapper';
+import CheckCircle from '../../assets/icons/checkCircle.svg';
+import ErrorX from '../../assets/icons/errorX.svg';
+import ErrorBang from '../../assets/icons/errorBang.svg';
 
 type Props = {};
 
@@ -15,6 +18,15 @@ const ToastMessage = (props: Props) => {
   if (toastDetail.isVisible === true) {
     return (
       <View style={styles.container}>
+        <View>
+          {toastDetail.type === 'success' ? (
+            <CheckCircle />
+          ) : toastDetail.type === 'error' ? (
+            <ErrorX />
+          ) : (
+            <ErrorBang />
+          )}
+        </View>
         <Text>{toastDetail.message}</Text>
       </View>
     );
@@ -28,10 +40,13 @@ export default ToastMessage;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 25,
-    left: '50%',
+    width: width - 30,
+    alignItems: 'center',
+    height: 200,
+    top: '50%',
+    left: 15,
     backgroundColor: '#fefefe',
-    transform: [{translateX: -width / 2}],
-    borderRadius: 8,
+    transform: [{translateY: -200 / 2}],
+    borderRadius: 15,
   },
 });

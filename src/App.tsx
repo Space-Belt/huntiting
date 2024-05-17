@@ -4,7 +4,7 @@ import React from 'react';
 import {RecoilRoot} from 'recoil';
 import MainStackNavigator from './navigation/MainStackNavigator';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import ToastMessage from './components/ToastMessage.tsx/ToastMessage';
 const RootStack = createStackNavigator();
 
