@@ -26,6 +26,7 @@ import ReusableBtn from '../components/ReusableBtn';
 import FastImage from 'react-native-fast-image';
 import CloseIcon from '../assets/icons/smallClose.svg';
 import ReusableHeader from '../components/ReusableHeader';
+import {useToast} from '../hooks/useToast';
 
 type Props = {};
 
@@ -38,6 +39,8 @@ const imagePickerOption = {
 };
 
 const HuntRequestScreen = (props: Props) => {
+  const {onToast} = useToast();
+
   const [productName, setProductName] = React.useState<string>('');
 
   const [productPrice, setProductPrice] = React.useState<string>('');
@@ -185,7 +188,9 @@ const HuntRequestScreen = (props: Props) => {
           <ReusableBtn
             text={'요청하기'}
             isClickable={true}
-            onClick={() => {}}
+            onClick={() => {
+              onToast('요청성공하셨습니다.', 'success', true);
+            }}
           />
         </View>
         <ReusableModal
