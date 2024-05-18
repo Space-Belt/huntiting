@@ -3,7 +3,6 @@ import React from 'react';
 import {getLayout} from '../../utils/getLayout';
 import {useRecoilValue} from 'recoil';
 import {toastContent} from '../../recoil/ToastStore';
-import WholeWrapper from '../WholeWrapper';
 import CheckCircle from '../../assets/icons/checkCircle.svg';
 import ErrorX from '../../assets/icons/errorX.svg';
 import ErrorBang from '../../assets/icons/errorBang.svg';
@@ -43,6 +42,7 @@ const styles = StyleSheet.create({
     width: width - 30,
     alignItems: 'center',
     height: 200,
+    padding: 15,
     top: '50%',
     left: 15,
     backgroundColor: '#fefefe',
