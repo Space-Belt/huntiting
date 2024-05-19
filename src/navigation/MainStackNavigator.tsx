@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 
 import BottomTabNavigator from './BottomTabNavigator';
 import Setting from '../screens/Setting';
+import HuntDetail from '../screens/HuntDetail';
 
 const MainStack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const MainStackNavigator = () => {
       initialRouteName="BottomTab">
       <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
       <MainStack.Screen name="Setting" component={Setting} />
+      <MainStack.Screen name="detail" component={HuntDetail} />
     </MainStack.Navigator>
   );
 };
