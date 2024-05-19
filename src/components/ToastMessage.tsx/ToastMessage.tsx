@@ -6,6 +6,8 @@ import {toastContent} from '../../recoil/ToastStore';
 import CheckCircle from '../../assets/icons/checkCircle.svg';
 import ErrorX from '../../assets/icons/errorX.svg';
 import ErrorBang from '../../assets/icons/errorBang.svg';
+import Animated, {BounceIn, BounceOut} from 'react-native-reanimated';
+import {COLORS} from '../../theme/theme';
 
 type Props = {};
 
@@ -17,7 +19,7 @@ const ToastMessage = (props: Props) => {
   if (toastDetail.isVisible === true) {
     return (
       <View style={styles.container}>
-        <View>
+        <Animated.View entering={BounceIn} exiting={BounceOut}>
           {toastDetail.type === 'success' ? (
             <CheckCircle />
           ) : toastDetail.type === 'error' ? (
@@ -25,8 +27,8 @@ const ToastMessage = (props: Props) => {
           ) : (
             <ErrorBang />
           )}
-        </View>
-        <Text>{toastDetail.message}</Text>
+        </Animated.View>
+        <Text style={styles.textStyle}>{toastDetail.message}</Text>
       </View>
     );
   }
@@ -48,5 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fefefe',
     transform: [{translateY: -200 / 2}],
     borderRadius: 15,
+  },
+  textStyle: {
+    color: COLORS.Orange2,
   },
 });
