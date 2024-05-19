@@ -3,19 +3,27 @@ import React, {ReactElement} from 'react';
 import {IHuntList} from '../../assets/mockData/huntList';
 import FastImage from 'react-native-fast-image';
 import {COLORS, FONTSIZE} from '../../theme/theme';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   data: IHuntList[];
 };
 
 const HuntListComponent = ({data}: Props) => {
+  const navigation = useNavigation();
+
   const keyExtractor = (item: IHuntList) => {
     return `${item.id}`;
   };
 
   const renderItem = ({item}: {item: IHuntList}) => {
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          navigation.navigate('detail' as never);
+        }}>
         <FastImage
           source={{
             uri:
@@ -31,7 +39,7 @@ const HuntListComponent = ({data}: Props) => {
             가격: {item.price} 수량: {item.productCount}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
