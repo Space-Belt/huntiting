@@ -19,6 +19,9 @@ const ProductDescribe = ({name, price, description, count}: Props) => {
           <Text style={styles.countText}>수량: {count}개</Text>
         </View>
       </View>
+      <View style={styles.descriptionWrapper}>
+        <Text style={styles.descriptionText}>{description}</Text>
+      </View>
     </View>
   );
 };
@@ -28,16 +31,16 @@ export default ProductDescribe;
 const styles = StyleSheet.create({
   container: {},
   titleContainer: {
-    backgroundColor: '#eee',
     paddingVertical: 15,
     paddingHorizontal: 15,
+    backgroundColor: '#eee',
     borderColor: '#d9d7ba',
     borderWidth: 1,
     shadowOffset: {
-      width: 2,
-      height: 2,
+      width: 1,
+      height: 1,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 5,
   },
@@ -61,5 +64,14 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_16,
     color: COLORS.Orange2,
     fontWeight: '700',
+  },
+  descriptionWrapper: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  descriptionText: {
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.Orange2,
+    fontWeight: '600',
   },
 });
