@@ -2,12 +2,18 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTSIZE} from '../../theme/theme';
 
-type Props = {};
+type Props = {
+  price: number;
+  count: number;
+};
 
-const BottomDeal = (props: Props) => {
+const BottomDeal = ({price, count}: Props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.priceText}></Text>
+      <View style={styles.describeContainer}>
+        <Text style={styles.priceText}>가격: {price}원</Text>
+        <Text style={styles.priceText}>수량: {count}개</Text>
+      </View>
       <TouchableOpacity style={styles.buttonStyle} onPress={() => {}}>
         <Text style={styles.buttonText}>채팅하기</Text>
       </TouchableOpacity>
@@ -28,9 +34,22 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: '#eee',
   },
+  // priceText: {
+  //   color: COLORS.Grey,
+  //   fontSize: FONTSIZE.size_16,
+  //   fontWeight: '700',
+  // },
+  describeContainer: {
+    // width:
+  },
   priceText: {
-    color: COLORS.Grey,
     fontSize: FONTSIZE.size_16,
+    color: COLORS.Orange2,
+    fontWeight: '700',
+  },
+  countText: {
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.Orange2,
     fontWeight: '700',
   },
   buttonStyle: {

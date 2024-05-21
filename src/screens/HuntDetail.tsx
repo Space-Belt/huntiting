@@ -43,7 +43,7 @@ const HuntDetail = (props: Props) => {
             count={10}
           />
         </ScrollView>
-        <BottomDeal />
+        <BottomDeal count={5} price={10000} />
       </>
     </WholeWrapper>
   );
