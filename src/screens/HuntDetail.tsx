@@ -5,28 +5,27 @@ import ReusableHeader from '../components/ReusableHeader';
 import Carousel from 'react-native-reanimated-carousel';
 import FastImage from 'react-native-fast-image';
 import {getLayout} from '../utils/getLayout';
+import ProductDescribe from '../components/Detail/ProductDescribe';
 
 type Props = {};
 
+const width = getLayout();
+
 const HuntDetail = (props: Props) => {
   const renderItem = (item: any) => {
-    return (
-      <View>
-        <FastImage source={{uri: item}} style={styles.imageStyle} />
-      </View>
-    );
+    return <FastImage source={{uri: item}} style={styles.imageStyle} />;
   };
 
   return (
     <WholeWrapper>
       <>
         <ReusableHeader title={'상세보기'} />
-        <View>
+        <View style={styles.imageWrapper}>
           <Carousel
             loop
-            width={getLayout()}
-            height={getLayout()}
-            autoPlay={true}
+            // mode={'parallax'}
+            width={width}
+            height={width}
             data={[
               'https://picsum.photos/400',
               'https://picsum.photos/400',
@@ -35,6 +34,12 @@ const HuntDetail = (props: Props) => {
             renderItem={({item}) => renderItem(item)}
           />
         </View>
+        <ProductDescribe
+          name={'폴로 빈티지 제품'}
+          price={10000}
+          description={'2023년 스투시랑 콜라보한 제품입니다'}
+          count={10}
+        />
       </>
     </WholeWrapper>
   );
@@ -43,10 +48,11 @@ const HuntDetail = (props: Props) => {
 export default HuntDetail;
 
 const styles = StyleSheet.create({
-  imageWrapper: {},
+  imageWrapper: {width: width, height: width},
   imageStyle: {
-    width: getLayout(),
-    height: getLayout(),
+    width: width,
+    height: width,
     resizeMode: 'cover',
   },
+  detailContainer: {},
 });
