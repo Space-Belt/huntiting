@@ -11,7 +11,7 @@ import {COLORS} from '../../theme/theme';
 
 type Props = {};
 
-const {width} = getLayout();
+const width = getLayout();
 
 const ToastMessage = (props: Props) => {
   const toastDetail = useRecoilValue(toastContent);

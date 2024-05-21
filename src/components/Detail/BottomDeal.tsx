@@ -5,16 +5,17 @@ import {COLORS, FONTSIZE} from '../../theme/theme';
 type Props = {
   price: number;
   count: number;
+  onPress: () => void;
 };
 
-const BottomDeal = ({price, count}: Props) => {
+const BottomDeal = ({price, count, onPress}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.describeContainer}>
         <Text style={styles.priceText}>가격: {price}원</Text>
         <Text style={styles.priceText}>수량: {count}개</Text>
       </View>
-      <TouchableOpacity style={styles.buttonStyle} onPress={() => {}}>
+      <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
         <Text style={styles.buttonText}>채팅하기</Text>
       </TouchableOpacity>
     </View>

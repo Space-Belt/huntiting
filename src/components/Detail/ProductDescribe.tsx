@@ -53,5 +53,6 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_14,
     color: COLORS.Orange2,
     fontWeight: '600',
+    lineHeight: 20,
   },
 });
