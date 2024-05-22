@@ -10,6 +10,7 @@ import FastImage from 'react-native-fast-image';
 type Props = {};
 
 const HuntListScreen = (props: Props) => {
+  const navigation = useNavigation();
   const keyExtractor = (item: any) => {
     return `${item.id}`;
   };
@@ -17,7 +18,11 @@ const HuntListScreen = (props: Props) => {
   return (
     <WholeWrapper>
       <View style={styles.container}>
-        <ReusableHeader title="요청 둘러보기" leftBtnIcon={<></>} />
+        <ReusableHeader
+          title="요청 둘러보기"
+          leftBtnIcon={<></>}
+          handleBackBtn={() => navigation.goBack()}
+        />
         <HuntListComponent data={huntList} />
       </View>
     </WholeWrapper>

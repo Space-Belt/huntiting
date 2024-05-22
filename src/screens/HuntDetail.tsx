@@ -30,7 +30,10 @@ const HuntDetail = (props: Props) => {
   return (
     <WholeWrapper>
       <>
-        <ReusableHeader title={'상세보기'} />
+        <ReusableHeader
+          title={'상세보기'}
+          handleBackBtn={() => navigation.goBack()}
+        />
         <ScrollView style={styles.scrollStyle}>
           <View style={styles.imageWrapper}>
             <Carousel
@@ -48,9 +51,8 @@ const HuntDetail = (props: Props) => {
           </View>
           <ProductDescribe
             name={'폴로 빈티지 제품'}
-            price={10000}
+            createdAt={'2024/05/20'}
             description={lorem}
-            count={10}
           />
         </ScrollView>
         <BottomDeal count={5} price={10000} onPress={handleChat} />

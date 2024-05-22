@@ -3,6 +3,7 @@ import React from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableHeader from '../components/ReusableHeader';
 import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
@@ -36,12 +37,16 @@ const chatMessage: {
 ];
 
 const ChatRoom = (props: Props) => {
+  const navigation = useNavigation();
   const [nickName, setNickName] = React.useState<string>('하이룽');
 
   return (
     <WholeWrapper>
       <>
-        <ReusableHeader title={`${nickName} 님 과의 채팅`} />
+        <ReusableHeader
+          title={`${nickName} 님 과의 채팅`}
+          handleBackBtn={() => navigation.goBack()}
+        />
         <ScrollView style={styles.scrollContainer}>
           {/* <SectionList data={chatMessage} /> */}
         </ScrollView>

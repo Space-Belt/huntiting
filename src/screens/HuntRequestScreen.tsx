@@ -27,6 +27,7 @@ import FastImage from 'react-native-fast-image';
 import CloseIcon from '../assets/icons/smallClose.svg';
 import ReusableHeader from '../components/ReusableHeader';
 import {useToast} from '../hooks/useToast';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
@@ -39,6 +40,8 @@ const imagePickerOption = {
 };
 
 const HuntRequestScreen = (props: Props) => {
+  const navigation = useNavigation();
+
   const {onToast} = useToast();
 
   const [productName, setProductName] = React.useState<string>('');
@@ -135,7 +138,10 @@ const HuntRequestScreen = (props: Props) => {
   return (
     <WholeWrapper>
       <ScrollView>
-        <ReusableHeader title="물품찾기" />
+        <ReusableHeader
+          title="물품찾기"
+          handleBackBtn={() => navigation.goBack()}
+        />
         <View style={styles.container}>
           <ReusableInput
             category="물품명"
