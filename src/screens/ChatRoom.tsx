@@ -6,13 +6,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableHeader from '../components/ReusableHeader';
 import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
 import {useNavigation} from '@react-navigation/native';
 import {getLayout} from '../utils/getLayout';
 import {COLORS} from '../theme/theme';
+import moment from 'moment';
 
 type Props = {};
 
@@ -26,36 +27,39 @@ interface IChat {
   status: string;
 }
 
-const chatMessage: IChat[] = [
-  {
-    message_id: 'message_1',
-    chat_room_id: 'chat_room_1',
-    sender_id: 'sender_1',
-    content: '안녕하세요!!',
-    timestamp: '2024/05/21 09:00',
-    message_type: 'text',
-    status: 'read',
-  },
-  {
-    message_id: 'message_2',
-    chat_room_id: 'chat_room_1',
-    sender_id: 'sender_2',
-    content: '네 안녕하세요!!',
-    timestamp: '2024/05/21 09:15',
-    message_type: 'text',
-    status: 'unRead',
-  },
-];
-
 const myId = 'sender_1';
 
 const width = getLayout();
 
 const ChatRoom = (props: Props) => {
   const navigation = useNavigation();
+
+  const flatListRef = useRef<FlatList>(null);
+
   const [nickName, setNickName] = React.useState<string>('하이룽');
 
   const [message, setMessage] = React.useState<string>('');
+
+  const [chatMessage, setChatMessage] = React.useState<IChat[]>([
+    {
+      message_id: 'message_1',
+      chat_room_id: 'chat_room_1',
+      sender_id: 'sender_1',
+      content: '안녕하세요!!',
+      timestamp: '2024/05/21 09:00',
+      message_type: 'text',
+      status: 'read',
+    },
+    {
+      message_id: 'message_2',
+      chat_room_id: 'chat_room_1',
+      sender_id: 'sender_2',
+      content: '네 안녕하세요!!',
+      timestamp: '2024/05/21 09:15',
+      message_type: 'text',
+      status: 'unRead',
+    },
+  ]);
 
   const renderItem = ({item}: {item: IChat}) => {
     if (item.sender_id === 'sender_1') {
@@ -74,6 +78,21 @@ const ChatRoom = (props: Props) => {
   const keyExtractor = (item: IChat, index: number) => {
     return `${item}-${index}`;
   };
+  const sendMessage = () => {
+    let tempMessage = [...chatMessage];
+    tempMessage.push({
+      message_id: `message_${chatMessage.length + 1}`,
+      chat_room_id: 'chat_room_1',
+      sender_id: 'sender_1',
+      content: message,
+      timestamp: moment().format('yyyy/mm/dd hh:mm'),
+      message_type: 'text',
+      status: 'unRead',
+    });
+    setChatMessage(tempMessage);
+    flatListRef.current?.scrollToEnd({animated: true});
+    setMessage('');
+  };
 
   return (
     <WholeWrapper>
@@ -83,12 +102,17 @@ const ChatRoom = (props: Props) => {
           handleBackBtn={() => navigation.goBack()}
         />
         <FlatList
+          ref={flatListRef}
           data={chatMessage}
           renderItem={renderItem}
           keyExtractor={(item, index) => keyExtractor(item, index)}
           style={styles.scrollContainer}
         />
-        <ChattingBottomInput text={message} setText={setMessage} />
+        <ChattingBottomInput
+          text={message}
+          setText={setMessage}
+          sendMessage={sendMessage}
+        />
       </>
     </WholeWrapper>
   );
@@ -108,6 +132,7 @@ const styles = StyleSheet.create({
   myChatBox: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    marginBottom: 10,
   },
   opponentChat: {
     maxWidth: width - 40,
@@ -115,6 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 14,
+    marginBottom: 10,
   },
   myChat: {
     maxWidth: width - 40,

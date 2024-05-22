@@ -9,9 +9,10 @@ import Camera from '../../assets/icons/addPhoto.svg';
 type Props = {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
+  sendMessage: () => void;
 };
 
-const ChattingBottomInput = ({text, setText}: Props) => {
+const ChattingBottomInput = ({text, setText, sendMessage}: Props) => {
   const handleText = (text: string) => {
     setText(text);
   };
@@ -27,7 +28,7 @@ const ChattingBottomInput = ({text, setText}: Props) => {
         value={text}
         placeholder="채팅"
       />
-      <TouchableOpacity style={styles.sendBtn}>
+      <TouchableOpacity style={styles.sendBtn} onPress={sendMessage}>
         <Send style={styles.sendIcon} />
       </TouchableOpacity>
     </View>
