@@ -3,6 +3,8 @@ import React, {Dispatch, SetStateAction} from 'react';
 import PlusIcon from '../../assets/icons/customPlus.svg';
 import {COLORS} from '../../theme/theme';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Send from '../../assets/icons/send.svg';
+import Camera from '../../assets/icons/addPhoto.svg';
 
 type Props = {
   text: string;
@@ -17,15 +19,17 @@ const ChattingBottomInput = ({text, setText}: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.btnStyle}>
-        <PlusIcon width={30} height={30} style={styles.iconStyle} />
+        <Camera width={30} height={30} style={styles.iconStyle} />
       </TouchableOpacity>
       <TextInput
         style={styles.textInput}
-        onChangeText={(text: string) => handleText(text)}
+        onChangeText={handleText}
         value={text}
         placeholder="채팅"
       />
-      <TouchableOpacity style={styles.sendBtn}></TouchableOpacity>
+      <TouchableOpacity style={styles.sendBtn}>
+        <Send style={styles.sendIcon} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
+    marginLeft: 10,
     height: 50,
     borderWidth: 1,
     borderRadius: 20,
@@ -60,9 +65,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   sendBtn: {
-    width: 80,
-    height: 50,
+    width: 50,
+    height: 45,
     marginLeft: 10,
+    borderRadius: 15,
     backgroundColor: COLORS.Orange2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sendIcon: {
+    width: 30,
+    height: 30,
+    color: '#fff',
   },
 });
