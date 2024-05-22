@@ -4,16 +4,16 @@ import {COLORS, FONTSIZE} from '../../theme/theme';
 
 type Props = {
   name: string;
-  price: number;
   description: string;
-  count?: number;
+  createdAt: string;
 };
 
-const ProductDescribe = ({name, price, description, count}: Props) => {
+const ProductDescribe = ({name, description, createdAt}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.productName}>{name}</Text>
+        <Text style={styles.createdAt}>{createdAt}</Text>
       </View>
       <View style={styles.descriptionWrapper}>
         <Text style={styles.descriptionText}>{description}</Text>
@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_20,
     fontWeight: '700',
     color: COLORS.Orange2,
+  },
+  createdAt: {
+    fontSize: FONTSIZE.size_10,
+    color: COLORS.Grey,
   },
   descriptionWrapper: {
     paddingVertical: 15,
