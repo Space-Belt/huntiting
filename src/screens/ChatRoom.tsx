@@ -12,7 +12,7 @@ import ReusableHeader from '../components/ReusableHeader';
 import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
 import {useNavigation} from '@react-navigation/native';
 import {getLayout} from '../utils/getLayout';
-import {COLORS} from '../theme/theme';
+import {COLORS, FONTSIZE} from '../theme/theme';
 import moment from 'moment';
 
 type Props = {};
@@ -26,6 +26,31 @@ interface IChat {
   message_type: string;
   status: string;
 }
+interface ISectionData {
+  title: string;
+  data: IChat[];
+}
+
+const chats: IChat[] = [
+  {
+    message_id: 'message_1',
+    chat_room_id: 'chat_room_1',
+    sender_id: 'sender_1',
+    content: '안녕하세요!!',
+    timestamp: '2024/05/21 09:00',
+    message_type: 'text',
+    status: 'read',
+  },
+  {
+    message_id: 'message_2',
+    chat_room_id: 'chat_room_1',
+    sender_id: 'sender_2',
+    content: '네 안녕하세요!!',
+    timestamp: '2024/05/21 09:15',
+    message_type: 'text',
+    status: 'unRead',
+  },
+];
 
 const myId = 'sender_1';
 
@@ -35,6 +60,7 @@ const ChatRoom = (props: Props) => {
   const navigation = useNavigation();
 
   const flatListRef = useRef<FlatList>(null);
+  const sectionListRef = useRef<SectionList>(null);
 
   const [nickName, setNickName] = React.useState<string>('하이룽');
 
@@ -61,10 +87,13 @@ const ChatRoom = (props: Props) => {
     },
   ]);
 
+  const [sectionList, setSectionList] = React.useState<ISectionData[]>([]);
+
   const renderItem = ({item}: {item: IChat}) => {
     if (item.sender_id === 'sender_1') {
       return (
         <View style={styles.myChatBox}>
+          <Text style={styles.dateText}>{item.timestamp.split(' ')[1]}</Text>
           <Text style={styles.myChat}>{item.content}</Text>
         </View>
       );
@@ -72,12 +101,23 @@ const ChatRoom = (props: Props) => {
     return (
       <View style={styles.opponentChatBox}>
         <Text style={styles.opponentChat}>{item.content}</Text>
+        <Text style={styles.dateText}>{item.timestamp.split(' ')[1]}</Text>
       </View>
     );
   };
+
+  const renderSectionHeader = ({section}: {section: any}) => {
+    return (
+      <View>
+        <Text style={styles.sectionHeaderText}>{section.title}</Text>
+      </View>
+    );
+  };
+
   const keyExtractor = (item: IChat, index: number) => {
     return `${item}-${index}`;
   };
+
   const sendMessage = () => {
     let tempMessage = [...chatMessage];
     tempMessage.push({
@@ -85,7 +125,7 @@ const ChatRoom = (props: Props) => {
       chat_room_id: 'chat_room_1',
       sender_id: 'sender_1',
       content: message,
-      timestamp: moment().format('yyyy/mm/dd hh:mm'),
+      timestamp: moment().format('YYYY/MM/DD hh:mm'),
       message_type: 'text',
       status: 'unRead',
     });
@@ -94,6 +134,30 @@ const ChatRoom = (props: Props) => {
     setMessage('');
   };
 
+  React.useEffect(() => {
+    let tempDatas: ISectionData[] = [];
+    let grouped: {[key: string]: IChat[]} = {};
+
+    chats.forEach(message => {
+      const date = message.timestamp.split(' ')[0]; // '2024/05/21'
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(message);
+    });
+
+    console.log(grouped);
+
+    Object.keys(grouped).map(date => {
+      tempDatas.push({
+        title: date,
+        data: grouped[date],
+      });
+    });
+
+    setSectionList(tempDatas);
+  }, [chats]);
+
   return (
     <WholeWrapper>
       <>
@@ -101,13 +165,24 @@ const ChatRoom = (props: Props) => {
           title={`${nickName} 님 과의 채팅`}
           handleBackBtn={() => navigation.goBack()}
         />
-        <FlatList
+        {/* <FlatList
           ref={flatListRef}
           data={chatMessage}
           renderItem={renderItem}
           keyExtractor={(item, index) => keyExtractor(item, index)}
           style={styles.scrollContainer}
+          
+        /> */}
+        <SectionList
+          ref={sectionListRef}
+          sections={sectionList}
+          renderItem={renderItem}
+          style={styles.scrollContainer}
+          renderSectionHeader={renderSectionHeader}
+          stickySectionHeadersEnabled={false}
+          keyExtractor={(item: IChat) => `${item.chat_room_id}-${item.content}`}
         />
+
         <ChattingBottomInput
           text={message}
           setText={setMessage}
@@ -125,25 +200,34 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  sectionHeaderText: {textAlign: 'center', color: '#988080'},
+
   opponentChatBox: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginBottom: 10,
   },
   myChatBox: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginBottom: 10,
   },
+  dateText: {
+    alignSelf: 'flex-end',
+    fontSize: FONTSIZE.size_12,
+    color: '#ab8181',
+    marginHorizontal: 5,
+  },
   opponentChat: {
-    maxWidth: width - 40,
+    maxWidth: width - 100,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 14,
-    marginBottom: 10,
+    fontWeight: '600',
   },
   myChat: {
-    maxWidth: width - 40,
+    maxWidth: width - 100,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
