@@ -8,6 +8,7 @@ import {COLORS, SPACING} from '../theme/theme';
 import HomeIcon from '../assets/icons/homeIcon.svg';
 import Request from '../assets/icons/request.svg';
 import PersonIcon from '../assets/icons/personIcon.svg';
+import ChatList from '../screens/ChatList';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -49,6 +50,16 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="request"
         component={HuntRequestScreen}
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({focused}) => {
+            return iconRendering('request', focused);
+          },
+        }}
+      />
+      <BottomTab.Screen
+        name="chatList"
+        component={ChatList}
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({focused}) => {
