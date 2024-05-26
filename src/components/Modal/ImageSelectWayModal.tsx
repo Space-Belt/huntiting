@@ -2,8 +2,8 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {FONTSIZE} from '../../theme/theme';
 
-import Camera from '../../assets/icons/photo.svg';
 import Gallery from '../../assets/icons/gallery.svg';
+import Camera from '../../assets/icons/photo.svg';
 
 interface IProps {
   onClose: () => void;

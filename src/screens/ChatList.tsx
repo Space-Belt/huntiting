@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 

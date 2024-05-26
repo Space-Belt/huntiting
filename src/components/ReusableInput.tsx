@@ -1,7 +1,6 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {Dispatch, SetStateAction} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {COLORS, FONTSIZE} from '../theme/theme';
-import WholeWrapper from './WholeWrapper';
 
 type Props = {
   category: string;

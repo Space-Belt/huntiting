@@ -1,7 +1,7 @@
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import React from 'react';
-import {FONTSIZE} from '../../theme/theme';
+import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import RightArrow from '../../assets/icons/right_arrow.svg';
+import {FONTSIZE} from '../../theme/theme';
 
 type Props = {
   title: string;

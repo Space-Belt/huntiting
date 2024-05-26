@@ -1,13 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {getLayout} from '../../utils/getLayout';
-import {useRecoilValue} from 'recoil';
-import {toastContent} from '../../recoil/ToastStore';
-import CheckCircle from '../../assets/icons/checkCircle.svg';
-import ErrorX from '../../assets/icons/errorX.svg';
-import ErrorBang from '../../assets/icons/errorBang.svg';
+import {StyleSheet, Text, View} from 'react-native';
 import Animated, {BounceIn, BounceOut} from 'react-native-reanimated';
+import {useRecoilValue} from 'recoil';
+import CheckCircle from '../../assets/icons/checkCircle.svg';
+import ErrorBang from '../../assets/icons/errorBang.svg';
+import ErrorX from '../../assets/icons/errorX.svg';
+import {toastContent} from '../../recoil/ToastStore';
 import {COLORS} from '../../theme/theme';
+import {getLayout} from '../../utils/getLayout';
 
 type Props = {};
 

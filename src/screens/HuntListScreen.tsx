@@ -1,11 +1,10 @@
-import {StyleSheet, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {huntList} from '../assets/mockData/huntList';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import ReusableHeader from '../components/ReusableHeader';
-import {useNavigation} from '@react-navigation/native';
 import WholeWrapper from '../components/WholeWrapper';
-import {IHuntList, huntList} from '../assets/mockData/huntList';
-import FastImage from 'react-native-fast-image';
 
 type Props = {};
 

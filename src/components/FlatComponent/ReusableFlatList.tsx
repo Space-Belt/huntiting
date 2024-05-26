@@ -1,6 +1,5 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import HuntListComponent from './HuntListComponent';
+import {StyleSheet, View} from 'react-native';
 
 type Props = {
   data: any[];

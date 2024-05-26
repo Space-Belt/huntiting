@@ -1,10 +1,10 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {ReactElement} from 'react';
-import {IHuntList} from '../../assets/mockData/huntList';
-import FastImage from 'react-native-fast-image';
-import {COLORS, FONTSIZE} from '../../theme/theme';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {IHuntList} from '../../assets/mockData/huntList';
+import {COLORS, FONTSIZE} from '../../theme/theme';
 
 type Props = {
   data: IHuntList[];

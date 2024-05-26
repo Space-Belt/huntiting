@@ -1,10 +1,9 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {Dispatch, SetStateAction} from 'react';
-import PlusIcon from '../../assets/icons/customPlus.svg';
-import {COLORS} from '../../theme/theme';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Send from '../../assets/icons/send.svg';
 import Camera from '../../assets/icons/addPhoto.svg';
+import Send from '../../assets/icons/send.svg';
+import {COLORS} from '../../theme/theme';
 
 type Props = {
   text: string;

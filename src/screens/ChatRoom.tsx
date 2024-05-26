@@ -1,19 +1,12 @@
-import {
-  FlatList,
-  ScrollView,
-  SectionList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import React, {useRef} from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
-import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
 import {useNavigation} from '@react-navigation/native';
-import {getLayout} from '../utils/getLayout';
-import {COLORS, FONTSIZE} from '../theme/theme';
 import moment from 'moment';
+import React, {useRef} from 'react';
+import {FlatList, SectionList, StyleSheet, Text, View} from 'react-native';
+import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
+import {COLORS, FONTSIZE} from '../theme/theme';
+import {getLayout} from '../utils/getLayout';
 
 type Props = {};
 

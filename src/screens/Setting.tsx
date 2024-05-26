@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import ReusableHeader from '../components/ReusableHeader';
-import WholeWrapper from '../components/WholeWrapper';
-import SettingComponent from '../components/Setting/SettingComponent';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import ReusableHeader from '../components/ReusableHeader';
+import SettingComponent from '../components/Setting/SettingComponent';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 

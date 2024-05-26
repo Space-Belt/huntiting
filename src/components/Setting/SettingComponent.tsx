@@ -1,3 +1,4 @@
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleSheet,
   Text,
@@ -5,13 +6,12 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
-import {COLORS, FONTSIZE} from '../../theme/theme';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {COLORS, FONTSIZE} from '../../theme/theme';
 
 type Props = {
   name: string;

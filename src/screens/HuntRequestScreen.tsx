@@ -1,3 +1,5 @@
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
 import {
   ActionSheetIOS,
   FlatList,
@@ -7,12 +9,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableInput from '../components/ReusableInput';
-import {COLORS, FONTSIZE} from '../theme/theme';
+import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Photo from '../assets/icons/photo.svg';
 import {
   Asset,
   CameraOptions,
@@ -20,14 +18,16 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import ReusableModal from '../components/ReusableModal';
+import Photo from '../assets/icons/photo.svg';
+import CloseIcon from '../assets/icons/smallClose.svg';
 import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
 import ReusableBtn from '../components/ReusableBtn';
-import FastImage from 'react-native-fast-image';
-import CloseIcon from '../assets/icons/smallClose.svg';
 import ReusableHeader from '../components/ReusableHeader';
+import ReusableInput from '../components/ReusableInput';
+import ReusableModal from '../components/ReusableModal';
+import WholeWrapper from '../components/WholeWrapper';
 import {useToast} from '../hooks/useToast';
-import {useNavigation} from '@react-navigation/native';
+import {COLORS, FONTSIZE} from '../theme/theme';
 
 type Props = {};
 

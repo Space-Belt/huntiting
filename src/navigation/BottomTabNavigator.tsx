@@ -1,14 +1,14 @@
-import React, {ReactElement} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HuntRequestScreen from '../screens/HuntRequestScreen';
-import {StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
+import React from 'react';
+import {StyleSheet, TextStyle} from 'react-native';
+import HomeIcon from '../assets/icons/homeIcon.svg';
+import PersonIcon from '../assets/icons/personIcon.svg';
+import Request from '../assets/icons/request.svg';
+import ChatList from '../screens/ChatList';
 import HuntListScreen from '../screens/HuntListScreen';
+import HuntRequestScreen from '../screens/HuntRequestScreen';
 import MyPageScreen from '../screens/MyPageScreen';
 import {COLORS, SPACING} from '../theme/theme';
-import HomeIcon from '../assets/icons/homeIcon.svg';
-import Request from '../assets/icons/request.svg';
-import PersonIcon from '../assets/icons/personIcon.svg';
-import ChatList from '../screens/ChatList';
 
 const BottomTab = createBottomTabNavigator();
 

@@ -1,12 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import FastImage from 'react-native-fast-image';
-import space from '../assets/images/space.png';
+import {StyleSheet, View} from 'react-native';
+import MenuComponent from '../components/MyPage/MenuComponent';
 import MyPageHeader from '../components/MyPage/MyPageHeader';
 import ReusableHeader from '../components/ReusableHeader';
-import {useNavigation} from '@react-navigation/native';
-import MenuComponent from '../components/MyPage/MenuComponent';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 

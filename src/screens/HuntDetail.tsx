@@ -1,13 +1,13 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
-import Carousel from 'react-native-reanimated-carousel';
-import FastImage from 'react-native-fast-image';
-import {getLayout} from '../utils/getLayout';
-import ProductDescribe from '../components/Detail/ProductDescribe';
-import BottomDeal from '../components/Detail/BottomDeal';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import Carousel from 'react-native-reanimated-carousel';
+import BottomDeal from '../components/Detail/BottomDeal';
+import ProductDescribe from '../components/Detail/ProductDescribe';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
+import {getLayout} from '../utils/getLayout';
 
 type Props = {};
 

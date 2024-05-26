@@ -1,5 +1,5 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ImageAssets} from '../../assets/images/ImageAssets';
 import {COLORS, FONTSIZE} from '../../theme/theme';
