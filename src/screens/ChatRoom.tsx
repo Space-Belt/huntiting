@@ -8,6 +8,8 @@ import WholeWrapper from '../components/WholeWrapper';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import {getLayout} from '../utils/getLayout';
 import ChatOut from '../assets/icons/chatroomOut.svg';
+import ReusableModal from '../components/ReusableModal';
+import ChatRoomOutModal from '../components/Modal/ChatRoomOutModal';
 
 type Props = {};
 
@@ -83,6 +85,8 @@ const ChatRoom = (props: Props) => {
 
   const [sectionList, setSectionList] = React.useState<ISectionData[]>([]);
 
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
   const renderItem = ({item}: {item: IChat}) => {
     if (item.sender_id === 'sender_1') {
       return (
@@ -123,7 +127,7 @@ const ChatRoom = (props: Props) => {
 
     if (sectionIndex !== -1) {
       newSections[sectionIndex].data.push({
-        message_id: `message_${chatMessage.length + 1}`,
+        message_id: `message_${newSections[sectionIndex].data.length + 1}`,
         chat_room_id: 'chat_room_1',
         sender_id: 'sender_1',
         content: message,
@@ -136,7 +140,7 @@ const ChatRoom = (props: Props) => {
         title: today,
         data: [
           {
-            message_id: `message_${chatMessage.length + 1}`,
+            message_id: 'message_1',
             chat_room_id: 'chat_room_1',
             sender_id: 'sender_1',
             content: message,
@@ -151,6 +155,14 @@ const ChatRoom = (props: Props) => {
     setSectionList(newSections);
 
     setMessage('');
+  };
+
+  const modalClose = (type?: string) => {
+    if (type === 'exit') {
+      console.log('방나가기');
+      navigation.goBack();
+    }
+    setModalOpen(prev => !prev);
   };
 
   React.useEffect(() => {
@@ -186,7 +198,9 @@ const ChatRoom = (props: Props) => {
               <ChatOut style={styles.chatOutIcon} />
             </View>
           }
-          handleRightBtn={() => {}}
+          handleRightBtn={() => {
+            setModalOpen(true);
+          }}
         />
         <SectionList
           ref={sectionListRef}
@@ -202,6 +216,12 @@ const ChatRoom = (props: Props) => {
           text={message}
           setText={setMessage}
           sendMessage={sendMessage}
+        />
+        <ReusableModal
+          visible={modalOpen}
+          onClose={modalClose}
+          animationType="slide"
+          children={<ChatRoomOutModal onClose={modalClose} />}
         />
       </>
     </WholeWrapper>
