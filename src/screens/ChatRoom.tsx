@@ -73,7 +73,7 @@ const ChatRoom = (props: Props) => {
       message_id: 'message_2',
       chat_room_id: 'chat_room_1',
       sender_id: 'sender_2',
-      content: '네 안녕하세요!!',
+      content: '네 안녕하세요ㅇㅇ!!',
       timestamp: '2024/05/21 09:15',
       message_type: 'text',
       status: 'unRead',
@@ -112,18 +112,46 @@ const ChatRoom = (props: Props) => {
   };
 
   const sendMessage = () => {
-    let tempMessage = [...chatMessage];
-    tempMessage.push({
-      message_id: `message_${chatMessage.length + 1}`,
-      chat_room_id: 'chat_room_1',
-      sender_id: 'sender_1',
-      content: message,
-      timestamp: moment().format('YYYY/MM/DD hh:mm'),
-      message_type: 'text',
-      status: 'unRead',
-    });
-    setChatMessage(tempMessage);
+    const today = moment().format('YYYY/MM/DD');
+
+    const sectionIndex = sectionList.findIndex(
+      section => section.title === today,
+    );
+
+    let newSections = [...sectionList];
+
+    console.log(newSections);
+    console.log(sectionIndex);
+
+    if (sectionIndex !== -1) {
+      newSections[sectionIndex].data.push({
+        message_id: `message_${chatMessage.length + 1}`,
+        chat_room_id: 'chat_room_1',
+        sender_id: 'sender_1',
+        content: message,
+        timestamp: moment().format('YYYY/MM/DD hh:mm'),
+        message_type: 'text',
+        status: 'unRead',
+      });
+    } else {
+      newSections.push({
+        title: today,
+        data: [
+          {
+            message_id: `message_${chatMessage.length + 1}`,
+            chat_room_id: 'chat_room_1',
+            sender_id: 'sender_1',
+            content: message,
+            timestamp: moment().format('YYYY/MM/DD hh:mm'),
+            message_type: 'text',
+            status: 'unRead',
+          },
+        ],
+      });
+    }
     flatListRef.current?.scrollToEnd({animated: true});
+    setSectionList(newSections);
+
     setMessage('');
   };
 
@@ -158,14 +186,6 @@ const ChatRoom = (props: Props) => {
           title={`${nickName} 님 과의 채팅`}
           handleBackBtn={() => navigation.goBack()}
         />
-        {/* <FlatList
-          ref={flatListRef}
-          data={chatMessage}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => keyExtractor(item, index)}
-          style={styles.scrollContainer}
-          
-        /> */}
         <SectionList
           ref={sectionListRef}
           sections={sectionList}
@@ -193,7 +213,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  sectionHeaderText: {textAlign: 'center', color: '#988080'},
+  sectionHeaderText: {textAlign: 'center', color: '#988080', marginBottom: 10},
 
   opponentChatBox: {
     flexDirection: 'row',
