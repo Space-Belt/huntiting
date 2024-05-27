@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useLayout} from '../../hooks/useLayout';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   handleGotoChatRoom: (id: number) => void;
@@ -25,10 +26,12 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
   const tempTranslateX = useSharedValue(DEFAULT_TRANSLATEX);
 
   const deleteBtnWidth = useSharedValue(DEFAULT_WIDTH);
+  const tempDeleteBtnWidth = useSharedValue(DEFAULT_WIDTH);
 
   const panGestureEvent = Gesture.Pan()
     .onStart(() => {
       tempTranslateX.value = translateX.value;
+      tempDeleteBtnWidth.value = deleteBtnWidth.value;
     })
     .onUpdate(event => {
       if (tempTranslateX.value === 0 && event.translationX > 0) {
@@ -37,6 +40,9 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
         translateX.value = withTiming(event.translationX, {
           duration: 0,
         });
+        deleteBtnWidth.value = withTiming(
+          tempDeleteBtnWidth.value - event.translationX,
+        );
       }
     })
     .onEnd(event => {});
@@ -53,6 +59,13 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
     }
   });
 
+  const deleteAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      width: deleteBtnWidth.value,
+      opacity: 1,
+    };
+  });
+
   /**
    * 1. 전체를 제스쳐핸들러로 감싸기
    * 2. 왼쪽으로 움직이는 위에 올라오는 채팅
@@ -62,16 +75,18 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
    * 5. 삭제 버튼 누르거나 다른거
    */
   return (
-    <GestureDetector gesture={panGestureEvent}>
+    <GestureDetector
+      gesture={panGestureEvent}
+      key={`${item.id}_${item.opponentNickname}`}>
       <View>
-        <TouchableOpacity
-          key={`${item.id}_${item.opponentNickname}`}
-          onPress={() => handleGotoChatRoom(item.id)}>
+        <TouchableOpacity onPress={() => handleGotoChatRoom(item.id)}>
           <Animated.View style={[styles.chatListContainer, listAnimatedStyle]}>
-            <FastImage
-              source={{uri: item.opponentProfileImg}}
-              style={styles.profileImg}
-            />
+            <View>
+              <FastImage
+                source={{uri: item.opponentProfileImg}}
+                style={styles.profileImg}
+              />
+            </View>
             <View style={styles.messageContainer}>
               <View style={styles.nickNameWrapper}>
                 <Text style={styles.nickNameText}>{item.opponentNickname}</Text>
@@ -92,9 +107,9 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
             </View>
           </Animated.View>
         </TouchableOpacity>
-        <Animated.View>
+        <Animated.View style={[styles.deleteBtn, deleteAnimatedStyle]}>
           <TouchableOpacity onPress={() => {}}>
-            <Text>삭제버튼</Text>
+            <Animated.Text style={[{}]}>삭제버튼</Animated.Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -106,11 +121,11 @@ export default ChatListComponent;
 
 const styles = StyleSheet.create({
   chatListContainer: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    height: 80,
     borderBottomWidth: 1,
     borderBottomColor: '#b98181b9',
   },
@@ -126,7 +141,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   nickNameWrapper: {
-    flex: 1,
+    marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -136,14 +151,15 @@ const styles = StyleSheet.create({
     color: COLORS.Orange,
   },
   messageCountText: {
-    fontSize: 8,
+    fontSize: getPlatform() === 'ios' ? 12 : 8,
     width: 20,
     height: 20,
-    lineHeight: 13,
+    lineHeight: getPlatform() === 'ios' ? 20 : 13,
     backgroundColor: COLORS.Orange2,
     color: COLORS.White,
     textAlign: 'center',
     borderRadius: 10,
+    overflow: 'hidden',
   },
   messageWrapper: {
     flexDirection: 'row',
@@ -155,5 +171,12 @@ const styles = StyleSheet.create({
   },
   timeWrapper: {
     fontSize: 7,
+  },
+  deleteBtn: {
+    position: 'absolute',
+    right: 0,
+    opacity: 0,
+    width: 0,
+    backgroundColor: 'red',
   },
 });
