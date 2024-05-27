@@ -32,7 +32,7 @@ const ReusableHeader = ({
       <TouchableOpacity
         style={styles.rightArea}
         onPress={handleRightBtn ? handleRightBtn : () => {}}>
-        {rightBtnIcon ? leftBtnIcon : <></>}
+        {rightBtnIcon ? rightBtnIcon : <></>}
       </TouchableOpacity>
     </View>
   );

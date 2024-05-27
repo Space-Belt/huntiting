@@ -7,6 +7,7 @@ import ReusableHeader from '../components/ReusableHeader';
 import WholeWrapper from '../components/WholeWrapper';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import {getLayout} from '../utils/getLayout';
+import ChatOut from '../assets/icons/chatroomOut.svg';
 
 type Props = {};
 
@@ -120,9 +121,6 @@ const ChatRoom = (props: Props) => {
 
     let newSections = [...sectionList];
 
-    console.log(newSections);
-    console.log(sectionIndex);
-
     if (sectionIndex !== -1) {
       newSections[sectionIndex].data.push({
         message_id: `message_${chatMessage.length + 1}`,
@@ -167,8 +165,6 @@ const ChatRoom = (props: Props) => {
       grouped[date].push(message);
     });
 
-    console.log(grouped);
-
     Object.keys(grouped).map(date => {
       tempDatas.push({
         title: date,
@@ -185,6 +181,12 @@ const ChatRoom = (props: Props) => {
         <ReusableHeader
           title={`${nickName} 님 과의 채팅`}
           handleBackBtn={() => navigation.goBack()}
+          rightBtnIcon={
+            <View>
+              <ChatOut style={styles.chatOutIcon} />
+            </View>
+          }
+          handleRightBtn={() => {}}
         />
         <SectionList
           ref={sectionListRef}
@@ -213,6 +215,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  chatOutIcon: {
+    alignItems: 'center',
+    width: 30,
+    height: 30,
+    color: COLORS.Orange2,
+  },
+
   sectionHeaderText: {textAlign: 'center', color: '#988080', marginBottom: 10},
 
   opponentChatBox: {

@@ -71,7 +71,7 @@ const HuntRequestScreen = (props: Props) => {
             : res.assets[i].uri!.replace('file://', ''),
       });
     }
-    console.log(res.assets);
+
     setProfileImage(temp);
   };
 
@@ -121,7 +121,6 @@ const HuntRequestScreen = (props: Props) => {
         <TouchableOpacity
           containerStyle={styles.editIconStyle}
           onPress={() => {
-            console.log('dfdfdfdfdf');
             if (item.uri !== undefined) {
               deleteImage(item.uri);
             }
