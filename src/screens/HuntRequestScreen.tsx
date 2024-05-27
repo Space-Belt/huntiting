@@ -201,6 +201,7 @@ const HuntRequestScreen = (props: Props) => {
         <ReusableModal
           visible={modalOpen}
           onClose={modalClose}
+          animationType={'fade'}
           children={
             <ImageSelectWayModal
               onClose={modalClose}
