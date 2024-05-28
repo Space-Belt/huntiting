@@ -28,10 +28,14 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
   const deleteBtnWidth = useSharedValue(DEFAULT_WIDTH);
   const tempDeleteBtnWidth = useSharedValue(DEFAULT_WIDTH);
 
+  const deleteBtnTextOpacity = useSharedValue(0);
+  const tempDeleteBtnTextOpacity = useSharedValue(0);
+
   const panGestureEvent = Gesture.Pan()
     .onStart(() => {
       tempTranslateX.value = translateX.value;
       tempDeleteBtnWidth.value = deleteBtnWidth.value;
+      tempDeleteBtnTextOpacity.value = deleteBtnTextOpacity.value;
     })
     .onUpdate(event => {
       if (tempTranslateX.value === 0 && event.translationX > 0) {
@@ -40,10 +44,19 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
         translateX.value = withTiming(event.translationX, {
           duration: 0,
         });
-        deleteBtnWidth.value = withTiming(
-          tempDeleteBtnWidth.value - event.translationX,
-        );
+
+        console.log(event.translationX);
       }
+      deleteBtnTextOpacity.value = withTiming(
+        Number(deleteBtnTextOpacity) + 1,
+        {
+          duration: 0,
+        },
+      );
+      deleteBtnWidth.value = withTiming(
+        tempDeleteBtnWidth.value - event.translationX,
+        {duration: 0},
+      );
     })
     .onEnd(event => {});
 
@@ -63,6 +76,12 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
     return {
       width: deleteBtnWidth.value,
       opacity: 1,
+    };
+  });
+
+  const deleteBtnTextAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: deleteBtnTextOpacity.value,
     };
   });
 
@@ -109,7 +128,10 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
         </TouchableOpacity>
         <Animated.View style={[styles.deleteBtn, deleteAnimatedStyle]}>
           <TouchableOpacity onPress={() => {}}>
-            <Animated.Text style={[{}]}>삭제버튼</Animated.Text>
+            <Animated.Text
+              style={[styles.deleteBtnText, deleteBtnTextAnimatedStyle]}>
+              삭제버튼
+            </Animated.Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -177,6 +199,11 @@ const styles = StyleSheet.create({
     right: 0,
     opacity: 0,
     width: 0,
+    height: 80,
     backgroundColor: 'red',
+  },
+  deleteBtnText: {
+    width: 0,
+    opacity: 0,
   },
 });
