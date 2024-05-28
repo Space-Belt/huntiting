@@ -13,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useLayout} from '../../hooks/useLayout';
 import {getPlatform} from '../../utils/getPlatform';
+import {getLayout} from '../../utils/getLayout';
 
 type Props = {
   handleGotoChatRoom: (id: number) => void;
@@ -21,6 +22,8 @@ type Props = {
 
 const DEFAULT_WIDTH = 0;
 const DEFAULT_TRANSLATEX = 0;
+
+const layout = getLayout();
 
 const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
   const ref = useRef(null);
@@ -34,6 +37,8 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
   const deleteBtnTextOpacity = useSharedValue(0);
   const tempDeleteBtnTextOpacity = useSharedValue(0);
 
+  const translateXHandler = (transX: number) => {};
+
   const panGestureEvent = Gesture.Pan()
     .onStart(() => {
       tempTranslateX.value = translateX.value;
@@ -41,19 +46,20 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
       tempDeleteBtnTextOpacity.value = deleteBtnTextOpacity.value;
     })
     .onUpdate(event => {
-      if (tempTranslateX.value === 0 && event.translationX > 0) {
-        return;
-      } else {
-        translateX.value = withTiming(event.translationX, {
-          duration: 0,
-        });
+      console.log(tempTranslateX.value);
 
-        deleteBtnWidth.value = withSpring(-event.translationX, {duration: 0});
-      }
+      translateX.value = withSpring(tempTranslateX.value + event.translationX, {
+        duration: 1000,
+      });
 
-      if (event.translationX < -40) {
+      deleteBtnWidth.value = withSpring(
+        tempDeleteBtnWidth.value - event.translationX,
+        {duration: 1000},
+      );
+
+      if (translateX.value < -40) {
         deleteBtnTextOpacity.value = withTiming(1, {
-          duration: 0,
+          duration: 300,
         });
       } else {
         deleteBtnTextOpacity.value = withSpring(0, {
