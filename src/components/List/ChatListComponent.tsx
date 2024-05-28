@@ -46,39 +46,68 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
       tempDeleteBtnTextOpacity.value = deleteBtnTextOpacity.value;
     })
     .onUpdate(event => {
-      console.log(tempTranslateX.value);
+      if (tempTranslateX.value === 0 && event.translationX > 0) {
+        return;
+      } else {
+        translateX.value = withSpring(
+          tempTranslateX.value + event.translationX,
+          {duration: 0},
+          () => {
+            if (tempTranslateX.value + event.translationX < -10) {
+              translateX.value = withSpring(-100, {duration: 2000});
+            }
 
-      translateX.value = withSpring(tempTranslateX.value + event.translationX, {
-        duration: 1000,
-      });
+            if (event.translationX > -10) {
+              translateX.value = withSpring(0, {duration: 2000});
+            }
+          },
+        );
+        deleteBtnWidth.value = withSpring(
+          tempDeleteBtnWidth.value - event.translationX,
+          {duration: 0},
+          () => {
+            if (tempDeleteBtnWidth.value - event.translationX > 10) {
+              deleteBtnWidth.value = withSpring(100, {duration: 2000});
+            }
+            if (event.translationX > -10) {
+              deleteBtnWidth.value = withSpring(0, {duration: 2000});
+            }
+          },
+        );
+      }
 
-      deleteBtnWidth.value = withSpring(
-        tempDeleteBtnWidth.value - event.translationX,
-        {duration: 1000},
-      );
-
-      if (translateX.value < -40) {
+      if (translateX.value < -30) {
         deleteBtnTextOpacity.value = withTiming(1, {
-          duration: 300,
+          duration: 0,
         });
       } else {
         deleteBtnTextOpacity.value = withSpring(0, {
-          duration: 300,
+          duration: 0,
         });
       }
     })
     .onEnd(event => {});
 
+  // React.useEffect(() => {
+  //   if (translateX.value < -100) {
+  //     translateX.value = withSpring(-100, {
+  //       duration: 0,
+  //     });
+  //   }
+  // }, [translateX.value]);
+
   const listAnimatedStyle = useAnimatedStyle(() => {
-    if (translateX.value > 0) {
-      return {
-        transform: [{translateX: 0}],
-      };
-    } else {
-      return {
-        transform: [{translateX: translateX.value}],
-      };
-    }
+    // console.log('트렌드');
+    // console.log(translateX.value);
+    // if (translateX.value > 0) {
+    //   return {
+    //     transform: [{translateX: 0}],
+    //   };
+    // } else {
+    return {
+      transform: [{translateX: translateX.value}],
+    };
+    // }
   });
 
   const deleteAnimatedStyle = useAnimatedStyle(() => {
@@ -215,7 +244,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     right: 0,
-    opacity: 0,
+    opacity: 1,
     width: 0,
     height: 80,
     backgroundColor: 'red',
