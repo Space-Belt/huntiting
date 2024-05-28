@@ -53,24 +53,41 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
           tempTranslateX.value + event.translationX,
           {duration: 0},
           () => {
-            if (tempTranslateX.value + event.translationX < -10) {
-              translateX.value = withSpring(-100, {duration: 2000});
-            }
+            if (tempTranslateX.value + event.translationX < -layout / 2) {
+              translateX.value = withTiming(-1000, {duration: 1000}, () => {
+                // console.log('dfdfdff');
+              });
+            } else {
+              if (tempTranslateX.value + event.translationX < -10) {
+                translateX.value = withSpring(-100, {duration: 2000});
+              }
 
-            if (event.translationX > -10) {
-              translateX.value = withSpring(0, {duration: 2000});
+              if (event.translationX > -10) {
+                translateX.value = withSpring(0, {duration: 2000});
+              }
             }
           },
         );
+
         deleteBtnWidth.value = withSpring(
           tempDeleteBtnWidth.value - event.translationX,
           {duration: 0},
           () => {
-            if (tempDeleteBtnWidth.value - event.translationX > 10) {
-              deleteBtnWidth.value = withSpring(100, {duration: 2000});
-            }
-            if (event.translationX > -10) {
-              deleteBtnWidth.value = withSpring(0, {duration: 2000});
+            if (tempDeleteBtnWidth.value + event.translationX < -layout / 2) {
+              deleteBtnWidth.value = withSpring(
+                layout,
+                {duration: 1000},
+                () => {
+                  console.log('dfdfdf');
+                },
+              );
+            } else {
+              if (tempDeleteBtnWidth.value - event.translationX > 10) {
+                deleteBtnWidth.value = withSpring(100, {duration: 2000});
+              }
+              if (event.translationX > -10) {
+                deleteBtnWidth.value = withSpring(0, {duration: 2000});
+              }
             }
           },
         );
@@ -106,6 +123,7 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
     // } else {
     return {
       transform: [{translateX: translateX.value}],
+      height: translateX.value < -layout ? 0 : 80,
     };
     // }
   });
@@ -115,6 +133,7 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
       return {
         width: deleteBtnWidth.value,
         opacity: 1,
+        height: deleteBtnWidth.value >= layout - 40 ? 0 : 80,
       };
     } else {
       return {
