@@ -65,6 +65,7 @@ const ChatList = (props: Props) => {
         <ScrollView>
           {chatRooms.map(el => (
             <ChatListComponent
+              key={`${el.id}_${el.opponentNickname}`}
               handleGotoChatRoom={handleGotoChatRoom}
               item={el}
             />
