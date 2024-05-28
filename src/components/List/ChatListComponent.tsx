@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import FastImage from 'react-native-fast-image';
 import {dateConverter} from '../../utils/dateConverter';
 import {IChatRoom} from '../../screens/ChatList';
@@ -8,6 +8,7 @@ import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 import {useLayout} from '../../hooks/useLayout';
@@ -22,6 +23,8 @@ const DEFAULT_WIDTH = 0;
 const DEFAULT_TRANSLATEX = 0;
 
 const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
+  const ref = useRef(null);
+
   const translateX = useSharedValue(DEFAULT_TRANSLATEX);
   const tempTranslateX = useSharedValue(DEFAULT_TRANSLATEX);
 
@@ -45,18 +48,18 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
           duration: 0,
         });
 
-        console.log(event.translationX);
+        deleteBtnWidth.value = withSpring(-event.translationX, {duration: 0});
       }
-      deleteBtnTextOpacity.value = withTiming(
-        Number(deleteBtnTextOpacity) + 1,
-        {
+
+      if (event.translationX < -40) {
+        deleteBtnTextOpacity.value = withTiming(1, {
           duration: 0,
-        },
-      );
-      deleteBtnWidth.value = withTiming(
-        tempDeleteBtnWidth.value - event.translationX,
-        {duration: 0},
-      );
+        });
+      } else {
+        deleteBtnTextOpacity.value = withSpring(0, {
+          duration: 300,
+        });
+      }
     })
     .onEnd(event => {});
 
@@ -73,10 +76,17 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
   });
 
   const deleteAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      width: deleteBtnWidth.value,
-      opacity: 1,
-    };
+    if (deleteBtnWidth.value > 0) {
+      return {
+        width: deleteBtnWidth.value,
+        opacity: 1,
+      };
+    } else {
+      return {
+        width: 0,
+        opacity: 0,
+      };
+    }
   });
 
   const deleteBtnTextAnimatedStyle = useAnimatedStyle(() => {
@@ -97,7 +107,7 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
     <GestureDetector
       gesture={panGestureEvent}
       key={`${item.id}_${item.opponentNickname}`}>
-      <View>
+      <View ref={ref}>
         <TouchableOpacity onPress={() => handleGotoChatRoom(item.id)}>
           <Animated.View style={[styles.chatListContainer, listAnimatedStyle]}>
             <View>
@@ -130,7 +140,7 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
           <TouchableOpacity onPress={() => {}}>
             <Animated.Text
               style={[styles.deleteBtnText, deleteBtnTextAnimatedStyle]}>
-              삭제버튼
+              삭제
             </Animated.Text>
           </TouchableOpacity>
         </Animated.View>
@@ -196,6 +206,8 @@ const styles = StyleSheet.create({
   },
   deleteBtn: {
     position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
     right: 0,
     opacity: 0,
     width: 0,
@@ -203,7 +215,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   deleteBtnText: {
-    width: 0,
+    width: 50,
     opacity: 0,
+    color: COLORS.White,
+    fontSize: getPlatform() === 'ios' ? 15 : 10,
+    textAlign: 'center',
+    fontWeight: '700',
   },
 });
