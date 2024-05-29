@@ -9,6 +9,7 @@ type Props = {
   value: string;
   placeholder: string;
   isMultiline: boolean;
+  disabled?: boolean;
   focus?: boolean;
   errorMessage?: string;
 };
@@ -19,6 +20,7 @@ const ReusableInput = ({
   value,
   placeholder,
   isMultiline,
+  disabled,
   focus,
   errorMessage,
 }: Props) => {
@@ -35,6 +37,7 @@ const ReusableInput = ({
           value={value}
           onChangeText={handleInput}
           autoFocus={focus ? focus : false}
+          editable={disabled ? false : true}
         />
       ) : (
         <TextInput
