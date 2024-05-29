@@ -4,9 +4,11 @@ import FastImage from 'react-native-fast-image';
 import {ImageAssets} from '../../assets/images/ImageAssets';
 import {COLORS, FONTSIZE} from '../../theme/theme';
 
-type Props = {};
+type Props = {
+  handleNavigationProfileEdit: () => void;
+};
 
-const MyPageHeader = (props: Props) => {
+const MyPageHeader = ({handleNavigationProfileEdit}: Props) => {
   const name: string = 'space-belt';
 
   return (
@@ -20,7 +22,9 @@ const MyPageHeader = (props: Props) => {
       <View style={styles.btnWrapper}>
         <Text style={styles.nameTextStyle}>안녕하세요! {name}님!</Text>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={() => {}} style={styles.btnStyle}>
+          <TouchableOpacity
+            onPress={handleNavigationProfileEdit}
+            style={styles.btnStyle}>
             <Text style={styles.btnText}>프로필 수정하기</Text>
           </TouchableOpacity>
         </View>

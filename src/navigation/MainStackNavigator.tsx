@@ -7,6 +7,9 @@ import BottomTabNavigator from './BottomTabNavigator';
 import Setting from '../screens/Setting';
 import HuntDetail from '../screens/HuntDetail';
 import ChatRoom from '../screens/ChatRoom';
+import ProfileEdit from '../screens/ProfileEdit';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 
 const MainStack = createStackNavigator();
 
@@ -14,9 +17,12 @@ const MainStackNavigator = () => {
   return (
     <MainStack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="BottomTab">
+      initialRouteName="SignInScreen">
+      <MainStack.Screen name="SignInScreen" component={SignInScreen} />
+      <MainStack.Screen name="SignUpScreen" component={SignUpScreen} />
       <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
       <MainStack.Screen name="Setting" component={Setting} />
+      <MainStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <MainStack.Screen name="detail" component={HuntDetail} />
       <MainStack.Screen name="chatRoom" component={ChatRoom} />
     </MainStack.Navigator>
