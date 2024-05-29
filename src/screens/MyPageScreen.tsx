@@ -15,13 +15,18 @@ const MyPageScreen = (props: Props) => {
     navigation.goBack();
   };
 
+  const handleNavigationProfileEdit = () => {
+    navigation.navigate('ProfileEdit' as never);
+  };
+
   return (
     <WholeWrapper>
       <View style={styles.container}>
         <View>
           <ReusableHeader title="프로필" handleBackBtn={handleBackBtn} />
-
-          <MyPageHeader />
+          <MyPageHeader
+            handleNavigationProfileEdit={handleNavigationProfileEdit}
+          />
         </View>
         <View style={styles.btnWrapper}>
           <MenuComponent
