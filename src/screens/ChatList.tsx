@@ -20,35 +20,35 @@ export interface IChatRoom {
   opponentProfileImg: string;
 }
 
-const chatRooms: IChatRoom[] = [
-  {
-    id: 1,
-    lastMessage: '저희가 필요한 제품을 공수해드릴수 있을것 같아요',
-    lastMessageTime: '2024/05/27 05:11',
-    lastMessageCount: 3,
-    opponentNickname: '강감찬',
-    opponentProfileImg: 'https://picsum.photos/200',
-  },
-  {
-    id: 2,
-    lastMessage: '제가 가지고 있는 여분의 제품이있습니다.',
-    lastMessageTime: '2024/05/27 05:11',
-    lastMessageCount: 3,
-    opponentNickname: '정약용',
-    opponentProfileImg: 'https://picsum.photos/200',
-  },
-  {
-    id: 3,
-    lastMessage: '안녕하세요! 저기에 있습니다.',
-    lastMessageTime: '2024/05/27 05:11',
-    lastMessageCount: 3,
-    opponentNickname: '길동홍',
-    opponentProfileImg: 'https://picsum.photos/200',
-  },
-];
-
 const ChatList = (props: Props) => {
   const navigation = useNavigation();
+
+  const [chatRoomList, setChatRoomList] = React.useState<IChatRoom[]>([
+    {
+      id: 1,
+      lastMessage: '저희가 필요한 제품을 공수해드릴수 있을것 같아요',
+      lastMessageTime: '2024/05/27 05:11',
+      lastMessageCount: 3,
+      opponentNickname: '강감찬',
+      opponentProfileImg: 'https://picsum.photos/200',
+    },
+    {
+      id: 2,
+      lastMessage: '제가 가지고 있는 여분의 제품이있습니다.',
+      lastMessageTime: '2024/05/27 05:11',
+      lastMessageCount: 3,
+      opponentNickname: '정약용',
+      opponentProfileImg: 'https://picsum.photos/200',
+    },
+    {
+      id: 3,
+      lastMessage: '안녕하세요! 저기에 있습니다.',
+      lastMessageTime: '2024/05/27 05:11',
+      lastMessageCount: 3,
+      opponentNickname: '길동홍',
+      opponentProfileImg: 'https://picsum.photos/200',
+    },
+  ]);
 
   const handleGotoChatRoom = (id: number) => {
     navigation.navigate('chatRoom' as never);
@@ -58,16 +58,24 @@ const ChatList = (props: Props) => {
     navigation.goBack();
   };
 
+  const handleDeleteBtn = (id: number) => {
+    let tempRoom = [...chatRoomList];
+    tempRoom = tempRoom.filter(el => el.id !== id);
+    console.log(tempRoom);
+    setChatRoomList(tempRoom);
+  };
+
   return (
     <WholeWrapper>
       <>
         <ReusableHeader title={'채팅'} handleBackBtn={handleGoBack} />
         <ScrollView>
-          {chatRooms.map(el => (
+          {chatRoomList.map(el => (
             <ChatListComponent
               key={`${el.id}_${el.opponentNickname}`}
               handleGotoChatRoom={handleGotoChatRoom}
               item={el}
+              handleDeleteBtn={handleDeleteBtn}
             />
           ))}
         </ScrollView>

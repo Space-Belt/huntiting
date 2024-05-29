@@ -6,17 +6,18 @@ import {IChatRoom} from '../../screens/ChatList';
 import {FONTSIZE, COLORS} from '../../theme/theme';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {useLayout} from '../../hooks/useLayout';
 import {getPlatform} from '../../utils/getPlatform';
 import {getLayout} from '../../utils/getLayout';
 
 type Props = {
   handleGotoChatRoom: (id: number) => void;
+  handleDeleteBtn: (id: number) => void;
   item: IChatRoom;
 };
 
@@ -25,7 +26,11 @@ const DEFAULT_TRANSLATEX = 0;
 
 const layout = getLayout();
 
-const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
+const ChatListComponent = ({
+  handleGotoChatRoom,
+  handleDeleteBtn,
+  item,
+}: Props) => {
   const ref = useRef(null);
 
   const translateX = useSharedValue(DEFAULT_TRANSLATEX);
@@ -36,8 +41,6 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
 
   const deleteBtnTextOpacity = useSharedValue(0);
   const tempDeleteBtnTextOpacity = useSharedValue(0);
-
-  const translateXHandler = (transX: number) => {};
 
   const panGestureEvent = Gesture.Pan()
     .onStart(() => {
@@ -53,18 +56,12 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
           tempTranslateX.value + event.translationX,
           {duration: 0},
           () => {
-            if (tempTranslateX.value + event.translationX < -layout / 2) {
-              translateX.value = withTiming(-1000, {duration: 1000}, () => {
-                // console.log('dfdfdff');
-              });
-            } else {
-              if (tempTranslateX.value + event.translationX < -10) {
-                translateX.value = withSpring(-100, {duration: 2000});
-              }
+            if (tempTranslateX.value + event.translationX < -10) {
+              translateX.value = withSpring(-100, {duration: 2000});
+            }
 
-              if (event.translationX > -10) {
-                translateX.value = withSpring(0, {duration: 2000});
-              }
+            if (event.translationX > -10) {
+              translateX.value = withSpring(0, {duration: 2000});
             }
           },
         );
@@ -73,21 +70,11 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
           tempDeleteBtnWidth.value - event.translationX,
           {duration: 0},
           () => {
-            if (tempDeleteBtnWidth.value + event.translationX < -layout / 2) {
-              deleteBtnWidth.value = withSpring(
-                layout,
-                {duration: 1000},
-                () => {
-                  console.log('dfdfdf');
-                },
-              );
-            } else {
-              if (tempDeleteBtnWidth.value - event.translationX > 10) {
-                deleteBtnWidth.value = withSpring(100, {duration: 2000});
-              }
-              if (event.translationX > -10) {
-                deleteBtnWidth.value = withSpring(0, {duration: 2000});
-              }
+            if (tempDeleteBtnWidth.value - event.translationX > 10) {
+              deleteBtnWidth.value = withSpring(100, {duration: 2000});
+            }
+            if (event.translationX > -10) {
+              deleteBtnWidth.value = withSpring(0, {duration: 2000});
             }
           },
         );
@@ -103,29 +90,25 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
         });
       }
     })
-    .onEnd(event => {});
-
-  // React.useEffect(() => {
-  //   if (translateX.value < -100) {
-  //     translateX.value = withSpring(-100, {
-  //       duration: 0,
-  //     });
-  //   }
-  // }, [translateX.value]);
+    .onEnd(event => {
+      if (tempTranslateX.value + event.translationX < (-layout / 3) * 2) {
+        deleteBtnWidth.value = withTiming(layout, {duration: 500}, () => {
+          runOnJS(handleDeleteBtn)(item.id);
+        });
+        translateX.value = withTiming(-layout, {duration: 500}, () => {});
+      }
+    });
+  React.useEffect(() => {
+    if (translateX.value === layout) {
+      handleDeleteBtn(item.id);
+    }
+    console.log(translateX.value);
+  }, [translateX]);
 
   const listAnimatedStyle = useAnimatedStyle(() => {
-    // console.log('트렌드');
-    // console.log(translateX.value);
-    // if (translateX.value > 0) {
-    //   return {
-    //     transform: [{translateX: 0}],
-    //   };
-    // } else {
     return {
       transform: [{translateX: translateX.value}],
-      height: translateX.value < -layout ? 0 : 80,
     };
-    // }
   });
 
   const deleteAnimatedStyle = useAnimatedStyle(() => {
@@ -133,7 +116,6 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
       return {
         width: deleteBtnWidth.value,
         opacity: 1,
-        height: deleteBtnWidth.value >= layout - 40 ? 0 : 80,
       };
     } else {
       return {
@@ -149,14 +131,6 @@ const ChatListComponent = ({handleGotoChatRoom, item}: Props) => {
     };
   });
 
-  /**
-   * 1. 전체를 제스쳐핸들러로 감싸기
-   * 2. 왼쪽으로 움직이는 위에 올라오는 채팅
-   * 3. 삭제 누를수 있는 버튼 (길어짐)
-   * 4. 삭제버튼은 제스쳐따라 늘어남, 조금만 움직였으면 어느정도 width로 고정,
-   *    많이 움직이면 자동 삭제, 나갈건지 물어보는 모달
-   * 5. 삭제 버튼 누르거나 다른거
-   */
   return (
     <GestureDetector
       gesture={panGestureEvent}
