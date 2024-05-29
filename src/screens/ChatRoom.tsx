@@ -159,7 +159,6 @@ const ChatRoom = (props: Props) => {
 
   const modalClose = (type?: string) => {
     if (type === 'exit') {
-      console.log('방나가기');
       navigation.goBack();
     }
     setModalOpen(prev => !prev);
@@ -170,7 +169,7 @@ const ChatRoom = (props: Props) => {
     let grouped: {[key: string]: IChat[]} = {};
 
     chats.forEach(message => {
-      const date = message.timestamp.split(' ')[0]; // '2024/05/21'
+      const date = message.timestamp.split(' ')[0];
       if (!grouped[date]) {
         grouped[date] = [];
       }
@@ -221,7 +220,7 @@ const ChatRoom = (props: Props) => {
           visible={modalOpen}
           onClose={modalClose}
           animationType="slide"
-          children={<ChatRoomOutModal onClose={modalClose} />}
+          children={<ChatRoomOutModal onClose={modalClose} type={'exit'} />}
         />
       </>
     </WholeWrapper>

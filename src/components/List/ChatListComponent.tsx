@@ -1,9 +1,6 @@
+import React, {Dispatch, SetStateAction} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useRef} from 'react';
 import FastImage from 'react-native-fast-image';
-import {dateConverter} from '../../utils/dateConverter';
-import {IChatRoom} from '../../screens/ChatList';
-import {FONTSIZE, COLORS} from '../../theme/theme';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -12,13 +9,19 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {getPlatform} from '../../utils/getPlatform';
+import {IChatRoom} from '../../screens/ChatList';
+import {COLORS, FONTSIZE} from '../../theme/theme';
+import {dateConverter} from '../../utils/dateConverter';
 import {getLayout} from '../../utils/getLayout';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   handleGotoChatRoom: (id: number) => void;
-  handleDeleteBtn: (id: number) => void;
+
   item: IChatRoom;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  setSelectedChatId: Dispatch<SetStateAction<number>>;
 };
 
 const DEFAULT_WIDTH = 0;
@@ -28,11 +31,12 @@ const layout = getLayout();
 
 const ChatListComponent = ({
   handleGotoChatRoom,
-  handleDeleteBtn,
-  item,
-}: Props) => {
-  const ref = useRef(null);
 
+  item,
+  modalOpen,
+  setModalOpen,
+  setSelectedChatId,
+}: Props) => {
   const translateX = useSharedValue(DEFAULT_TRANSLATEX);
   const tempTranslateX = useSharedValue(DEFAULT_TRANSLATEX);
 
@@ -93,17 +97,12 @@ const ChatListComponent = ({
     .onEnd(event => {
       if (tempTranslateX.value + event.translationX < (-layout / 3) * 2) {
         deleteBtnWidth.value = withTiming(layout, {duration: 500}, () => {
-          runOnJS(handleDeleteBtn)(item.id);
+          runOnJS(setSelectedChatId)(item.id);
+          runOnJS(setModalOpen)(true);
         });
         translateX.value = withTiming(-layout, {duration: 500}, () => {});
       }
     });
-  React.useEffect(() => {
-    if (translateX.value === layout) {
-      handleDeleteBtn(item.id);
-    }
-    console.log(translateX.value);
-  }, [translateX]);
 
   const listAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -131,12 +130,24 @@ const ChatListComponent = ({
     };
   });
 
+  React.useEffect(() => {
+    if (!modalOpen) {
+      translateX.value = withSpring(0);
+      deleteBtnWidth.value = withSpring(0);
+    }
+  }, [modalOpen]);
+
   return (
     <GestureDetector
       gesture={panGestureEvent}
       key={`${item.id}_${item.opponentNickname}`}>
-      <View ref={ref}>
-        <TouchableOpacity onPress={() => handleGotoChatRoom(item.id)}>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            handleGotoChatRoom(item.id);
+            translateX.value = withSpring(0);
+            deleteBtnWidth.value = withSpring(0);
+          }}>
           <Animated.View style={[styles.chatListContainer, listAnimatedStyle]}>
             <View>
               <FastImage
@@ -165,7 +176,11 @@ const ChatListComponent = ({
           </Animated.View>
         </TouchableOpacity>
         <Animated.View style={[styles.deleteBtn, deleteAnimatedStyle]}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedChatId(item.id);
+              setModalOpen(prev => !prev);
+            }}>
             <Animated.Text
               style={[styles.deleteBtnText, deleteBtnTextAnimatedStyle]}>
               삭제
@@ -207,18 +222,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   nickNameText: {
-    fontSize: FONTSIZE.size_14,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_14,
     color: COLORS.Orange,
   },
   messageCountText: {
-    fontSize: getPlatform() === 'ios' ? 12 : 8,
-    width: 20,
-    height: 20,
-    lineHeight: getPlatform() === 'ios' ? 20 : 13,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : 8,
+    width: getPlatform() === 'ios' ? 25 : 20,
+    height: getPlatform() === 'ios' ? 25 : 20,
+    lineHeight: getPlatform() === 'ios' ? 25 : 13,
     backgroundColor: COLORS.Orange2,
     color: COLORS.White,
     textAlign: 'center',
-    borderRadius: 10,
+    borderRadius: getPlatform() === 'ios' ? 12.5 : 10,
     overflow: 'hidden',
   },
   messageWrapper: {
@@ -227,10 +242,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   messageText: {
-    fontSize: FONTSIZE.size_10,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_12 : FONTSIZE.size_10,
   },
   timeWrapper: {
-    fontSize: 7,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_10 : 7,
   },
   deleteBtn: {
     position: 'absolute',
