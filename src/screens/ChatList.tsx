@@ -8,6 +8,8 @@ import FastImage from 'react-native-fast-image';
 import {dateConverter} from '../utils/dateConverter';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import ChatListComponent from '../components/List/ChatListComponent';
+import ReusableModal from '../components/ReusableModal';
+import ChatRoomOutModal from '../components/Modal/ChatRoomOutModal';
 
 type Props = {};
 
@@ -22,6 +24,8 @@ export interface IChatRoom {
 
 const ChatList = (props: Props) => {
   const navigation = useNavigation();
+
+  const [onDeleteModal, setOnDeleteModal] = React.useState<boolean>(false);
 
   const [chatRoomList, setChatRoomList] = React.useState<IChatRoom[]>([
     {
@@ -50,8 +54,17 @@ const ChatList = (props: Props) => {
     },
   ]);
 
+  const [selectedChatId, setSelectedChatId] = React.useState<number>(-1);
+
   const handleGotoChatRoom = (id: number) => {
     navigation.navigate('chatRoom' as never);
+  };
+
+  const onClose = (type?: string) => {
+    if (type === 'exit') {
+      handleDeleteBtn(selectedChatId);
+    }
+    setOnDeleteModal(prev => !prev);
   };
 
   const handleGoBack = () => {
@@ -72,6 +85,9 @@ const ChatList = (props: Props) => {
         <ScrollView>
           {chatRoomList.map(el => (
             <ChatListComponent
+              setModalOpen={setOnDeleteModal}
+              modalOpen={onDeleteModal}
+              setSelectedChatId={setSelectedChatId}
               key={`${el.id}_${el.opponentNickname}`}
               handleGotoChatRoom={handleGotoChatRoom}
               item={el}
@@ -79,6 +95,12 @@ const ChatList = (props: Props) => {
             />
           ))}
         </ScrollView>
+        <ReusableModal
+          onClose={onClose}
+          visible={onDeleteModal}
+          animationType="fade"
+          children={<ChatRoomOutModal type={'exit'} onClose={onClose} />}
+        />
       </>
     </WholeWrapper>
   );
