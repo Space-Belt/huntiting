@@ -5,6 +5,7 @@ import ReusableInput from '../components/ReusableInput';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import {useNavigation} from '@react-navigation/native';
 import {getPlatform} from '../utils/getPlatform';
+import ReusableBtn from '../components/ReusableBtn';
 
 type Props = {};
 
@@ -36,13 +37,21 @@ const SignInScreen = (props: Props) => {
             value={password}
           />
           <View style={styles.signUpNfindAccountBox}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignUpScreen' as never)}>
               <Text style={styles.signUpNfindText}>회원가입</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.signUpNfindText}>계정찾기</Text>
             </TouchableOpacity>
           </View>
+          <ReusableBtn
+            text={'로그인'}
+            isClickable={true}
+            onClick={() => {
+              navigation.navigate('BottomTab' as never);
+            }}
+          />
         </View>
       </View>
     </WholeWrapper>
@@ -78,6 +87,7 @@ const styles = StyleSheet.create({
   },
   signUpNfindAccountBox: {
     marginTop: 20,
+    marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
