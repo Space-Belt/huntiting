@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {COLORS, FONTSIZE} from '../theme/theme';
+import {getPlatform} from '../utils/getPlatform';
 
 type Props = {
   category: string;
@@ -8,6 +9,8 @@ type Props = {
   value: string;
   placeholder: string;
   isMultiline: boolean;
+  focus?: boolean;
+  errorMessage?: string;
 };
 
 const ReusableInput = ({
@@ -16,6 +19,8 @@ const ReusableInput = ({
   value,
   placeholder,
   isMultiline,
+  focus,
+  errorMessage,
 }: Props) => {
   const handleInput = (text: string) => {
     setValue(text);
@@ -29,6 +34,7 @@ const ReusableInput = ({
           placeholder={placeholder}
           value={value}
           onChangeText={handleInput}
+          autoFocus={focus ? focus : false}
         />
       ) : (
         <TextInput
@@ -38,8 +44,10 @@ const ReusableInput = ({
           onChangeText={handleInput}
           multiline={true}
           numberOfLines={5}
+          autoFocus={focus ? focus : false}
         />
       )}
+      {errorMessage && <Text>{errorMessage}</Text>}
     </View>
   );
 };
@@ -92,5 +100,9 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     color: '#6b650e',
+  },
+  errorMessageText: {
+    color: 'red',
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_12 : FONTSIZE.size_10,
   },
 });
