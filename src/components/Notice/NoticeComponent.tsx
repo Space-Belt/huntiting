@@ -10,10 +10,13 @@ import React from 'react';
 import {INotice} from '../../screens/NoticeScreen';
 import ArrowSvg from '../../assets/icons/arrowDown.svg';
 import Animated, {
+  FadeOutUp,
   FlipInEasyY,
   FlipInXDown,
   FlipInXUp,
+  FlipOutXUp,
   StretchInY,
+  ZoomIn,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -51,11 +54,13 @@ const NoticeComponent = ({data, indexNum}: Props) => {
   };
 
   return (
-    <View style={[styles.container, indexNum === 0 ? containerStyle : {}]}>
+    <Animated.View
+      style={[styles.container, indexNum === 0 ? containerStyle : {}]}>
       <TouchableOpacity
         style={styles.btnStyle}
         onPress={() => {
           setOpenNotice(prev => !prev);
+
           svgRotate.value = withTiming(openNotice ? 360 : 180, {
             duration: 1000,
           });
@@ -72,32 +77,35 @@ const NoticeComponent = ({data, indexNum}: Props) => {
           </Animated.View>
         </View>
       </TouchableOpacity>
-      {/* {openNotice && ( */}
-      <Animated.View
-        entering={FlipInXUp.duration(500)}
-        style={[styles.openContainer]}>
-        <View style={styles.openWrapper}>
-          <Text style={styles.contentText}>{data.content}</Text>
-          <View style={styles.imagesContainer}>
-            {data.images.map((image, index) => (
-              <TouchableOpacity
-                onPress={() => {}}
-                style={index !== data.images.length - 1 ? imageBoxStyle : {}}>
-                <Animated.Image
-                  source={{uri: image}}
-                  style={[styles.imageStyle]}
-                />
-                {/* <FastImage
+      {openNotice && (
+        <Animated.View
+          entering={FlipInXUp.duration(500)}
+          // exiting={FlipOutXUp.duration(1000)}
+          exiting={FlipOutXUp.duration(1000)}
+          style={[styles.openContainer]}>
+          <View style={styles.openWrapper}>
+            <Text style={styles.contentText}>{data.content}</Text>
+            <View style={styles.imagesContainer}>
+              {data.images.map((image, index) => (
+                <TouchableOpacity
+                  onPress={() => {}}
+                  style={index !== data.images.length - 1 ? imageBoxStyle : {}}>
+                  <Animated.Image
+                    entering={ZoomIn.duration(1000)}
+                    source={{uri: image}}
+                    style={[styles.imageStyle]}
+                  />
+                  {/* <FastImage
                       source={{uri: image}}
                       style={styles.imageStyle}
                     /> */}
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
-      </Animated.View>
-      {/* )} */}
-    </View>
+        </Animated.View>
+      )}
+    </Animated.View>
   );
 };
 
@@ -144,7 +152,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: 100,
-    height: 0,
+    height: 100,
     resizeMode: 'cover',
     borderRadius: 15,
   },
