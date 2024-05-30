@@ -1,15 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
-import ReusableHeader from '../components/ReusableHeader';
-import WholeWrapper from '../components/WholeWrapper';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import FastImage from 'react-native-fast-image';
-import {dateConverter} from '../utils/dateConverter';
-import {COLORS, FONTSIZE} from '../theme/theme';
+import {ScrollView, StyleSheet} from 'react-native';
 import ChatListComponent from '../components/List/ChatListComponent';
-import ReusableModal from '../components/ReusableModal';
 import ChatRoomOutModal from '../components/Modal/ChatRoomOutModal';
+import ReusableHeader from '../components/ReusableHeader';
+import ReusableModal from '../components/ReusableModal';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 
@@ -85,13 +81,13 @@ const ChatList = (props: Props) => {
         <ScrollView>
           {chatRoomList.map(el => (
             <ChatListComponent
+              item={el}
+              key={`${el.id}_${el.opponentNickname}`}
               setModalOpen={setOnDeleteModal}
               modalOpen={onDeleteModal}
               setSelectedChatId={setSelectedChatId}
-              key={`${el.id}_${el.opponentNickname}`}
               handleGotoChatRoom={handleGotoChatRoom}
-              item={el}
-              handleDeleteBtn={handleDeleteBtn}
+              // handleDeleteBtn={handleDeleteBtn}
             />
           ))}
         </ScrollView>

@@ -31,7 +31,7 @@ const MyPageScreen = (props: Props) => {
         <View style={styles.btnWrapper}>
           <MenuComponent
             title="공지사항"
-            handleNavigate={() => navigation.navigate('home' as never)}
+            handleNavigate={() => navigation.navigate('NoticeScreen' as never)}
           />
           <MenuComponent
             title="설정"
