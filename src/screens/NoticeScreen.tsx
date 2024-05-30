@@ -1,9 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
 import NoticeComponent from '../components/Notice/NoticeComponent';
+import ReusableModal from '../components/ReusableModal';
+import FastImage from 'react-native-fast-image';
+import {getLayout} from '../utils/getLayout';
+import ImageShowModal from '../components/Modal/ImageShowModal';
 
 interface Props {}
 
@@ -33,6 +37,13 @@ const NoticeScreen = (props: Props) => {
       images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
     },
   ]);
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>();
+  const [selectedImageIndex, setSelectedImageIndex] = React.useState<number>();
+
+  const onClose = () => {
+    setModalOpen(prev => !prev);
+  };
 
   return (
     <WholeWrapper>
@@ -42,8 +53,31 @@ const NoticeScreen = (props: Props) => {
           handleBackBtn={() => navigation.goBack()}
         />
         {noticeData.map((data, index) => (
-          <NoticeComponent data={data} indexNum={index} />
+          <NoticeComponent
+            key={`${data.id}_${index}`}
+            data={data}
+            indexNum={index}
+            setModalOpen={setModalOpen}
+            setSelectedIndex={setSelectedIndex}
+            setSelectedImageIndex={setSelectedImageIndex}
+          />
         ))}
+        <ReusableModal
+          visible={modalOpen}
+          animationType="fade"
+          children={
+            <ImageShowModal
+              onClose={onClose}
+              image={
+                selectedIndex && selectedImageIndex
+                  ? noticeData[selectedIndex].images[selectedImageIndex]
+                  : ''
+              }
+              index={selectedImageIndex ? selectedImageIndex : 0}
+            />
+          }
+          onClose={onClose}
+        />
       </>
     </WholeWrapper>
   );

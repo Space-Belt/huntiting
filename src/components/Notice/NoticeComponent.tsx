@@ -1,3 +1,4 @@
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -6,31 +7,35 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
-import {INotice} from '../../screens/NoticeScreen';
-import ArrowSvg from '../../assets/icons/arrowDown.svg';
 import Animated, {
-  FadeOutUp,
-  FlipInEasyY,
-  FlipInXDown,
   FlipInXUp,
   FlipOutXUp,
-  StretchInY,
+  RotateOutDownLeft,
   ZoomIn,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import ArrowSvg from '../../assets/icons/arrowDown.svg';
+import {INotice} from '../../screens/NoticeScreen';
 import {COLORS, FONTSIZE} from '../../theme/theme';
-import FastImage from 'react-native-fast-image';
 
 type Props = {
   data: INotice;
   indexNum: number;
+  setSelectedIndex: Dispatch<SetStateAction<number | undefined>>;
+  setSelectedImageIndex: Dispatch<SetStateAction<number | undefined>>;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const NoticeComponent = ({data, indexNum}: Props) => {
+const NoticeComponent = ({
+  data,
+  indexNum,
+  setSelectedIndex,
+  setSelectedImageIndex,
+  setModalOpen,
+}: Props) => {
   const [openNotice, setOpenNotice] = React.useState<boolean>(false);
 
   const svgRotate = useSharedValue(0);
@@ -80,25 +85,26 @@ const NoticeComponent = ({data, indexNum}: Props) => {
       {openNotice && (
         <Animated.View
           entering={FlipInXUp.duration(500)}
-          // exiting={FlipOutXUp.duration(1000)}
-          exiting={FlipOutXUp.duration(1000)}
+          exiting={FlipOutXUp.duration(400)}
           style={[styles.openContainer]}>
           <View style={styles.openWrapper}>
             <Text style={styles.contentText}>{data.content}</Text>
             <View style={styles.imagesContainer}>
               {data.images.map((image, index) => (
                 <TouchableOpacity
-                  onPress={() => {}}
+                  key={`${image}--${index}`}
+                  onPress={() => {
+                    setSelectedIndex(indexNum);
+                    setSelectedImageIndex(index);
+                    setModalOpen(prev => !prev);
+                  }}
                   style={index !== data.images.length - 1 ? imageBoxStyle : {}}>
                   <Animated.Image
-                    entering={ZoomIn.duration(1000)}
+                    entering={ZoomIn.duration(500)}
+                    exiting={RotateOutDownLeft.duration(500)}
                     source={{uri: image}}
                     style={[styles.imageStyle]}
                   />
-                  {/* <FastImage
-                      source={{uri: image}}
-                      style={styles.imageStyle}
-                    /> */}
                 </TouchableOpacity>
               ))}
             </View>
