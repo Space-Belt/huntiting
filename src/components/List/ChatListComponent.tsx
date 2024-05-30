@@ -31,7 +31,6 @@ const layout = getLayout();
 
 const ChatListComponent = ({
   handleGotoChatRoom,
-
   item,
   modalOpen,
   setModalOpen,
