@@ -19,7 +19,6 @@ interface IProps {
   index: number;
 }
 
-const {width, height} = Dimensions.get('window');
 const ImageShowModal = ({onClose, image, index}: IProps) => {
   return (
     <TouchableWithoutFeedback onPress={() => onClose()}>
@@ -28,29 +27,6 @@ const ImageShowModal = ({onClose, image, index}: IProps) => {
           <View style={[styles.imageWrapper]} key={`${image}_${index}`}>
             <FastImage source={{uri: image}} style={styles.imageStyle} />
           </View>
-
-          {/* <ScrollView horizontal={true}>
-            {images.length > 0 ? (
-              images.map((imageEl, index) => {
-                console.log(imageEl);
-                return (
-                  <View
-                    style={[
-                      styles.imageWrapper,
-                      index !== images.length ? {marginRight: 100} : {},
-                    ]}
-                    key={`${imageEl}_${index}`}>
-                    <FastImage
-                      source={{uri: imageEl}}
-                      style={styles.imageStyle}
-                    />
-                  </View>
-                );
-              })
-            ) : (
-              <></>
-            )}
-          </ScrollView> */}
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -69,6 +45,7 @@ const styles = StyleSheet.create({
   },
   whiteBox: {
     width: getLayout(),
+    justifyContent: 'center',
     height: 'auto',
     backgroundColor: 'white',
     borderRadius: 4,
@@ -77,7 +54,7 @@ const styles = StyleSheet.create({
   imageWrapper: {},
   imageStyle: {
     width: getLayout(),
-    height: height - 20,
-    resizeMode: 'repeat',
+    height: 500,
+    resizeMode: 'cover',
   },
 });
