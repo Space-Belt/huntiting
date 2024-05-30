@@ -1,15 +1,5 @@
-import {
-  Dimensions,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
 import React from 'react';
-import {FONTSIZE} from '../../theme/theme';
-import {getPlatform} from '../../utils/getPlatform';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getLayout} from '../../utils/getLayout';
 
