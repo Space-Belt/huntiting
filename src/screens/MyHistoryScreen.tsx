@@ -1,62 +1,36 @@
-import {StyleProp, StyleSheet, Text, TextStyle, View} from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {COLORS} from '../theme/theme';
-import {useLayout} from '../hooks/useLayout';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import TabPanelComponent from '../components/MyHistory/TabPanelComponent';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
+import {COLORS} from '../theme/theme';
+import HuntListComponent from '../components/FlatComponent/HuntListComponent';
+import {IHuntList, huntList} from '../assets/mockData/huntList';
 
 type Props = {};
 
-const tabLists = [
-  {
-    text: '진행중',
-  },
-  {
-    text: '진행완료',
-  },
-];
+export interface IHistoryList {
+  id: number;
+  productImg: string;
+  productName: string;
+  productPrice: number;
+}
 
 const MyHistoryScreen = (props: Props) => {
   const navigation = useNavigation();
 
-  const tabChange = useSharedValue(0);
-
-  const [layout, onLayout] = useLayout();
-
-  const tabAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      // transform: [
-      //   {
-      //     translateX: tabChange.value,
-      //   },
-      // ],
-      left: tabChange.value,
-      borderTopLeftRadius: selectedTabIndex === 0 ? 15 : 0,
-      borderTopRightRadius: selectedTabIndex === 1 ? 15 : 0,
-    };
-  });
-
   const [selectedTabIndex, setSelectedTabIndex] = React.useState<number>(0);
 
-  const renderStyle = (index: number): StyleProp<TextStyle> => {
-    return {
-      color: selectedTabIndex === index ? '#fff' : '#616161da',
-    };
-  };
+  const [datas, setDatas] = React.useState<IHuntList[]>([]);
 
   React.useEffect(() => {
     if (selectedTabIndex === 0) {
-      tabChange.value = withTiming(0, {duration: 500});
+      let tempData = [...huntList].filter(el => el.status === 'pending');
+      setDatas(tempData);
     } else {
-      tabChange.value = withTiming(layout.width, {duration: 500});
+      let tempData = [...huntList].filter(el => el.status !== 'pending');
+      setDatas(tempData);
     }
   }, [selectedTabIndex]);
 
@@ -72,26 +46,7 @@ const MyHistoryScreen = (props: Props) => {
             selectedTabIndex={selectedTabIndex}
             setSelectedTabIndex={setSelectedTabIndex}
           />
-          {/* <View style={styles.tabContainer}>
-            <Animated.View
-              onLayout={onLayout}
-              style={[styles.animateTabBox, tabAnimatedStyle]}
-            />
-            {tabLists.map((tabEl, index) => (
-              <View style={styles.tabBox}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedTabIndex(index);
-                  }}>
-                  <Animated.View style={[styles.tabStyle]}>
-                    <Text style={[styles.tabText, renderStyle(index)]}>
-                      {tabEl.text}
-                    </Text>
-                  </Animated.View>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View> */}
+          <HuntListComponent data={datas} />
         </View>
       </>
     </WholeWrapper>
@@ -103,7 +58,7 @@ export default MyHistoryScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   tabContainer: {
     flexDirection: 'row',

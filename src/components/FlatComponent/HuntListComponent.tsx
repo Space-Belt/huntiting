@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {IHuntList} from '../../assets/mockData/huntList';
 import {COLORS, FONTSIZE} from '../../theme/theme';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   data: IHuntList[];
@@ -15,6 +16,16 @@ const HuntListComponent = ({data}: Props) => {
 
   const keyExtractor = (item: IHuntList) => {
     return `${item.id}`;
+  };
+
+  const renderStatus = (status: 'successed' | 'pending' | 'failed') => {
+    if (status === 'successed') {
+      return <Text style={[styles.statusStyle, styles.success]}>완료</Text>;
+    } else if (status === 'pending') {
+      return <Text style={[styles.statusStyle, styles.pending]}>대기</Text>;
+    } else {
+      return <Text style={[styles.statusStyle, styles.fail]}>실패</Text>;
+    }
   };
 
   const renderItem = ({item}: {item: IHuntList}) => {
@@ -34,7 +45,10 @@ const HuntListComponent = ({data}: Props) => {
           style={styles.imageStyle}
         />
         <View style={styles.textInfoWrapper}>
-          <Text style={styles.productName}>{item.productName}</Text>
+          <View style={styles.productNameNstatusWrapper}>
+            <Text style={styles.productName}>{item.productName}</Text>
+            {item.status && renderStatus(item.status)}
+          </View>
           <Text style={styles.productPriceNCount}>
             가격: {item.price} 수량: {item.productCount}
           </Text>
@@ -76,9 +90,28 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textInfoWrapper: {
-    // flex: 1,
+    flex: 1,
     justifyContent: 'space-between',
   },
+  productNameNstatusWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statusStyle: {
+    width: 50,
+    textAlign: 'center',
+    paddingVertical: 7.5,
+    borderRadius: 12,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_12 : FONTSIZE.size_10,
+    color: COLORS.White,
+    fontWeight: '700',
+    overflow: 'hidden',
+  },
+  success: {backgroundColor: COLORS.Orange2},
+  pending: {backgroundColor: '#4c4a4a98'},
+  fail: {backgroundColor: 'red'},
+
   productName: {
     color: COLORS.Orange,
     fontSize: FONTSIZE.size_14,

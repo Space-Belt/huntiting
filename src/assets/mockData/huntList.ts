@@ -5,6 +5,7 @@ export interface IHuntList {
   price: string;
   created_at: string;
   productPhotoUrl: string[];
+  status?: 'successed' | 'pending' | 'failed';
 }
 
 export const huntList: IHuntList[] = [
@@ -15,6 +16,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'pending',
   },
   {
     id: 2,
@@ -23,6 +25,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'failed',
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'successed',
   },
   {
     id: 4,
@@ -39,6 +43,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'pending',
   },
   {
     id: 5,
@@ -47,6 +52,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'pending',
   },
   {
     id: 6,
@@ -55,6 +61,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'successed',
   },
   {
     id: 7,
@@ -63,6 +70,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'failed',
   },
   {
     id: 8,
@@ -71,6 +79,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'pending',
   },
   {
     id: 9,
@@ -79,6 +88,7 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'success',
   },
   {
     id: 10,
@@ -87,5 +97,6 @@ export const huntList: IHuntList[] = [
     price: '100000',
     created_at: '2024/05/11',
     productPhotoUrl: ['https://picsum.photos/200'],
+    status: 'pending',
   },
 ];
