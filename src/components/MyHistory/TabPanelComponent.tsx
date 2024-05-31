@@ -61,7 +61,7 @@ const TabPanelComponent = ({selectedTabIndex, setSelectedTabIndex}: Props) => {
         style={[styles.animateTabBox, tabAnimatedStyle]}
       />
       {tabLists.map((tabEl, index) => (
-        <View style={styles.tabBox}>
+        <View style={styles.tabBox} key={`${tabEl}_${index}`}>
           <TouchableOpacity
             onPress={() => {
               setSelectedTabIndex(index);
