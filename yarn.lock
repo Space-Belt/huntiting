@@ -3283,6 +3283,7 @@ __metadata:
     react: 18.2.0
     react-native: 0.73.6
     react-native-dashed-line: ^1.1.0
+    react-native-date-picker: ^5.0.4
     react-native-dotenv: ^3.4.11
     react-native-fast-image: ^8.6.3
     react-native-gesture-handler: ^2.15.0
@@ -8653,6 +8654,16 @@ __metadata:
   version: 1.1.0
   resolution: "react-native-dashed-line@npm:1.1.0"
   checksum: 8be97e53929b9ec16c98037e8c59429e7784d1d93c60750e3a572185518fd4ff8b8cbe947707d991b6c0ea040ce71630517a2737b09b1b11f4814fbadb5d2c81
+  languageName: node
+  linkType: hard
+
+"react-native-date-picker@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "react-native-date-picker@npm:5.0.4"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+  checksum: 67db7fba5de613c61a70b5b9274daef8c7d3b6f6cdc5a6063eb61126d4df43252c501c2cb78ebda37fb0997ccb0994e949976d0fb395453580019923100e03ad
   languageName: node
   linkType: hard
 
