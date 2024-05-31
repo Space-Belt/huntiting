@@ -11,6 +11,7 @@ import ProfileEdit from '../screens/ProfileEdit';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import NoticeScreen from '../screens/NoticeScreen';
+import MyHistoryScreen from '../screens/MyHistoryScreen';
 
 const MainStack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const MainStackNavigator = () => {
       <MainStack.Screen name="Setting" component={Setting} />
       <MainStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <MainStack.Screen name="detail" component={HuntDetail} />
+      <MainStack.Screen name="MyHistoryScreen" component={MyHistoryScreen} />
       <MainStack.Screen name="NoticeScreen" component={NoticeScreen} />
       <MainStack.Screen name="chatRoom" component={ChatRoom} />
     </MainStack.Navigator>
