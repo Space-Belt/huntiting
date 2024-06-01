@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   ActionSheetIOS,
+  Alert,
   FlatList,
   Platform,
   ScrollView,
@@ -31,6 +32,7 @@ import {COLORS, FONTSIZE} from '../theme/theme';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import DatePickerModal from '../components/Modal/DatePickerModal';
+import {getLayout} from '../utils/getLayout';
 
 type Props = {};
 
@@ -181,15 +183,21 @@ const HuntRequestScreen = (props: Props) => {
           />
           <View style={styles.datePickerContainer}>
             <Text style={styles.category}>마감기한</Text>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateWrapper}>
+                {selectedDate
+                  ? moment(selectedDate).format('YYYY/MM/DD')
+                  : '날짜를 선택하세요'}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setShowDatePicker(prev => !prev);
+                }}
+                style={styles.dateBtn}>
+                <Text style={styles.dateText}>날짜선택</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Text>{moment(date).format('YYYY/MM/DD')}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setShowDatePicker(prev => !prev);
-            }}
-            style={{}}>
-            <Text>날짜선택</Text>
-          </TouchableOpacity>
           <Text style={styles.category}>상품 사진</Text>
           <View style={styles.imageContainer}>
             <TouchableOpacity
@@ -230,14 +238,20 @@ const HuntRequestScreen = (props: Props) => {
             />
           }
         />
-
         <DatePicker
           modal
           title={'selected'}
           date={selectedDate ? selectedDate : date}
           onDateChange={setSelectedDate}
-          onConfirm={() => console.log('dfdf')}
-          onCancel={() => console.log('취소')}
+          onConfirm={(select: Date) => {
+            if (select < date) {
+              Alert.alert('과거는 선택할수 없습니다');
+              return;
+            }
+            setSelectedDate(select);
+            setShowDatePicker(false);
+          }}
+          onCancel={() => setShowDatePicker(false)}
           mode={'date'}
           confirmText="설정"
           cancelText="취소"
@@ -308,5 +322,44 @@ const styles = StyleSheet.create({
   },
   datePickerContainer: {
     marginBottom: 15,
+  },
+  dateWrapper: {
+    width: getLayout() - 130,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlignVertical: 'center',
+    lineHeight: 50,
+    height: 50,
+    paddingHorizontal: 15,
+    fontSize: FONTSIZE.size_14,
+    borderColor: '#d9d7ba',
+    borderWidth: 1,
+    borderRadius: 20,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+    color: '#6b650e',
+  },
+  dateContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dateBtn: {
+    height: 50,
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.Orange2,
+    borderRadius: 15,
+  },
+  dateText: {
+    color: COLORS.White,
+    fontWeight: '700',
   },
 });
