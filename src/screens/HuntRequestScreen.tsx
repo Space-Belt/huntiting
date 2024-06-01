@@ -28,6 +28,9 @@ import ReusableModal from '../components/ReusableModal';
 import WholeWrapper from '../components/WholeWrapper';
 import {useToast} from '../hooks/useToast';
 import {COLORS, FONTSIZE} from '../theme/theme';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+import DatePickerModal from '../components/Modal/DatePickerModal';
 
 type Props = {};
 
@@ -54,7 +57,13 @@ const HuntRequestScreen = (props: Props) => {
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
+  const [showDatePicker, setShowDatePicker] = React.useState<boolean>(false);
+
   const [profileImage, setProfileImage] = React.useState<Asset[]>();
+
+  const [date, setDate] = React.useState<Date>(new Date());
+
+  const [selectedDate, setSelectedDate] = React.useState<Date>();
 
   const onPickImage = (res: any) => {
     if (res.didCancel || !res) {
@@ -170,6 +179,17 @@ const HuntRequestScreen = (props: Props) => {
             value={description}
             isMultiline={true}
           />
+          <View style={styles.datePickerContainer}>
+            <Text style={styles.category}>마감기한</Text>
+          </View>
+          <Text>{moment(date).format('YYYY/MM/DD')}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setShowDatePicker(prev => !prev);
+            }}
+            style={{}}>
+            <Text>날짜선택</Text>
+          </TouchableOpacity>
           <Text style={styles.category}>상품 사진</Text>
           <View style={styles.imageContainer}>
             <TouchableOpacity
@@ -209,6 +229,19 @@ const HuntRequestScreen = (props: Props) => {
               onLaunchImageLibrary={onLaunchImageLibrary}
             />
           }
+        />
+
+        <DatePicker
+          modal
+          title={'selected'}
+          date={selectedDate ? selectedDate : date}
+          onDateChange={setSelectedDate}
+          onConfirm={() => console.log('dfdf')}
+          onCancel={() => console.log('취소')}
+          mode={'date'}
+          confirmText="설정"
+          cancelText="취소"
+          open={showDatePicker}
         />
       </ScrollView>
     </WholeWrapper>
@@ -272,5 +305,8 @@ const styles = StyleSheet.create({
   editIconStyles: {
     position: 'relative',
     zIndex: 1,
+  },
+  datePickerContainer: {
+    marginBottom: 15,
   },
 });
