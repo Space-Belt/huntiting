@@ -13,8 +13,9 @@ import SignUpScreen from '../screens/SignUpScreen';
 import NoticeScreen from '../screens/NoticeScreen';
 import MyHistoryScreen from '../screens/MyHistoryScreen';
 import Terms from '../screens/Terms';
+import {RootStackParamList} from '../App';
 
-const MainStack = createStackNavigator();
+const MainStack = createStackNavigator<RootStackParamList>();
 
 const MainStackNavigator = () => {
   return (

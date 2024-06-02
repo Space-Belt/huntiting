@@ -18,6 +18,9 @@ import MoreBtn from '../assets/icons/moreBtn.svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {COLORS} from '../theme/theme';
 import ReusableModal from '../components/ReusableModal';
+import HuntEditModal from '../components/Modal/HuntEditModal';
+import {RootStackParamList} from '../App';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 
 type Props = {};
 
@@ -53,6 +56,7 @@ const HuntDetail = (props: Props) => {
         },
         buttonIndex => {
           if (buttonIndex === 0) {
+            navigation.navigate('request', {id: 1});
           } else if (buttonIndex === 1) {
           }
         },
@@ -105,7 +109,7 @@ const HuntDetail = (props: Props) => {
           animationType="fade"
           onClose={handleMoreBtn}
           visible={modalOpen}>
-          <View></View>
+          <HuntEditModal onClose={() => {}} />
         </ReusableModal>
       </>
     </WholeWrapper>

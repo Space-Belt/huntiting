@@ -9,8 +9,9 @@ import HuntListScreen from '../screens/HuntListScreen';
 import HuntRequestScreen from '../screens/HuntRequestScreen';
 import MyPageScreen from '../screens/MyPageScreen';
 import {COLORS, SPACING} from '../theme/theme';
+import {RootStackParamList} from '../App';
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 const BottomTabNavigator = () => {
   const iconRendering = (iconName: string, focus: boolean) => {

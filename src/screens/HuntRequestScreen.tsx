@@ -33,6 +33,8 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import {getLayout} from '../utils/getLayout';
 import RequestComponent from '../components/HuntRequest/RequestComponent';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {RootStackParamList} from '../App';
 
 type Props = {};
 
@@ -44,8 +46,13 @@ const imagePickerOption = {
   selectionLimit: 5,
 };
 
-const HuntRequestScreen = (props: Props) => {
-  const navigation = useNavigation();
+export type RequestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'request'
+>;
+
+const HuntRequestScreen = ({route, navigation}: RequestProps) => {
+  // const navigation = useNavigation();
 
   const {onToast} = useToast();
 
