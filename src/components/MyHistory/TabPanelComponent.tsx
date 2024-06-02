@@ -5,6 +5,7 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import React, {Dispatch, SetStateAction} from 'react';
 import {COLORS} from '../../theme/theme';
@@ -15,21 +16,21 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useLayout} from '../../hooks/useLayout';
 
+export interface ITabList {
+  text: string;
+}
+
 type Props = {
   selectedTabIndex: number;
   setSelectedTabIndex: Dispatch<SetStateAction<number>>;
+  tabLists: ITabList[];
 };
 
-const tabLists = [
-  {
-    text: '진행중',
-  },
-  {
-    text: '진행완료',
-  },
-];
-
-const TabPanelComponent = ({selectedTabIndex, setSelectedTabIndex}: Props) => {
+const TabPanelComponent = ({
+  selectedTabIndex,
+  setSelectedTabIndex,
+  tabLists,
+}: Props) => {
   const tabChange = useSharedValue(0);
 
   const [layout, onLayout] = useLayout();
@@ -47,21 +48,23 @@ const TabPanelComponent = ({selectedTabIndex, setSelectedTabIndex}: Props) => {
   };
 
   React.useEffect(() => {
-    if (selectedTabIndex === 0) {
-      tabChange.value = withTiming(0, {duration: 500});
-    } else {
-      tabChange.value = withTiming(layout.width, {duration: 500});
-    }
+    tabChange.value = withTiming(layout.width * selectedTabIndex, {
+      duration: 500,
+    });
   }, [selectedTabIndex]);
+
+  const tabBoxWidth: StyleProp<ViewStyle> = {
+    width: `${100 / tabLists.length}%`,
+  };
 
   return (
     <View style={styles.tabContainer}>
       <Animated.View
         onLayout={onLayout}
-        style={[styles.animateTabBox, tabAnimatedStyle]}
+        style={[tabBoxWidth, styles.animateTabBox, tabAnimatedStyle]}
       />
       {tabLists.map((tabEl, index) => (
-        <View style={styles.tabBox} key={`${tabEl}_${index}`}>
+        <View style={[tabBoxWidth, styles.tabBox]} key={`${tabEl}_${index}`}>
           <TouchableOpacity
             onPress={() => {
               setSelectedTabIndex(index);
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
   },
   animateTabBox: {
     position: 'absolute',
-    width: '50%',
+
     height: 50,
     borderBottomWidth: 1,
     backgroundColor: '#ea2f2f99',
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
   },
   tabBox: {
-    width: '50%',
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
