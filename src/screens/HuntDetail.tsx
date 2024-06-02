@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {
+  ActionSheetIOS,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-reanimated-carousel';
 import BottomDeal from '../components/Detail/BottomDeal';
@@ -8,6 +14,10 @@ import ProductDescribe from '../components/Detail/ProductDescribe';
 import ReusableHeader from '../components/ReusableHeader';
 import WholeWrapper from '../components/WholeWrapper';
 import {getLayout} from '../utils/getLayout';
+import MoreBtn from '../assets/icons/moreBtn.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {COLORS} from '../theme/theme';
+import ReusableModal from '../components/ReusableModal';
 
 type Props = {};
 
@@ -19,6 +29,10 @@ const lorem: string =
 const HuntDetail = (props: Props) => {
   const navigation = useNavigation();
 
+  const [isMine, setIsMine] = React.useState<boolean>(true);
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
   const renderItem = (item: any) => {
     return <FastImage source={{uri: item}} style={styles.imageStyle} />;
   };
@@ -27,12 +41,43 @@ const HuntDetail = (props: Props) => {
     navigation.navigate('chatRoom' as never);
   };
 
+  const handleMoreBtn = () => {};
+  const onClose = () => {
+    if (Platform.OS === 'android') {
+      setModalOpen(prev => !prev);
+    } else {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['수정', '완료처리', '대기처리', '삭제', '취소'],
+          cancelButtonIndex: 4,
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+          } else if (buttonIndex === 1) {
+          }
+        },
+      );
+    }
+  };
+
   return (
     <WholeWrapper>
       <>
         <ReusableHeader
           title={'상세보기'}
           handleBackBtn={() => navigation.goBack()}
+          rightBtnIcon={
+            isMine ? (
+              <TouchableOpacity
+                onPress={() => {
+                  onClose();
+                }}>
+                <MoreBtn style={styles.moreBtn} />
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )
+          }
         />
         <ScrollView style={styles.scrollStyle}>
           <View style={styles.imageWrapper}>
@@ -56,6 +101,12 @@ const HuntDetail = (props: Props) => {
           />
         </ScrollView>
         <BottomDeal count={5} price={10000} onPress={handleChat} />
+        <ReusableModal
+          animationType="fade"
+          onClose={handleMoreBtn}
+          visible={modalOpen}>
+          <View></View>
+        </ReusableModal>
       </>
     </WholeWrapper>
   );
@@ -69,6 +120,11 @@ const styles = StyleSheet.create({
     width: width,
     height: width,
     resizeMode: 'cover',
+  },
+  moreBtn: {
+    width: 30,
+    height: 30,
+    color: COLORS.Orange,
   },
   scrollStyle: {flex: 1},
   detailContainer: {},
