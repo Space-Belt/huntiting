@@ -12,6 +12,7 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import NoticeScreen from '../screens/NoticeScreen';
 import MyHistoryScreen from '../screens/MyHistoryScreen';
+import Terms from '../screens/Terms';
 
 const MainStack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const MainStackNavigator = () => {
       <MainStack.Screen name="MyHistoryScreen" component={MyHistoryScreen} />
       <MainStack.Screen name="NoticeScreen" component={NoticeScreen} />
       <MainStack.Screen name="chatRoom" component={ChatRoom} />
+      <MainStack.Screen name="Terms" component={Terms} />
     </MainStack.Navigator>
   );
 };

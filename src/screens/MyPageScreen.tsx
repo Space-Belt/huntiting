@@ -45,7 +45,7 @@ const MyPageScreen = (props: Props) => {
           />
           <MenuComponent
             title="약관"
-            handleNavigate={() => navigation.navigate('home' as never)}
+            handleNavigate={() => navigation.navigate('Terms' as never)}
           />
         </View>
       </View>
