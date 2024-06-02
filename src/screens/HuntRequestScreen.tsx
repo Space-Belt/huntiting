@@ -31,8 +31,8 @@ import {useToast} from '../hooks/useToast';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
-import DatePickerModal from '../components/Modal/DatePickerModal';
 import {getLayout} from '../utils/getLayout';
+import RequestComponent from '../components/HuntRequest/RequestComponent';
 
 type Props = {};
 
@@ -152,7 +152,32 @@ const HuntRequestScreen = (props: Props) => {
           title="물품찾기"
           handleBackBtn={() => navigation.goBack()}
         />
-        <ScrollView>
+        <RequestComponent
+          productName={productName}
+          setProductName={setProductName}
+          productPrice={productPrice}
+          setProductPrice={setProductPrice}
+          productCount={productCount}
+          setProductCount={setProductCount}
+          description={description}
+          setDescription={setDescription}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          showDatePicker={showDatePicker}
+          setShowDatePicker={setShowDatePicker}
+          profileImage={profileImage}
+          setProfileImage={setProfileImage}
+          date={date}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          handleModalOpen={handleModalOpen}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          modalClose={modalClose}
+          onLaunchCamera={onLaunchCamera}
+          onLaunchImageLibrary={onLaunchImageLibrary}
+        />
+        {/* <ScrollView>
           <View style={styles.container}>
             <ReusableInput
               category="물품명"
@@ -258,7 +283,7 @@ const HuntRequestScreen = (props: Props) => {
             cancelText="취소"
             open={showDatePicker}
           />
-        </ScrollView>
+        </ScrollView> */}
       </>
     </WholeWrapper>
   );
