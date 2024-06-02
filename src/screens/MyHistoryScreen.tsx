@@ -1,7 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import TabPanelComponent from '../components/MyHistory/TabPanelComponent';
+import TabPanelComponent, {
+  ITabList,
+} from '../components/MyHistory/TabPanelComponent';
 import ReusableHeader from '../components/ReusableHeader';
 import WholeWrapper from '../components/WholeWrapper';
 import {COLORS} from '../theme/theme';
@@ -10,12 +12,14 @@ import {IHuntList, huntList} from '../assets/mockData/huntList';
 
 type Props = {};
 
-export interface IHistoryList {
-  id: number;
-  productImg: string;
-  productName: string;
-  productPrice: number;
-}
+const tabLists: ITabList[] = [
+  {
+    text: '진행중',
+  },
+  {
+    text: '진행완료',
+  },
+];
 
 const MyHistoryScreen = (props: Props) => {
   const navigation = useNavigation();
@@ -45,6 +49,7 @@ const MyHistoryScreen = (props: Props) => {
           <TabPanelComponent
             selectedTabIndex={selectedTabIndex}
             setSelectedTabIndex={setSelectedTabIndex}
+            tabLists={tabLists}
           />
           <HuntListComponent data={datas} />
         </View>
