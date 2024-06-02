@@ -1,11 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import TabPanelComponent, {
   ITabList,
 } from '../components/MyHistory/TabPanelComponent';
-import {useNavigation} from '@react-navigation/native';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
+import {termsLists} from '../assets/mockData/TermList';
+import {COLORS} from '../theme/theme';
+
+export interface ITerm {
+  content: string;
+}
 
 type Props = {};
 
@@ -38,6 +44,11 @@ const Terms = (props: Props) => {
           setSelectedTabIndex={setSelectedTabIndex}
           tabLists={tabLists}
         />
+        <ScrollView style={styles.textContainer}>
+          <View style={styles.textWrapper}>
+            <Text>{termsLists[selectedTabIndex].content}</Text>
+          </View>
+        </ScrollView>
       </>
     </WholeWrapper>
   );
@@ -45,4 +56,22 @@ const Terms = (props: Props) => {
 
 export default Terms;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textContainer: {
+    padding: 15,
+    flex: 1,
+  },
+  textWrapper: {
+    padding: 10,
+    flex: 1,
+    paddingBottom: 50,
+    backgroundColor: '#eee',
+    shadowColor: COLORS.Orange,
+    shadowOpacity: 1,
+    shadowRadius: 0.1,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+  },
+});
