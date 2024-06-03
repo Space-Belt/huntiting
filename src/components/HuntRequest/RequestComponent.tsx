@@ -45,14 +45,13 @@ type Props = {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   showDatePicker: boolean;
   setShowDatePicker: Dispatch<SetStateAction<boolean>>;
-  profileImage: string[] | undefined;
+  profileImage: Asset[] | undefined;
   setProfileImage: Dispatch<SetStateAction<Asset[] | undefined>>;
   date: Date;
   selectedDate: Date | undefined;
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
   handleModalOpen: () => void;
-  // renderItem: ({item}: {item: Asset}) => React.JSX.Element;
-  renderItem: ListRenderItem<string>;
+  renderItem: ListRenderItem<Asset>;
   keyExtractor: (item: any) => string;
   modalClose: () => void;
   onLaunchCamera: () => void;

@@ -19,7 +19,7 @@ export type RootStackParamList = {
   NoticeScreen: undefined;
   chatRoom: undefined;
   Terms: undefined;
-  list: undefined;
+  home: undefined;
   request: {id?: number};
   chatList: undefined;
   my_page: undefined;

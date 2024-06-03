@@ -16,17 +16,32 @@ const BottomTab = createBottomTabNavigator<RootStackParamList>();
 const BottomTabNavigator = () => {
   const iconRendering = (iconName: string, focus: boolean) => {
     const focusedColor: TextStyle = {
-      color: '#000',
+      color: COLORS.Orange,
     };
+
+    const unFocusesColor: TextStyle = {
+      color: '#57545458',
+    };
+
     if (iconName === 'home') {
-      return <HomeIcon style={[styles.iconStyle, focus ? focusedColor : {}]} />;
+      return (
+        <HomeIcon
+          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
+        />
+      );
     }
     if (iconName === 'request') {
-      return <Request style={[styles.iconStyle, focus ? focusedColor : {}]} />;
+      return (
+        <Request
+          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
+        />
+      );
     }
     if (iconName === 'profile') {
       return (
-        <PersonIcon style={[styles.iconStyle, focus ? focusedColor : {}]} />
+        <PersonIcon
+          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
+        />
       );
     }
   };
@@ -38,10 +53,14 @@ const BottomTabNavigator = () => {
         tabBarStyle: styles.bottomTabStyle,
       }}>
       <BottomTab.Screen
-        name="list"
+        name="home"
         component={HuntListScreen}
         options={{
-          tabBarShowLabel: false,
+          headerPressColor: COLORS.Orange,
+          headerTitleStyle: {
+            color: COLORS.Orange,
+          },
+          tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('home', focused);
           },
@@ -52,7 +71,7 @@ const BottomTabNavigator = () => {
         name="request"
         component={HuntRequestScreen}
         options={{
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('request', focused);
           },
@@ -62,7 +81,7 @@ const BottomTabNavigator = () => {
         name="chatList"
         component={ChatList}
         options={{
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('request', focused);
           },
@@ -72,7 +91,7 @@ const BottomTabNavigator = () => {
         name="my_page"
         component={MyPageScreen}
         options={{
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('profile', focused);
           },

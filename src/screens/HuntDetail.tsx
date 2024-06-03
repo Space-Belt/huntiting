@@ -29,9 +29,9 @@ const width = getLayout();
 const lorem: string =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia rhoncus tortor ac tristique. Maecenas tincidunt quis quam varius fringilla. Mauris sit amet mi turpis. Praesent sit amet consectetur eros. Maecenas tempor consequat commodo. Mauris convallis ipsum at consequat condimentum. Nulla lacinia lacus sem, sed congue mi posuere id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque hendrerit cursus gravida. Duis at dictum nisl. Nulla ligula justo, luctus non felis quis, vestibulum dictum velit. Sed sit amet volutpat metus. Mauris dictum sit amet nisl sed viverra. Pellentesque a nisi eget risus iaculis aliquam. Nam pretium at leo nec consectetur.';
 
-const HuntDetail = (props: Props) => {
-  const navigation = useNavigation();
+type IRequestProps = NativeStackScreenProps<RootStackParamList, 'request'>;
 
+const HuntDetail = ({route, navigation}: IRequestProps) => {
   const [isMine, setIsMine] = React.useState<boolean>(true);
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
