@@ -1,5 +1,14 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import {getPlatform} from '../utils/getPlatform';
 
@@ -12,6 +21,11 @@ type Props = {
   disabled?: boolean;
   focus?: boolean;
   errorMessage?: string;
+  handleBtn?: {
+    btnText: string;
+    handleOnPress: () => Promise<void>;
+    disabled: boolean;
+  };
 };
 
 const ReusableInput = ({
@@ -23,33 +37,58 @@ const ReusableInput = ({
   disabled,
   focus,
   errorMessage,
+  handleBtn,
 }: Props) => {
   const handleInput = (text: string) => {
     setValue(text);
   };
+
+  const textInputStyle: StyleProp<ViewStyle> = {
+    width: handleBtn ? '75%' : '100%',
+  };
+
+  const textWrapperStyle: StyleProp<ViewStyle> = {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  };
+
+  const disabledBtnStyle: StyleProp<ViewStyle> = {
+    backgroundColor: handleBtn?.disabled ? '#3f3e3e6a' : COLORS.Orange2,
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.category}>{category}</Text>
-      {!isMultiline ? (
-        <TextInput
-          style={styles.inputStyle}
-          placeholder={placeholder}
-          value={value}
-          onChangeText={handleInput}
-          autoFocus={focus ? focus : false}
-          editable={disabled ? false : true}
-        />
-      ) : (
-        <TextInput
-          style={styles.multilineInputStyle}
-          placeholder={placeholder}
-          value={value}
-          onChangeText={handleInput}
-          multiline={true}
-          numberOfLines={5}
-          autoFocus={focus ? focus : false}
-        />
-      )}
+      <View style={[handleBtn ? textWrapperStyle : {}]}>
+        {!isMultiline ? (
+          <TextInput
+            style={[styles.inputStyle, textInputStyle]}
+            placeholder={placeholder}
+            value={value}
+            onChangeText={handleInput}
+            autoFocus={focus ? focus : false}
+            editable={disabled ? false : true}
+          />
+        ) : (
+          <TextInput
+            style={styles.multilineInputStyle}
+            placeholder={placeholder}
+            value={value}
+            onChangeText={handleInput}
+            multiline={true}
+            numberOfLines={5}
+            autoFocus={focus ? focus : false}
+          />
+        )}
+        {handleBtn && (
+          <TouchableOpacity
+            style={[styles.btnStyle, disabledBtnStyle]}
+            onPress={() => handleBtn.handleOnPress()}
+            disabled={handleBtn.disabled}>
+            <Text style={styles.btnText}>{handleBtn.btnText}</Text>
+          </TouchableOpacity>
+        )}
+      </View>
       {errorMessage && <Text>{errorMessage}</Text>}
     </View>
   );
@@ -103,6 +142,19 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     color: '#6b650e',
+  },
+  btnStyle: {
+    width: '22%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.Orange2,
+    borderRadius: 15,
+  },
+  btnText: {
+    textAlign: 'center',
+    color: COLORS.White,
+    fontSize: FONTSIZE.size_12,
+    fontWeight: '700',
   },
   errorMessageText: {
     color: 'red',
