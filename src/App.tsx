@@ -23,6 +23,10 @@ export type RootStackParamList = {
   request: {id?: number};
   chatList: undefined;
   my_page: undefined;
+  FindAuth: undefined;
+  FindUserNameResult: undefined;
+  ChangePassword: undefined;
+  ChangePasswordResult: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();

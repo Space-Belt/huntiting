@@ -14,6 +14,10 @@ import NoticeScreen from '../screens/NoticeScreen';
 import MyHistoryScreen from '../screens/MyHistoryScreen';
 import Terms from '../screens/Terms';
 import {RootStackParamList} from '../App';
+import FindAuth from '../screens/FindAuth';
+import FindUserNameResult from '../components/FindAuth/FindUserNameResult';
+import ChangePassword from '../components/FindAuth/ChangePassword';
+import ChangePasswordResult from '../components/FindAuth/ChangePasswordResult';
 
 const MainStack = createStackNavigator<RootStackParamList>();
 
@@ -21,9 +25,19 @@ const MainStackNavigator = () => {
   return (
     <MainStack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="BottomTab">
+      initialRouteName="SignInScreen">
       <MainStack.Screen name="SignInScreen" component={SignInScreen} />
       <MainStack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <MainStack.Screen name="FindAuth" component={FindAuth} />
+      <MainStack.Screen
+        name="FindUserNameResult"
+        component={FindUserNameResult}
+      />
+      <MainStack.Screen name="ChangePassword" component={ChangePassword} />
+      <MainStack.Screen
+        name="ChangePasswordResult"
+        component={ChangePasswordResult}
+      />
       <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
       <MainStack.Screen name="Setting" component={Setting} />
       <MainStack.Screen name="ProfileEdit" component={ProfileEdit} />
