@@ -41,7 +41,8 @@ const SignInScreen = (props: Props) => {
               onPress={() => navigation.navigate('SignUpScreen' as never)}>
               <Text style={styles.signUpNfindText}>회원가입</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FindAuth' as never)}>
               <Text style={styles.signUpNfindText}>계정찾기</Text>
             </TouchableOpacity>
           </View>
