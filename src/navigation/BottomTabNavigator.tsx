@@ -14,8 +14,30 @@ import {RootStackParamList} from '../App';
 
 const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
-const BottomTabNavigator = () => {
-  const iconRendering = (iconName: string, focus: boolean) => {
+interface IIconType {
+  tabBarLabel?: string;
+  tabBarIcon?: ({
+    focused: boolean,
+    color: string,
+    size: number,
+  }) => React.ReactNode;
+  tabBarAccessibilityLabel?: string;
+  tabBarTestID?: string;
+  tabBarAllowFontScaling?: boolean;
+  tabBarShowLabel?: boolean;
+  tabBarShowIcon?: boolean;
+  tabBarActiveTintColor?: string;
+  tabBarInactiveTintColor?: string;
+  tabBarActiveBackgroundColor?: string;
+  tabBarInactiveBackgroundColor?: string;
+  tabBarStyle?: StyleProp<ViewStyle>;
+  tabBarItemStyle?: StyleProp<ViewStyle>;
+  tabBarLabelStyle?: StyleProp<TextStyle>;
+  tabBarItemTestID?: string;
+}
+
+const BottomTabNavigator = (): IIconType => {
+  const iconRendering = (iconName: string) => {
     const focusedColor: TextStyle = {
       color: COLORS.Orange,
     };
@@ -25,34 +47,74 @@ const BottomTabNavigator = () => {
     };
 
     if (iconName === 'home') {
-      return (
-        <HomeIcon
-          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
-        />
-      );
+      return {
+        tabBarLabel: '홈',
+        tabBarActiveTintColor: COLORS.Orange,
+        headerPressColor: COLORS.Orange,
+        headerTitleStyle: {
+          color: COLORS.Orange,
+        },
+        tabBarShowLabel: true,
+        tabBarIcon: ({focused}) => {
+          return (
+            <HomeIcon
+              style={[
+                styles.iconStyle,
+                focused ? focusedColor : unFocusesColor,
+              ]}
+            />
+          );
+        },
+      };
     }
     if (iconName === 'request') {
-      return (
-        <Request
-          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
-        />
-      );
+      return {
+        tabBarLabel: '요청',
+        tabBarActiveTintColor: COLORS.Orange,
+        tabBarShowLabel: true,
+        tabBarIcon: ({focused}) => {
+          return (
+            <Request
+              style={[
+                styles.iconStyle,
+                focused ? focusedColor : unFocusesColor,
+              ]}
+            />
+          );
+        },
+      };
     }
     if (iconName === 'chat') {
-      return (
-        <ChatIcon
-          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
-        />
-      );
+      return {
+        tabBarLabel: '채팅',
+        tabBarActiveTintColor: COLORS.Orange,
+        tabBarShowLabel: true,
+        tabBarIcon: ({focused}) => (
+          <ChatIcon
+            style={[styles.iconStyle, focused ? focusedColor : unFocusesColor]}
+          />
+        ),
+      };
     }
     if (iconName === 'profile') {
-      return (
-        <PersonIcon
-          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
-        />
-      );
+      return {
+        tabBarLabel: '프로필',
+        tabBarActiveTintColor: COLORS.Orange,
+        tabBarShowLabel: true,
+        tabBarIcon: ({focused}) => {
+          return (
+            <PersonIcon
+              style={[
+                styles.iconStyle,
+                focused ? focusedColor : unFocusesColor,
+              ]}
+            />
+          );
+        },
+      };
     }
   };
+
   return (
     <BottomTab.Navigator
       screenOptions={{
@@ -63,55 +125,23 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="home"
         component={HuntListScreen}
-        options={{
-          tabBarLabel: '홈',
-          tabBarActiveTintColor: COLORS.Orange,
-          headerPressColor: COLORS.Orange,
-          headerTitleStyle: {
-            color: COLORS.Orange,
-          },
-          tabBarShowLabel: true,
-          tabBarIcon: ({focused}) => {
-            return iconRendering('home', focused);
-          },
-        }}
+        options={iconRendering('home')}
       />
 
       <BottomTab.Screen
         name="request"
         component={HuntRequestScreen}
-        options={{
-          tabBarLabel: '요청',
-          tabBarActiveTintColor: COLORS.Orange,
-          tabBarShowLabel: true,
-          tabBarIcon: ({focused}) => {
-            return iconRendering('request', focused);
-          },
-        }}
+        options={iconRendering('request')}
       />
       <BottomTab.Screen
         name="chatList"
         component={ChatList}
-        options={{
-          tabBarLabel: '채팅',
-          tabBarActiveTintColor: COLORS.Orange,
-          tabBarShowLabel: true,
-          tabBarIcon: ({focused}) => {
-            return iconRendering('chat', focused);
-          },
-        }}
+        options={iconRendering('chat')}
       />
       <BottomTab.Screen
         name="my_page"
         component={MyPageScreen}
-        options={{
-          tabBarLabel: '프로필',
-          tabBarActiveTintColor: COLORS.Orange,
-          tabBarShowLabel: true,
-          tabBarIcon: ({focused}) => {
-            return iconRendering('profile', focused);
-          },
-        }}
+        options={iconRendering('profile')}
       />
     </BottomTab.Navigator>
   );
