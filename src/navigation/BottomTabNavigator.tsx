@@ -3,7 +3,8 @@ import React from 'react';
 import {StyleSheet, TextStyle} from 'react-native';
 import HomeIcon from '../assets/icons/homeIcon.svg';
 import PersonIcon from '../assets/icons/personIcon.svg';
-import Request from '../assets/icons/request.svg';
+import ChatIcon from '../assets/icons/chatting.svg';
+import Request from '../assets/icons/requestAdd.svg';
 import ChatList from '../screens/ChatList';
 import HuntListScreen from '../screens/HuntListScreen';
 import HuntRequestScreen from '../screens/HuntRequestScreen';
@@ -37,6 +38,13 @@ const BottomTabNavigator = () => {
         />
       );
     }
+    if (iconName === 'chat') {
+      return (
+        <ChatIcon
+          style={[styles.iconStyle, focus ? focusedColor : unFocusesColor]}
+        />
+      );
+    }
     if (iconName === 'profile') {
       return (
         <PersonIcon
@@ -56,6 +64,8 @@ const BottomTabNavigator = () => {
         name="home"
         component={HuntListScreen}
         options={{
+          tabBarLabel: '홈',
+          tabBarActiveTintColor: COLORS.Orange,
           headerPressColor: COLORS.Orange,
           headerTitleStyle: {
             color: COLORS.Orange,
@@ -71,6 +81,8 @@ const BottomTabNavigator = () => {
         name="request"
         component={HuntRequestScreen}
         options={{
+          tabBarLabel: '요청',
+          tabBarActiveTintColor: COLORS.Orange,
           tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('request', focused);
@@ -81,9 +93,11 @@ const BottomTabNavigator = () => {
         name="chatList"
         component={ChatList}
         options={{
+          tabBarLabel: '채팅',
+          tabBarActiveTintColor: COLORS.Orange,
           tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
-            return iconRendering('request', focused);
+            return iconRendering('chat', focused);
           },
         }}
       />
@@ -91,6 +105,8 @@ const BottomTabNavigator = () => {
         name="my_page"
         component={MyPageScreen}
         options={{
+          tabBarLabel: '프로필',
+          tabBarActiveTintColor: COLORS.Orange,
           tabBarShowLabel: true,
           tabBarIcon: ({focused}) => {
             return iconRendering('profile', focused);
