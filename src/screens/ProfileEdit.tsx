@@ -1,10 +1,10 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import ReusableBtn from '../components/ReusableBtn';
 import ReusableHeader from '../components/ReusableHeader';
 import ReusableInput from '../components/ReusableInput';
-import {useNavigation} from '@react-navigation/native';
-import ReusableBtn from '../components/ReusableBtn';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 

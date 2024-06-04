@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {StyleSheet, TextStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import HomeIcon from '../assets/icons/homeIcon.svg';
 import PersonIcon from '../assets/icons/personIcon.svg';
 import ChatIcon from '../assets/icons/chatting.svg';

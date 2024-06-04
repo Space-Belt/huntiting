@@ -1,15 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  ActionSheetIOS,
-  Alert,
-  FlatList,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActionSheetIOS, Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
@@ -19,22 +9,15 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import Photo from '../assets/icons/photo.svg';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {RootStackParamList} from '../App';
 import CloseIcon from '../assets/icons/smallClose.svg';
-import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
-import ReusableBtn from '../components/ReusableBtn';
+import RequestComponent from '../components/HuntRequest/RequestComponent';
 import ReusableHeader from '../components/ReusableHeader';
-import ReusableInput from '../components/ReusableInput';
-import ReusableModal from '../components/ReusableModal';
 import WholeWrapper from '../components/WholeWrapper';
 import {useToast} from '../hooks/useToast';
 import {COLORS, FONTSIZE} from '../theme/theme';
-import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
 import {getLayout} from '../utils/getLayout';
-import RequestComponent from '../components/HuntRequest/RequestComponent';
-import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {RootStackParamList} from '../App';
 
 type Props = {};
 

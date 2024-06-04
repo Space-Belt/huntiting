@@ -1,3 +1,5 @@
+import moment from 'moment';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   Alert,
   FlatList,
@@ -9,20 +11,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
-import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
+import {Asset} from 'react-native-image-picker';
 import ImageSelectWayModal from '../Modal/ImageSelectWayModal';
 import ReusableBtn from '../ReusableBtn';
 import ReusableInput from '../ReusableInput';
 import ReusableModal from '../ReusableModal';
-import {Asset} from 'react-native-image-picker';
 
 import Photo from '../../assets/icons/photo.svg';
-import CloseIcon from '../../assets/icons/smallClose.svg';
-import {FONTSIZE, COLORS} from '../../theme/theme';
-import {getLayout} from '../../utils/getLayout';
 import {useToast} from '../../hooks/useToast';
+import {COLORS, FONTSIZE} from '../../theme/theme';
+import {getLayout} from '../../utils/getLayout';
 
 const imagePickerOption = {
   mediaType: 'photo',

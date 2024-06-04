@@ -1,5 +1,5 @@
-import {Modal, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import React from 'react';
+import {Modal, StyleSheet} from 'react-native';
 
 interface IProps {
   visible: boolean;

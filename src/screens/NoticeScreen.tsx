@@ -1,13 +1,11 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
 import {useNavigation} from '@react-navigation/native';
-import NoticeComponent from '../components/Notice/NoticeComponent';
-import ReusableModal from '../components/ReusableModal';
-import FastImage from 'react-native-fast-image';
-import {getLayout} from '../utils/getLayout';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import ImageShowModal from '../components/Modal/ImageShowModal';
+import NoticeComponent from '../components/Notice/NoticeComponent';
+import ReusableHeader from '../components/ReusableHeader';
+import ReusableModal from '../components/ReusableModal';
+import WholeWrapper from '../components/WholeWrapper';
 
 interface Props {}
 

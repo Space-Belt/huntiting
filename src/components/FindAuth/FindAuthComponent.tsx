@@ -1,6 +1,5 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import React from 'react';
-import WholeWrapper from '../WholeWrapper';
 import ReusableInput from '../ReusableInput';
 import ReusableBtn from '../ReusableBtn';
 
