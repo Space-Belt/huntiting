@@ -22,6 +22,7 @@ import Photo from '../../assets/icons/photo.svg';
 import {useToast} from '../../hooks/useToast';
 import {COLORS, FONTSIZE} from '../../theme/theme';
 import {getLayout} from '../../utils/getLayout';
+import {getPlatform} from '../../utils/getPlatform';
 
 const imagePickerOption = {
   mediaType: 'photo',
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlignVertical: 'center',
-    lineHeight: 50,
+    lineHeight: getPlatform() === 'ios' ? 50 : 25,
     height: 50,
     paddingHorizontal: 15,
     fontSize: FONTSIZE.size_14,
@@ -274,7 +275,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 5,
+
     color: '#6b650e',
   },
   dateContainer: {

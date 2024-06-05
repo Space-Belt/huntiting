@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {ImageAssets} from '../../assets/images/ImageAssets';
 import {COLORS, FONTSIZE} from '../../theme/theme';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   handleNavigationProfileEdit: () => void;
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     width: '20%',
   },
   nameTextStyle: {
-    fontSize: FONTSIZE.size_16,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_14,
     fontWeight: '700',
     color: '#6b650e',
     textAlign: 'right',
@@ -84,5 +85,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: COLORS.White,
     fontWeight: '700',
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_12,
   },
 });
