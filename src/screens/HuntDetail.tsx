@@ -107,9 +107,15 @@ const HuntDetail = ({route, navigation}: IRequestProps) => {
         <ReusableModal
           animationType="fade"
           onClose={handleMoreBtn}
-          visible={modalOpen}>
-          <HuntEditModal onClose={() => {}} />
-        </ReusableModal>
+          visible={modalOpen}
+          children={
+            <HuntEditModal
+              onClose={() => {
+                setModalOpen(false);
+              }}
+            />
+          }
+        />
       </>
     </WholeWrapper>
   );
