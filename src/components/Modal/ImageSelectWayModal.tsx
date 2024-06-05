@@ -1,5 +1,11 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {FONTSIZE} from '../../theme/theme';
 
 import Gallery from '../../assets/icons/gallery.svg';
@@ -21,30 +27,32 @@ const ImageSelectWayModal = ({
   onLaunchImageLibrary,
 }: IProps) => {
   return (
-    <View style={styles.background}>
-      <View style={styles.whiteBox}>
-        <Pressable
-          style={styles.actionButton}
-          android_ripple={{color: '#eee'}}
-          onPress={() => {
-            onLaunchCamera();
-            onClose();
-          }}>
-          <Camera />
-          <Text style={styles.actionText}>카메라로 촬영하기</Text>
-        </Pressable>
-        <Pressable
-          style={styles.actionButton}
-          android_ripple={{color: '#eee'}}
-          onPress={() => {
-            onLaunchImageLibrary();
-            onClose();
-          }}>
-          <Gallery />
-          <Text style={styles.actionText}>사진 선택하기</Text>
-        </Pressable>
+    <TouchableWithoutFeedback onPress={() => onClose()}>
+      <View style={styles.background}>
+        <View style={styles.whiteBox}>
+          <Pressable
+            style={styles.actionButton}
+            android_ripple={{color: '#eee'}}
+            onPress={() => {
+              onLaunchCamera();
+              onClose();
+            }}>
+            <Camera />
+            <Text style={styles.actionText}>카메라로 촬영하기</Text>
+          </Pressable>
+          <Pressable
+            style={styles.actionButton}
+            android_ripple={{color: '#eee'}}
+            onPress={() => {
+              onLaunchImageLibrary();
+              onClose();
+            }}>
+            <Gallery />
+            <Text style={styles.actionText}>사진 선택하기</Text>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

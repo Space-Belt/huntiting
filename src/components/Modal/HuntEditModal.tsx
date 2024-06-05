@@ -2,6 +2,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -13,30 +14,46 @@ type Props = {
   onClose: (args?: string) => void;
 };
 
-const HuntEditModal = ({onClose, type}: Props) => {
+const HuntEditModal = ({onClose}: Props) => {
   return (
     <TouchableWithoutFeedback onPress={() => onClose()}>
       <View style={styles.background}>
         <View style={styles.whiteBox}>
-          <Text style={styles.noticeWord}>이 채팅방을 나가시겠습니까?</Text>
-          <View style={styles.btnContainer}>
-            <Pressable
-              style={styles.actionButton}
-              android_ripple={{color: '#eee'}}
-              onPress={() => {
-                onClose();
-              }}>
-              <Text style={styles.actionText}>채팅방 나가기</Text>
-            </Pressable>
-            <Pressable
-              style={styles.secondActionButton}
-              android_ripple={{color: '#eee'}}
-              onPress={() => {
-                onClose();
-              }}>
-              <Text style={styles.actionText}>취소</Text>
-            </Pressable>
-          </View>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              console.log('수정');
+            }}>
+            <Text style={styles.actionText}>수정</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              console.log('성공');
+            }}>
+            <Text style={styles.actionText}>성공</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              console.log('실패');
+            }}>
+            <Text style={styles.actionText}>실패</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              console.log('마감');
+            }}>
+            <Text style={styles.actionText}>마감</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => {
+              console.log('삭제');
+            }}>
+            <Text style={styles.actionText}>삭제</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -61,31 +78,13 @@ const styles = StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
   },
-  noticeWord: {
-    textAlign: 'center',
-    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : 12,
-    paddingVertical: 20,
-  },
   actionButton: {
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
     borderTopWidth: 0.5,
-    borderBottomLeftRadius: 15,
-  },
-  secondActionButton: {
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    borderLeftWidth: 0.5,
-    borderTopWidth: 0.5,
-    borderBottomRightRadius: 15,
-  },
-  iconStyle: {
-    fontSize: FONTSIZE.size_18,
-    marginRight: 15,
+    // borderBottomLeftRadius: 15,
   },
   text: {
     fontSize: 26,
@@ -96,6 +95,6 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     flex: 1,
-    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : FONTSIZE.size_10,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : FONTSIZE.size_12,
   },
 });
