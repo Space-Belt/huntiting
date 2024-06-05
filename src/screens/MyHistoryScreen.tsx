@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import TabPanelComponent, {
   ITabList,
 } from '../components/MyHistory/TabPanelComponent';
@@ -9,6 +9,8 @@ import WholeWrapper from '../components/WholeWrapper';
 import {COLORS} from '../theme/theme';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import {IHuntList, huntList} from '../assets/mockData/huntList';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import {runOnJS} from 'react-native-reanimated';
 
 type Props = {};
 
@@ -38,6 +40,17 @@ const MyHistoryScreen = (props: Props) => {
     }
   }, [selectedTabIndex]);
 
+  const panGestureEvent = Gesture.Pan()
+    .onStart(() => {})
+    .onUpdate(event => {
+      if (event.translationX > -90) {
+        runOnJS(setSelectedTabIndex)(0);
+      } else if (event.translationX < 90) {
+        runOnJS(setSelectedTabIndex)(1);
+      }
+    })
+    .onEnd(event => {});
+
   return (
     <WholeWrapper>
       <>
@@ -51,7 +64,11 @@ const MyHistoryScreen = (props: Props) => {
             setSelectedTabIndex={setSelectedTabIndex}
             tabLists={tabLists}
           />
-          <HuntListComponent data={datas} />
+          <GestureDetector gesture={panGestureEvent}>
+            <ScrollView>
+              <HuntListComponent data={datas} />
+            </ScrollView>
+          </GestureDetector>
         </View>
       </>
     </WholeWrapper>
