@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import ImageShowModal from '../components/Modal/ImageShowModal';
 import NoticeComponent from '../components/Notice/NoticeComponent';
 import ReusableHeader from '../components/ReusableHeader';
@@ -50,16 +50,18 @@ const NoticeScreen = (props: Props) => {
           title="공지사항"
           handleBackBtn={() => navigation.goBack()}
         />
-        {noticeData.map((data, index) => (
-          <NoticeComponent
-            key={`${data.id}_${index}`}
-            data={data}
-            indexNum={index}
-            setModalOpen={setModalOpen}
-            setSelectedIndex={setSelectedIndex}
-            setSelectedImageIndex={setSelectedImageIndex}
-          />
-        ))}
+        <ScrollView>
+          {noticeData.map((data, index) => (
+            <NoticeComponent
+              key={`${data.id}_${index}`}
+              data={data}
+              indexNum={index}
+              setModalOpen={setModalOpen}
+              setSelectedIndex={setSelectedIndex}
+              setSelectedImageIndex={setSelectedImageIndex}
+            />
+          ))}
+        </ScrollView>
         <ReusableModal
           visible={modalOpen}
           animationType="fade"
