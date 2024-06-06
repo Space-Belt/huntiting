@@ -17,10 +17,6 @@ interface IProps {
   onLaunchImageLibrary: () => void;
 }
 
-const imagePickerOption = {
-  mediaType: 'photo',
-};
-
 const ImageSelectWayModal = ({
   onClose,
   onLaunchCamera,

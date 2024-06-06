@@ -2,16 +2,17 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {GestureDetector, TouchableOpacity} from 'react-native-gesture-handler';
 import {IHuntList} from '../../assets/mockData/huntList';
 import {COLORS, FONTSIZE} from '../../theme/theme';
 import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   data: IHuntList[];
+  modalOpen?: () => void;
 };
 
-const HuntListComponent = ({data}: Props) => {
+const HuntListComponent = ({data, modalOpen}: Props) => {
   const navigation = useNavigation();
 
   const keyExtractor = (item: IHuntList) => {
@@ -34,6 +35,9 @@ const HuntListComponent = ({data}: Props) => {
         style={styles.container}
         onPress={() => {
           navigation.navigate('detail' as never);
+        }}
+        onLongPress={() => {
+          modalOpen ? modalOpen() : {};
         }}>
         <FastImage
           source={{

@@ -24,14 +24,6 @@ import {COLORS, FONTSIZE} from '../../theme/theme';
 import {getLayout} from '../../utils/getLayout';
 import {getPlatform} from '../../utils/getPlatform';
 
-const imagePickerOption = {
-  mediaType: 'photo',
-  maxWidth: 360,
-  maxHeight: 360,
-  includeBase64: Platform.OS === 'android',
-  selectionLimit: 5,
-};
-
 type Props = {
   productName: string;
   setProductName: Dispatch<SetStateAction<string>>;
