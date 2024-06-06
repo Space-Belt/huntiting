@@ -23,7 +23,6 @@ const SettingComponent = ({name, value, setValue}: Props) => {
   const btnPosition = useSharedValue(0);
   const settingAnimatedStyle = useAnimatedStyle(() => {
     return {
-      // backgroundColor: ,
       left: btnPosition.value,
     };
   });

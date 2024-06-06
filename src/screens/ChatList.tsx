@@ -70,7 +70,7 @@ const ChatList = (props: Props) => {
   const handleDeleteBtn = (id: number) => {
     let tempRoom = [...chatRoomList];
     tempRoom = tempRoom.filter(el => el.id !== id);
-    console.log(tempRoom);
+
     setChatRoomList(tempRoom);
   };
 
