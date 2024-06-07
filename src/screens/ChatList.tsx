@@ -21,6 +21,8 @@ export interface IChatRoom {
 const ChatList = (props: Props) => {
   const navigation = useNavigation();
 
+  const [longPressModal, setLongPressModal] = React.useState<boolean>(false);
+
   const [onDeleteModal, setOnDeleteModal] = React.useState<boolean>(false);
 
   const [chatRoomList, setChatRoomList] = React.useState<IChatRoom[]>([
@@ -56,6 +58,10 @@ const ChatList = (props: Props) => {
     navigation.navigate('chatRoom' as never);
   };
 
+  const longPressModalClose = () => {
+    setLongPressModal(prev => !prev);
+  };
+
   const onClose = (type?: string) => {
     if (type === 'exit') {
       handleDeleteBtn(selectedChatId);
@@ -87,7 +93,7 @@ const ChatList = (props: Props) => {
               modalOpen={onDeleteModal}
               setSelectedChatId={setSelectedChatId}
               handleGotoChatRoom={handleGotoChatRoom}
-              // handleDeleteBtn={handleDeleteBtn}
+              longPressModalClose={longPressModalClose}
             />
           ))}
         </ScrollView>
@@ -97,6 +103,12 @@ const ChatList = (props: Props) => {
           animationType="fade"
           children={<ChatRoomOutModal type={'exit'} onClose={onClose} />}
         />
+        {/* <ReusableModal
+          onClose={longPressModalClose}
+          visible={longPressModal}
+          animationType="fade"
+          children={<ChatRoomOutModal type={'exit'} onClose={onClose} />}
+        /> */}
       </>
     </WholeWrapper>
   );

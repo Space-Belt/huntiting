@@ -22,6 +22,7 @@ type Props = {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   setSelectedChatId: Dispatch<SetStateAction<number>>;
+  longPressModalClose: () => void;
 };
 
 const DEFAULT_WIDTH = 0;
@@ -35,6 +36,7 @@ const ChatListComponent = ({
   modalOpen,
   setModalOpen,
   setSelectedChatId,
+  longPressModalClose,
 }: Props) => {
   const translateX = useSharedValue(DEFAULT_TRANSLATEX);
   const tempTranslateX = useSharedValue(DEFAULT_TRANSLATEX);
@@ -146,6 +148,9 @@ const ChatListComponent = ({
             handleGotoChatRoom(item.id);
             translateX.value = withSpring(0);
             deleteBtnWidth.value = withSpring(0);
+          }}
+          onLongPress={() => {
+            setModalOpen(prev => !prev);
           }}>
           <Animated.View style={[styles.chatListContainer, listAnimatedStyle]}>
             <View>
