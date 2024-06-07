@@ -103,12 +103,6 @@ const ChatList = (props: Props) => {
           animationType="fade"
           children={<ChatRoomOutModal type={'exit'} onClose={onClose} />}
         />
-        {/* <ReusableModal
-          onClose={longPressModalClose}
-          visible={longPressModal}
-          animationType="fade"
-          children={<ChatRoomOutModal type={'exit'} onClose={onClose} />}
-        /> */}
       </>
     </WholeWrapper>
   );
