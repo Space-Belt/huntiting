@@ -86,7 +86,6 @@ const HuntDetail = ({route, navigation}: IRequestProps) => {
           <View style={styles.imageWrapper}>
             <Carousel
               loop
-              // mode={'parallax'}
               width={width}
               height={width}
               data={[

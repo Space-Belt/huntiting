@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#877373c2',
     color: COLORS.Orange2,
-    // alignItems: 'flex-end',
     justifyContent: 'center',
   },
   circleStyle: {

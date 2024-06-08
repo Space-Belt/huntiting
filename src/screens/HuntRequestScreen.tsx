@@ -35,8 +35,6 @@ export type RequestProps = NativeStackScreenProps<
 >;
 
 const HuntRequestScreen = ({route, navigation}: RequestProps) => {
-  // const navigation = useNavigation();
-
   const {onToast} = useToast();
 
   const [productName, setProductName] = React.useState<string>('');

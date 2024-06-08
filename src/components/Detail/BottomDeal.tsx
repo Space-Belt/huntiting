@@ -35,14 +35,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderColor: '#eee',
   },
-  // priceText: {
-  //   color: COLORS.Grey,
-  //   fontSize: FONTSIZE.size_16,
-  //   fontWeight: '700',
-  // },
-  describeContainer: {
-    // width:
-  },
+
+  describeContainer: {},
   priceText: {
     fontSize: FONTSIZE.size_16,
     color: COLORS.Orange2,

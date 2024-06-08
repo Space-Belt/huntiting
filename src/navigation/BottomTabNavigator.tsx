@@ -151,7 +151,6 @@ export default BottomTabNavigator;
 
 const styles = StyleSheet.create({
   bottomTabStyle: {
-    // backgroundColor: 'black',
     borderTopWidth: 0,
   },
   activeTabBackground: {

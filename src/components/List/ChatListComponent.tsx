@@ -200,7 +200,6 @@ export default ChatListComponent;
 
 const styles = StyleSheet.create({
   chatListContainer: {
-    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
