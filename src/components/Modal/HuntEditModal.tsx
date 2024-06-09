@@ -12,48 +12,61 @@ import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   onClose: (args?: string) => void;
+  isMine: boolean;
 };
 
-const HuntEditModal = ({onClose}: Props) => {
+const HuntEditModal = ({onClose, isMine}: Props) => {
   return (
     <TouchableWithoutFeedback onPress={() => onClose()}>
       <View style={styles.background}>
         <View style={styles.whiteBox}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              console.log('수정');
-            }}>
-            <Text style={styles.actionText}>수정</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              console.log('성공');
-            }}>
-            <Text style={styles.actionText}>성공</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              console.log('실패');
-            }}>
-            <Text style={styles.actionText}>실패</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              console.log('마감');
-            }}>
-            <Text style={styles.actionText}>마감</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => {
-              console.log('삭제');
-            }}>
-            <Text style={styles.actionText}>삭제</Text>
-          </TouchableOpacity>
+          {!isMine ? (
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={() => {
+                console.log('신고');
+              }}>
+              <Text style={styles.actionText}>신고</Text>
+            </TouchableOpacity>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('수정');
+                }}>
+                <Text style={styles.actionText}>수정</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('성공');
+                }}>
+                <Text style={styles.actionText}>성공</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('실패');
+                }}>
+                <Text style={styles.actionText}>실패</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('마감');
+                }}>
+                <Text style={styles.actionText}>마감</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('삭제');
+                }}>
+                <Text style={styles.actionText}>삭제</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </TouchableWithoutFeedback>

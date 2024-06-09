@@ -112,6 +112,7 @@ const HuntDetail = ({route, navigation}: IRequestProps) => {
               onClose={() => {
                 setModalOpen(false);
               }}
+              isMine={!isMine}
             />
           }
         />
