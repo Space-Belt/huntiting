@@ -48,6 +48,7 @@ type Props = {
   modalClose: () => void;
   onLaunchCamera: () => void;
   onLaunchImageLibrary: () => void;
+  handleSubmitBtn: () => void;
 };
 
 const RequestComponent = ({
@@ -74,6 +75,7 @@ const RequestComponent = ({
   modalClose,
   onLaunchCamera,
   onLaunchImageLibrary,
+  handleSubmitBtn,
 }: Props) => {
   const {onToast} = useToast();
   return (
@@ -149,6 +151,9 @@ const RequestComponent = ({
           isClickable={true}
           onClick={() => {
             onToast('요청성공하셨습니다.', 'success', true);
+            setTimeout(() => {
+              handleSubmitBtn();
+            }, 1500);
           }}
         />
       </View>

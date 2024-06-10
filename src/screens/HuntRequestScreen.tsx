@@ -164,6 +164,7 @@ const HuntRequestScreen = ({route, navigation}: RequestProps) => {
           modalClose={modalClose}
           onLaunchCamera={onLaunchCamera}
           onLaunchImageLibrary={onLaunchImageLibrary}
+          handleSubmitBtn={() => navigation.navigate('detail' as never)}
         />
       </>
     </WholeWrapper>
