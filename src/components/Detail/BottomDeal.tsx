@@ -13,8 +13,8 @@ const BottomDeal = ({price, count, onPress}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.describeContainer}>
-        <Text style={styles.priceText}>가격: {price}원</Text>
-        <Text style={styles.priceText}>수량: {count}개</Text>
+        <Text style={styles.priceText}>가격: {price} 원</Text>
+        <Text style={styles.priceText}>수량: {count} 개</Text>
       </View>
       <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
         <Text style={styles.buttonText}>채팅하기</Text>
@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
 
   describeContainer: {},
   priceText: {
-    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_12,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : FONTSIZE.size_12,
     color: COLORS.Orange2,
-    fontWeight: '700',
+    fontWeight: '500',
   },
   countText: {
     fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_12,
     color: COLORS.Orange2,
-    fontWeight: '700',
+    fontWeight: '500',
   },
   buttonStyle: {
     paddingVertical: 15,

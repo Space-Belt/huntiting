@@ -10,6 +10,9 @@ import {getLayout} from '../utils/getLayout';
 import ChatOut from '../assets/icons/chatroomOut.svg';
 import ReusableModal from '../components/ReusableModal';
 import ChatRoomOutModal from '../components/Modal/ChatRoomOutModal';
+import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
+import {onLaunchCamera} from '../utils/cameraSelectOpener';
+import {CameraOptions, ImageLibraryOptions} from 'react-native-image-picker';
 
 type Props = {};
 
@@ -26,6 +29,14 @@ interface ISectionData {
   title: string;
   data: IChat[];
 }
+
+const imagePickerOption = {
+  mediaType: 'photo',
+  maxWidth: 360,
+  maxHeight: 360,
+  includeBase64: Platform.OS === 'android',
+  selectionLimit: 5,
+};
 
 const chats: IChat[] = [
   {
@@ -86,6 +97,8 @@ const ChatRoom = (props: Props) => {
   const [sectionList, setSectionList] = React.useState<ISectionData[]>([]);
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
+  const [cameraModalOpen, setCameraModalOpen] = React.useState<boolean>(false);
 
   const renderItem = ({item}: {item: IChat}) => {
     if (item.sender_id === 'sender_1') {
@@ -157,11 +170,31 @@ const ChatRoom = (props: Props) => {
     setMessage('');
   };
 
+  const onPickImage = (res: any) => {
+    // if (res.didCancel || !res) {
+    //   return;
+    // }
+    // const temp: Asset[] = profileImage ? [...profileImage] : [];
+    // for (let i = 0; i < res.assets.length; i++) {
+    //   temp.push({
+    //     ...res.assets,
+    //     uri:
+    //       Platform.OS === 'android'
+    //         ? res.assets[i].uri
+    //         : res.assets[i].uri!.replace('file://', ''),
+    //   });
+    // }
+    // setProfileImage(temp);
+  };
+
   const modalClose = (type?: string) => {
     if (type === 'exit') {
       navigation.goBack();
     }
     setModalOpen(prev => !prev);
+  };
+  const cameraModalClose = () => {
+    setCameraModalOpen(prev => !prev);
   };
 
   React.useEffect(() => {
@@ -215,12 +248,32 @@ const ChatRoom = (props: Props) => {
           text={message}
           setText={setMessage}
           sendMessage={sendMessage}
+          openCameraModal={() => setCameraModalOpen(prev => !prev)}
         />
         <ReusableModal
           visible={modalOpen}
           onClose={modalClose}
           animationType="slide"
           children={<ChatRoomOutModal onClose={modalClose} type={'exit'} />}
+        />
+        <ReusableModal
+          visible={cameraModalOpen}
+          onClose={cameraModalClose}
+          animationType="fade"
+          children={
+            <ImageSelectWayModal
+              onClose={cameraModalClose}
+              onLaunchCamera={() =>
+                onLaunchCamera(imagePickerOption as CameraOptions, onPickImage)
+              }
+              onLaunchImageLibrary={() =>
+                onLaunchCamera(
+                  imagePickerOption as ImageLibraryOptions,
+                  onPickImage,
+                )
+              }
+            />
+          }
         />
       </>
     </WholeWrapper>

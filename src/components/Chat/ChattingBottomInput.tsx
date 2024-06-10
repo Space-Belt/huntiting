@@ -9,16 +9,22 @@ type Props = {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
   sendMessage: () => void;
+  openCameraModal: () => void;
 };
 
-const ChattingBottomInput = ({text, setText, sendMessage}: Props) => {
+const ChattingBottomInput = ({
+  text,
+  setText,
+  sendMessage,
+  openCameraModal,
+}: Props) => {
   const handleText = (text: string) => {
     setText(text);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.btnStyle}>
+      <TouchableOpacity style={styles.btnStyle} onPress={openCameraModal}>
         <Camera width={30} height={30} style={styles.iconStyle} />
       </TouchableOpacity>
       <TextInput

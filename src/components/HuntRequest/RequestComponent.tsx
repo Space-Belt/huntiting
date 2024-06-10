@@ -34,11 +34,9 @@ type Props = {
   description: string;
   setDescription: Dispatch<SetStateAction<string>>;
   modalOpen: boolean;
-  setModalOpen: Dispatch<SetStateAction<boolean>>;
   showDatePicker: boolean;
   setShowDatePicker: Dispatch<SetStateAction<boolean>>;
   profileImage: Asset[] | undefined;
-  setProfileImage: Dispatch<SetStateAction<Asset[] | undefined>>;
   date: Date;
   selectedDate: Date | undefined;
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
@@ -61,11 +59,9 @@ const RequestComponent = ({
   description,
   setDescription,
   modalOpen,
-  setModalOpen,
   showDatePicker,
   setShowDatePicker,
   profileImage,
-  setProfileImage,
   date,
   selectedDate,
   setSelectedDate,

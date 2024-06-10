@@ -33,6 +33,14 @@ const ChatRoomOutModal = ({onClose, type}: IProps) => {
               style={styles.secondActionButton}
               android_ripple={{color: '#eee'}}
               onPress={() => {
+                onClose(type);
+              }}>
+              <Text style={styles.actionText}>신고하기</Text>
+            </Pressable>
+            <Pressable
+              style={styles.secondActionButton}
+              android_ripple={{color: '#eee'}}
+              onPress={() => {
                 onClose();
               }}>
               <Text style={styles.actionText}>취소</Text>
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   whiteBox: {
-    width: 300,
+    width: 330,
     backgroundColor: 'white',
     borderRadius: 4,
     elevation: 2,
