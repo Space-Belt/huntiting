@@ -18,6 +18,7 @@ import FindAuth from '../screens/FindAuth';
 import FindUserNameResult from '../components/FindAuth/FindUserNameResult';
 import ChangePassword from '../components/FindAuth/ChangePassword';
 import ChangePasswordResult from '../components/FindAuth/ChangePasswordResult';
+import HuntRequestScreen from '../screens/HuntRequestScreen';
 
 const MainStack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,7 @@ const MainStackNavigator = () => {
       <MainStack.Screen name="Setting" component={Setting} />
       <MainStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <MainStack.Screen name="detail" component={HuntDetail} />
+      <MainStack.Screen name="request" component={HuntRequestScreen} />
       <MainStack.Screen name="MyHistoryScreen" component={MyHistoryScreen} />
       <MainStack.Screen name="NoticeScreen" component={NoticeScreen} />
       <MainStack.Screen name="chatRoom" component={ChatRoom} />
