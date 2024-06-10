@@ -21,13 +21,22 @@ const HuntEditModal = ({onClose, isMine}: Props) => {
       <View style={styles.background}>
         <View style={styles.whiteBox}>
           {!isMine ? (
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => {
-                console.log('신고');
-              }}>
-              <Text style={styles.actionText}>신고</Text>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  console.log('신고');
+                }}>
+                <Text style={styles.actionText}>신고</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => {
+                  onClose();
+                }}>
+                <Text style={styles.actionText}>취소</Text>
+              </TouchableOpacity>
+            </>
           ) : (
             <>
               <TouchableOpacity
