@@ -67,23 +67,23 @@ const BottomTabNavigator = (): IIconType => {
         },
       };
     }
-    if (iconName === 'request') {
-      return {
-        tabBarLabel: '요청',
-        tabBarActiveTintColor: COLORS.Orange,
-        tabBarShowLabel: true,
-        tabBarIcon: ({focused}) => {
-          return (
-            <Request
-              style={[
-                styles.iconStyle,
-                focused ? focusedColor : unFocusesColor,
-              ]}
-            />
-          );
-        },
-      };
-    }
+    // if (iconName === 'request') {
+    //   return {
+    //     tabBarLabel: '요청',
+    //     tabBarActiveTintColor: COLORS.Orange,
+    //     tabBarShowLabel: true,
+    //     tabBarIcon: ({focused}) => {
+    //       return (
+    //         <Request
+    //           style={[
+    //             styles.iconStyle,
+    //             focused ? focusedColor : unFocusesColor,
+    //           ]}
+    //         />
+    //       );
+    //     },
+    //   };
+    // }
     if (iconName === 'chat') {
       return {
         tabBarLabel: '채팅',
@@ -128,11 +128,11 @@ const BottomTabNavigator = (): IIconType => {
         options={iconRendering('home')}
       />
 
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="request"
         component={HuntRequestScreen}
         options={iconRendering('request')}
-      />
+      /> */}
       <BottomTab.Screen
         name="chatList"
         component={ChatList}
