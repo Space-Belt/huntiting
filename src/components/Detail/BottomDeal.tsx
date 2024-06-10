@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {COLORS, FONTSIZE} from '../../theme/theme';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   price: number;
@@ -27,7 +28,7 @@ export default BottomDeal;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 60,
+    height: getPlatform() === 'ios' ? 60 : 80,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 25,
@@ -38,12 +39,12 @@ const styles = StyleSheet.create({
 
   describeContainer: {},
   priceText: {
-    fontSize: FONTSIZE.size_16,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_12,
     color: COLORS.Orange2,
     fontWeight: '700',
   },
   countText: {
-    fontSize: FONTSIZE.size_16,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_16 : FONTSIZE.size_12,
     color: COLORS.Orange2,
     fontWeight: '700',
   },
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.White,
-    fontSize: FONTSIZE.size_14,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : FONTSIZE.size_10,
     fontWeight: '800',
   },
 });
