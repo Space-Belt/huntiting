@@ -290,12 +290,14 @@ const ChatRoom = (props: Props) => {
           keyExtractor={(item: IChat) => `${item.chat_room_id}-${item.content}`}
         />
         {selectedImages && (
-          <FlatList
-            data={selectedImages}
-            renderItem={renderItems}
-            keyExtractor={keyExtractors}
-            horizontal={true}
-          />
+          <View style={styles.imageContainer}>
+            <FlatList
+              data={selectedImages}
+              renderItem={renderItems}
+              keyExtractor={keyExtractors}
+              horizontal={true}
+            />
+          </View>
         )}
 
         <ChattingBottomInput

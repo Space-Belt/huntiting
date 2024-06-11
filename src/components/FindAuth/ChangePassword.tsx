@@ -15,7 +15,7 @@ const ChangePassword = (props: Props) => {
   const [password, setPassword] = React.useState<string>('');
   const [checkPassword, setCheckPassword] = React.useState<string>('');
 
-  const isValidateStyle: ViewProps<StyleProp> = {
+  const isValidateStyle: StyleProp<ViewStyle> = {
     backgroundColor: password === checkPassword ? COLORS.Orange : '#4c4a4a7a',
   };
 
