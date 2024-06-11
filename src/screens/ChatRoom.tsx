@@ -1,7 +1,14 @@
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useRef} from 'react';
-import {FlatList, SectionList, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import ChattingBottomInput from '../components/Chat/ChattingBottomInput';
 import ReusableHeader from '../components/ReusableHeader';
 import WholeWrapper from '../components/WholeWrapper';
@@ -11,8 +18,15 @@ import ChatOut from '../assets/icons/chatroomOut.svg';
 import ReusableModal from '../components/ReusableModal';
 import ChatRoomOutModal from '../components/Modal/ChatRoomOutModal';
 import ImageSelectWayModal from '../components/Modal/ImageSelectWayModal';
-import {onLaunchCamera} from '../utils/cameraSelectOpener';
-import {CameraOptions, ImageLibraryOptions} from 'react-native-image-picker';
+import {
+  onLaunchCamera,
+  onLaunchImageLibrary,
+} from '../utils/cameraSelectOpener';
+import {
+  Asset,
+  CameraOptions,
+  ImageLibraryOptions,
+} from 'react-native-image-picker';
 
 type Props = {};
 
@@ -72,6 +86,8 @@ const ChatRoom = (props: Props) => {
   const [nickName, setNickName] = React.useState<string>('하이룽');
 
   const [message, setMessage] = React.useState<string>('');
+
+  const [selectedImages, setSelectedImages] = React.useState<Asset[]>([]);
 
   const [chatMessage, setChatMessage] = React.useState<IChat[]>([
     {
@@ -171,20 +187,20 @@ const ChatRoom = (props: Props) => {
   };
 
   const onPickImage = (res: any) => {
-    // if (res.didCancel || !res) {
-    //   return;
-    // }
-    // const temp: Asset[] = profileImage ? [...profileImage] : [];
-    // for (let i = 0; i < res.assets.length; i++) {
-    //   temp.push({
-    //     ...res.assets,
-    //     uri:
-    //       Platform.OS === 'android'
-    //         ? res.assets[i].uri
-    //         : res.assets[i].uri!.replace('file://', ''),
-    //   });
-    // }
-    // setProfileImage(temp);
+    if (res.didCancel || !res) {
+      return;
+    }
+    const temp: Asset[] = selectedImages ? [...selectedImages] : [];
+    for (let i = 0; i < res.assets?.length; i++) {
+      temp.push({
+        ...res.assets,
+        uri:
+          Platform.OS === 'android'
+            ? res.assets[i].uri
+            : res.assets[i].uri!.replace('file://', ''),
+      });
+    }
+    setSelectedImages(temp);
   };
 
   const modalClose = (type?: string) => {
@@ -267,7 +283,7 @@ const ChatRoom = (props: Props) => {
                 onLaunchCamera(imagePickerOption as CameraOptions, onPickImage)
               }
               onLaunchImageLibrary={() =>
-                onLaunchCamera(
+                onLaunchImageLibrary(
                   imagePickerOption as ImageLibraryOptions,
                   onPickImage,
                 )
