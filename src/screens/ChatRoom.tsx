@@ -27,6 +27,9 @@ import {
   CameraOptions,
   ImageLibraryOptions,
 } from 'react-native-image-picker';
+import FastImage from 'react-native-fast-image';
+import CloseIcon from '../assets/icons/smallClose.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type Props = {};
 
@@ -87,7 +90,7 @@ const ChatRoom = (props: Props) => {
 
   const [message, setMessage] = React.useState<string>('');
 
-  const [selectedImages, setSelectedImages] = React.useState<Asset[]>([]);
+  const [selectedImages, setSelectedImages] = React.useState<Asset[]>();
 
   const [chatMessage, setChatMessage] = React.useState<IChat[]>([
     {
@@ -141,6 +144,13 @@ const ChatRoom = (props: Props) => {
     );
   };
 
+  const deleteImage = (uri: string) => {
+    let temp: Asset[] = selectedImages ? [...selectedImages] : [];
+    temp = temp.filter(item => item.uri !== uri);
+
+    setSelectedImages(temp);
+  };
+
   const keyExtractor = (item: IChat, index: number) => {
     return `${item}-${index}`;
   };
@@ -184,6 +194,26 @@ const ChatRoom = (props: Props) => {
     setSectionList(newSections);
 
     setMessage('');
+  };
+
+  const renderItems = ({item}: {item: Asset}) => {
+    return (
+      <View style={styles.imageWrapper}>
+        <FastImage source={{uri: item.uri}} style={styles.addImageBtn} />
+        <TouchableOpacity
+          containerStyle={styles.editIconStyle}
+          onPress={() => {
+            if (item.uri !== undefined) {
+              deleteImage(item.uri);
+            }
+          }}>
+          <CloseIcon style={styles.editIconStyles} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  const keyExtractors = (item: any) => {
+    return `${item.uri}`;
   };
 
   const onPickImage = (res: any) => {
@@ -259,6 +289,14 @@ const ChatRoom = (props: Props) => {
           stickySectionHeadersEnabled={false}
           keyExtractor={(item: IChat) => `${item.chat_room_id}-${item.content}`}
         />
+        {selectedImages && (
+          <FlatList
+            data={selectedImages}
+            renderItem={renderItems}
+            keyExtractor={keyExtractors}
+            horizontal={true}
+          />
+        )}
 
         <ChattingBottomInput
           text={message}
@@ -346,5 +384,44 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     fontWeight: '600',
     color: COLORS.White,
+  },
+  imageContainer: {
+    backgroundColor: '#3f39396e',
+    justifyContent: 'center',
+  },
+
+  addImageBtn: {
+    width: 90,
+    height: 90,
+    backgroundColor: '#eee',
+    borderColor: '#d9d7ba',
+    borderWidth: 1,
+    borderRadius: 20,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 5,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+  imageWrapper: {
+    position: 'relative',
+    paddingTop: 10,
+  },
+  editIconStyle: {
+    position: 'absolute',
+    right: 2,
+    top: 0,
+
+    zIndex: 1,
+  },
+  editIconStyles: {
+    position: 'relative',
+    zIndex: 1,
   },
 });
