@@ -150,11 +150,9 @@ const HuntRequestScreen = ({route, navigation}: RequestProps) => {
           description={description}
           setDescription={setDescription}
           modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
           showDatePicker={showDatePicker}
           setShowDatePicker={setShowDatePicker}
           profileImage={profileImage}
-          setProfileImage={setProfileImage}
           date={date}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}

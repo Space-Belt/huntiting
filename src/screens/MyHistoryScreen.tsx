@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useMemo} from 'react';
+import {ScrollView, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import TabPanelComponent, {
   ITabList,
 } from '../components/MyHistory/TabPanelComponent';
@@ -10,7 +10,13 @@ import {COLORS} from '../theme/theme';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import {IHuntList, huntList} from '../assets/mockData/huntList';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import {runOnJS} from 'react-native-reanimated';
+import Animated, {
+  interpolate,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 type Props = {};
 
@@ -30,6 +36,36 @@ const MyHistoryScreen = (props: Props) => {
 
   const [datas, setDatas] = React.useState<IHuntList[]>([]);
 
+  const listRotate = useSharedValue(0);
+
+  const frontListAnimatedStyle = useAnimatedStyle(() => {
+    const spin = interpolate(listRotate.value, [0, 1], [0, 180]);
+    return {
+      transform: [
+        {
+          rotateY: `${spin}deg`,
+        },
+      ],
+    };
+  });
+  const backListAnimatedStyle = useAnimatedStyle(() => {
+    const spin = interpolate(listRotate.value, [0, 1], [180, 360]);
+    return {
+      transform: [
+        {
+          rotateY: `${spin}deg`,
+        },
+      ],
+    };
+  });
+
+  const listBoxStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return {
+      position: 'absolute',
+      backfaceVisibility: 'hidden',
+    };
+  }, []);
+
   React.useEffect(() => {
     if (selectedTabIndex === 0) {
       let tempData = [...huntList].filter(el => el.status === 'pending');
@@ -43,13 +79,23 @@ const MyHistoryScreen = (props: Props) => {
   const panGestureEvent = Gesture.Pan()
     .onStart(() => {})
     .onUpdate(event => {
-      if (event.translationX > -90) {
-        runOnJS(setSelectedTabIndex)(0);
-      } else if (event.translationX < 90) {
+      if (event.translationX < -60) {
         runOnJS(setSelectedTabIndex)(1);
+      } else if (event.translationX > 60) {
+        runOnJS(setSelectedTabIndex)(0);
       }
     })
-    .onEnd(event => {});
+    .onEnd(event => {
+      if (event.translationX < -60) {
+        listRotate.value = withTiming(listRotate.value ? 0 : 1, {
+          duration: 600,
+        });
+      } else if (event.translationX > 60) {
+        listRotate.value = withTiming(listRotate.value ? 0 : 1, {
+          duration: 600,
+        });
+      }
+    });
 
   return (
     <WholeWrapper>
@@ -65,9 +111,28 @@ const MyHistoryScreen = (props: Props) => {
             tabLists={tabLists}
           />
           <GestureDetector gesture={panGestureEvent}>
-            <ScrollView>
-              <HuntListComponent data={datas} />
-            </ScrollView>
+            <View style={styles.animationContainer}>
+              <Animated.View
+                style={[
+                  styles.animatedList,
+                  listBoxStyle,
+                  frontListAnimatedStyle,
+                ]}>
+                <ScrollView>
+                  <HuntListComponent data={datas} />
+                </ScrollView>
+              </Animated.View>
+              <Animated.View
+                style={[
+                  styles.animatedList,
+                  listBoxStyle,
+                  backListAnimatedStyle,
+                ]}>
+                <ScrollView>
+                  <HuntListComponent data={datas} />
+                </ScrollView>
+              </Animated.View>
+            </View>
           </GestureDetector>
         </View>
       </>
@@ -82,28 +147,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
   },
-  tabContainer: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#4d4b4ba1',
+  animatedList: {
+    width: '100%',
   },
-  animateTabBox: {
-    position: 'absolute',
-    width: '50%',
-    height: 50,
-    borderBottomWidth: 1,
-    backgroundColor: '#ea2f2f99',
-    borderBottomColor: COLORS.Orange2,
-  },
-  tabBox: {
-    width: '50%',
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabStyle: {alignItems: 'center'},
-  tabText: {
-    textAlign: 'center',
-    fontWeight: '700',
+  animationContainer: {
+    flex: 1,
   },
 });
