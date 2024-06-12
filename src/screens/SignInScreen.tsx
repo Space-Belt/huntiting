@@ -6,7 +6,8 @@ import {COLORS, FONTSIZE} from '../theme/theme';
 import {useNavigation} from '@react-navigation/native';
 import {getPlatform} from '../utils/getPlatform';
 import ReusableBtn from '../components/ReusableBtn';
-import {stubFalse} from 'lodash';
+import UnCheckedBox from '../assets/icons/uncheckedBox.svg';
+import CheckedBox from '../assets/icons/checkedBox.svg';
 
 type Props = {};
 
@@ -16,6 +17,8 @@ const SignInScreen = (props: Props) => {
   const [userName, setUserName] = React.useState<string>('');
 
   const [password, setPassword] = React.useState<string>('');
+
+  const [passwordShow, setPasswordShow] = React.useState<boolean>(false);
 
   const handleLogin = () => {
     let isValidated = true;
@@ -38,6 +41,10 @@ const SignInScreen = (props: Props) => {
     }
   };
 
+  const handleShowPassword = () => {
+    setPasswordShow(prev => !prev);
+  };
+
   return (
     <WholeWrapper>
       <View style={styles.container}>
@@ -55,10 +62,20 @@ const SignInScreen = (props: Props) => {
             category="비밀번호"
             isMultiline={false}
             placeholder="비밀번호를 입력해주세요"
-            security={true}
+            security={passwordShow}
             value={password}
             setValue={setPassword}
           />
+          <TouchableOpacity onPress={handleShowPassword}>
+            <View style={styles.showPassword}>
+              {!passwordShow ? (
+                <CheckedBox style={styles.checkIcon} />
+              ) : (
+                <UnCheckedBox style={styles.checkIcon} />
+              )}
+              <Text style={styles.showPasswordText}>비밀번호 보기</Text>
+            </View>
+          </TouchableOpacity>
           <View style={styles.signUpNfindAccountBox}>
             <TouchableOpacity
               onPress={() => navigation.navigate('SignUpScreen' as never)}>
@@ -119,5 +136,20 @@ const styles = StyleSheet.create({
     fontSize: getPlatform() === 'ios' ? FONTSIZE.size_14 : FONTSIZE.size_10,
     fontWeight: '700',
     paddingHorizontal: 10,
+  },
+  showPassword: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  checkIcon: {
+    width: 20,
+    height: 20,
+    color: COLORS.Orange,
+  },
+  showPasswordText: {
+    marginLeft: 5,
+    fontSize: getPlatform() === 'ios' ? FONTSIZE.size_12 : FONTSIZE.size_10,
+    color: COLORS.Orange,
   },
 });
