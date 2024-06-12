@@ -22,6 +22,8 @@ import {
   ImageLibraryOptions,
   Asset,
 } from 'react-native-image-picker';
+import {COLORS} from '../theme/theme';
+import PlusCircle from '../assets/icons/addCircle.svg';
 
 type Props = {};
 
@@ -47,7 +49,7 @@ const ProfileEdit = (props: Props) => {
 
   const [phoneNumber, setPhoneNumber] = React.useState<string>('');
 
-  const [profileImage, setProfileImage] = React.useState<Asset[]>();
+  const [profileImage, setProfileImage] = React.useState<Asset>();
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -79,16 +81,13 @@ const ProfileEdit = (props: Props) => {
     if (res.didCancel || !res) {
       return;
     }
-    const temp: Asset[] = profileImage ? [...profileImage] : [];
+    let temp: Asset | undefined = profileImage ? profileImage : undefined;
 
     for (let i = 0; i < res.assets.length; i++) {
-      temp.push({
-        ...res.assets,
-        uri:
-          Platform.OS === 'android'
-            ? res.assets[i].uri
-            : res.assets[i].uri!.replace('file://', ''),
-      });
+      temp =
+        Platform.OS === 'android'
+          ? res.assets[i].uri
+          : res.assets[i].uri!.replace('file://', '');
     }
 
     setProfileImage(temp);
@@ -109,11 +108,24 @@ const ProfileEdit = (props: Props) => {
         <ScrollView>
           <View style={styles.container}>
             <View style={styles.imageWrapper}>
-              <TouchableOpacity onPress={handleModalOpen}>
-                <FastImage
-                  source={{uri: 'https://picsum.photos/200'}}
-                  style={styles.imageStyle}
-                />
+              <TouchableOpacity
+                onPress={handleModalOpen}
+                style={styles.imageBox}>
+                <View>
+                  <FastImage
+                    source={{
+                      uri: !profileImage
+                        ? 'https://picsum.photos/200'
+                        : profileImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
+                  <PlusCircle
+                    width={30}
+                    height={30}
+                    style={styles.plusCircleIcon}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
             <ReusableInput
@@ -192,5 +204,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  imageBox: {
+    position: 'relative',
+  },
+  plusCircleIcon: {
+    position: 'absolute',
+    width: 30,
+    height: 30,
+    bottom: -5,
+    right: -5,
+    color: COLORS.Orange,
+    zIndex: 1,
   },
 });
