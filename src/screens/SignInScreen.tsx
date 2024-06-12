@@ -19,8 +19,8 @@ const SignInScreen = (props: Props) => {
 
   const handleLogin = () => {
     let isValidated = true;
-    if (userName.length > 5) {
-      isValidated = fasle;
+    if (userName.length < 6) {
+      isValidated = false;
     }
 
     if (
@@ -48,15 +48,16 @@ const SignInScreen = (props: Props) => {
             category="아이디"
             isMultiline={false}
             placeholder="아이디를 입력해주세요"
-            setValue={setPassword}
-            value={password}
+            value={userName}
+            setValue={setUserName}
           />
           <ReusableInput
             category="비밀번호"
             isMultiline={false}
             placeholder="비밀번호를 입력해주세요"
-            setValue={setPassword}
+            security={true}
             value={password}
+            setValue={setPassword}
           />
           <View style={styles.signUpNfindAccountBox}>
             <TouchableOpacity
@@ -71,9 +72,7 @@ const SignInScreen = (props: Props) => {
           <ReusableBtn
             text={'로그인'}
             isClickable={true}
-            onClick={() => {
-              navigation.navigate('BottomTab' as never);
-            }}
+            onClick={handleLogin}
           />
         </View>
       </View>
