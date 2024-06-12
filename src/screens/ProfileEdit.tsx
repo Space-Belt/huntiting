@@ -84,10 +84,13 @@ const ProfileEdit = (props: Props) => {
     let temp: Asset | undefined = profileImage ? profileImage : undefined;
 
     for (let i = 0; i < res.assets.length; i++) {
-      temp =
-        Platform.OS === 'android'
-          ? res.assets[i].uri
-          : res.assets[i].uri!.replace('file://', '');
+      temp = {
+        ...res.assets,
+        uri:
+          Platform.OS === 'android'
+            ? res.assets[i].uri
+            : res.assets[i].uri!.replace('file://', ''),
+      };
     }
 
     setProfileImage(temp);
@@ -114,9 +117,10 @@ const ProfileEdit = (props: Props) => {
                 <View>
                   <FastImage
                     source={{
-                      uri: !profileImage
-                        ? 'https://picsum.photos/200'
-                        : profileImage,
+                      uri:
+                        profileImage !== undefined
+                          ? profileImage.uri
+                          : 'https://picsum.photos/200',
                     }}
                     style={styles.imageStyle}
                   />
