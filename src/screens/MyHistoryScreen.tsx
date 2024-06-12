@@ -6,7 +6,6 @@ import TabPanelComponent, {
 } from '../components/MyHistory/TabPanelComponent';
 import ReusableHeader from '../components/ReusableHeader';
 import WholeWrapper from '../components/WholeWrapper';
-import {COLORS} from '../theme/theme';
 import HuntListComponent from '../components/FlatComponent/HuntListComponent';
 import {IHuntList, huntList} from '../assets/mockData/huntList';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';

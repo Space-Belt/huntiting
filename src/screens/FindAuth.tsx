@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import WholeWrapper from '../components/WholeWrapper';
-import ReusableHeader from '../components/ReusableHeader';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet} from 'react-native';
 import {RootStackParamList} from '../App';
-import TabPanelComponent from '../components/MyHistory/TabPanelComponent';
 import FindAuthComponent from '../components/FindAuth/FindAuthComponent';
+import TabPanelComponent from '../components/MyHistory/TabPanelComponent';
+import ReusableHeader from '../components/ReusableHeader';
+import WholeWrapper from '../components/WholeWrapper';
 
 type Props = {};
 

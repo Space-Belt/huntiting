@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import WholeWrapper from '../components/WholeWrapper';
 import ReusableInput from '../components/ReusableInput';
@@ -6,6 +6,7 @@ import {COLORS, FONTSIZE} from '../theme/theme';
 import {useNavigation} from '@react-navigation/native';
 import {getPlatform} from '../utils/getPlatform';
 import ReusableBtn from '../components/ReusableBtn';
+import {stubFalse} from 'lodash';
 
 type Props = {};
 
@@ -15,6 +16,27 @@ const SignInScreen = (props: Props) => {
   const [userName, setUserName] = React.useState<string>('');
 
   const [password, setPassword] = React.useState<string>('');
+
+  const handleLogin = () => {
+    let isValidated = true;
+    if (userName.length > 5) {
+      isValidated = fasle;
+    }
+
+    if (
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,20}$/.test(
+        password,
+      ) === false
+    ) {
+      isValidated = false;
+    }
+
+    if (isValidated) {
+      navigation.navigate('BottomTab' as never);
+    } else {
+      Alert.alert('일치하는 계정이 존재하지 않습니다.');
+    }
+  };
 
   return (
     <WholeWrapper>
